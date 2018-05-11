@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { DataService } from '../data.service';
 @Component({
   selector: 'app-nca',
   templateUrl: './nca.component.html',
@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NcaComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _dataService: DataService) { }
 
   ngOnInit() {
   }
