@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { NcaComponent } from './nca/nca.component';
 import { SheqComponent } from './sheq/sheq.component';
 import { DataService } from './data.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,7 @@ import { DataService } from './data.service';
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    ReactiveFormsModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

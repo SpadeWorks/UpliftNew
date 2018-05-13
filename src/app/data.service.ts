@@ -101,7 +101,7 @@ export class DataService {
   getLevel1Data() {
     return new Promise((resolve, reject) => {
       pnp.sp.web.lists.getByTitle(Constants.Lists.LOSS_TREE_LEVEL1_MASTER).items
-        .select(`${Constants.LossTreeLevel1Master.TITLE}`)
+        .select(`${Constants.LossTreeLevel1Master.TITLE}, ID`)
         .get().then(levels => {
           resolve(levels);
         }, error => {
@@ -114,7 +114,7 @@ export class DataService {
   getLevel2Data(level1ID: string) {
     return new Promise((resolve, reject) => {
       pnp.sp.web.lists.getByTitle(Constants.Lists.LOSS_TREE_LEVEL2_MASTER).items
-        .select(`${Constants.LossTreeLevel2Master.TITLE},
+        .select(`${Constants.LossTreeLevel2Master.TITLE}, ID,
                  ${Constants.LossTreeLevel2Master.LEVEL1_LOOKUP}/ID,
                  ${Constants.LossTreeLevel2Master.LEVEL1_LOOKUP}/Title`)
         .filter(`${Constants.LossTreeLevel2Master.LEVEL1_LOOKUP} eq ${level1ID}`)
@@ -131,7 +131,7 @@ export class DataService {
   getLevel3Data(level2ID: string) {
     return new Promise((resolve, reject) => {
       pnp.sp.web.lists.getByTitle(Constants.Lists.LOSS_TREE_LEVEL3_MASTER).items
-        .select(`${Constants.LossTreeLevel3Master.TITLE},
+        .select(`${Constants.LossTreeLevel3Master.TITLE}, ID,
                  ${Constants.LossTreeLevel3Master.LEVEL2_LOOKUP}/ID,
                  ${Constants.LossTreeLevel3Master.LEVEL2_LOOKUP}/Title`)
         .filter(`${Constants.LossTreeLevel3Master.LEVEL2_LOOKUP} eq ${level2ID}`)
@@ -148,7 +148,7 @@ export class DataService {
   getLevel4Data(level3ID: string) {
     return new Promise((resolve, reject) => {
       pnp.sp.web.lists.getByTitle(Constants.Lists.LOSS_TREE_LEVEL4_MASTER).items
-        .select(`${Constants.LossTreeLevel4Master.TITLE},
+        .select(`${Constants.LossTreeLevel4Master.TITLE}, ID,
                  ${Constants.LossTreeLevel4Master.EXPLAINATION},
                  ${Constants.LossTreeLevel4Master.LEVEL3_LOOKUP}/ID,
                  ${Constants.LossTreeLevel4Master.LEVEL3_LOOKUP}/Title`)
