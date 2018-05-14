@@ -57,7 +57,7 @@ export class LossTreeLevel3Master {
 export class LossTreeLevel4Master {
     static TITLE = "Title";
     static LEVEL3_LOOKUP = "Level3Lookup";
-    static EXPLAINATION = "Explaination";
+    static EXPLANATION = "Explaination";
 }
 
 export class Complaints {
@@ -69,17 +69,18 @@ export class Complaints {
     static BATCH_DETAILS_4 = "BatchDetails4";
     static BATCH_DETAILS_5 = "BatchDetails5";
     static BBE_EXPIRY = "BBEExpiry";
-    static COMPLAINT_DETAILS = "Complaint Details";
+    static COMPLAINT_DETAILS = "ComplaintDetails";
     static CUSTOMER_CONTACT_DESIGNATION = "CustomerContactDesignation";
+    static CUSTOMER_CONTACT_NAME = "CustomerContactName";
     static CUSTOMER_NAME = "CustomerName";
     static CUSTOMER_NUMBER = "CustomerNumber";
     static DATE_OF_INCIDENT = "DateOfIncident";
     static DELIVERY_NUMBER = "DeliveryNumber";
-    static EXPLAINATION = "Explaination";
-    static LEVEL1 = "Level1";
-    static LEVEL2 = "Level2";
-    static LEVEL3 = "Level3";
-    static LEVEL4 = "Level4";
+    static EXPLANATION = "Explanation";
+    static LEVEL1_LOOKUP = "Level1Lookup";
+    static LEVEL2_LOOKUP = "Level2Lookup";
+    static LEVEL3_LOOKUP = "Level3Lookup";
+    static LEVEL4_LOOKUP = "Level4Lookup";
     static PACKCODE1 = "PackCode1";
     static PACKCODE2 = "PackCode2";
     static PACKCODE3 = "PackCode3";
@@ -116,7 +117,8 @@ export class Complaints {
     static QUANTITY_UNITS_4 = "QuantityShrink4";
     static QUANTITY_UNITS_5 = "QuantityShrink5";
     static REASON_CODE = "ReasonCode";
-    static REAMDEY_NUMBER = "ReamedyNumber";
+    static REMEDY_NUMBER = "RemedyNumber";
     static ROOT_CAUSE = "RootCause";
     static SITE_NAME = "SiteName";
+    static CUSTOMER_CONTACT = "CustomerContact";
 } 

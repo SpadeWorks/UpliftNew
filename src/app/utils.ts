@@ -14,7 +14,7 @@ declare var SP: any;
 export class Utils {
     public LoadedScripts = [];
 
-    public getUrlParameters(url, name) {
+    getUrlParameters(name: string, url?: string ) {
         var regexS, regex, results;
         if (!url) url = location.href;
         name = name.replace(/[\[]/, '\\\[').replace(/[\]]/, '\\\]');
@@ -78,6 +78,76 @@ export class Utils {
         } catch (e) {
             return false;
         }
+    }
+
+    getAttachments(item) {
+        return new Promise((resolve, reject) => {
+            item.attachmentFiles.get().then(files => {
+                resolve({
+                    id: item.id,
+                    files: files
+                });
+            }, error => {
+                reject(error);
+            });
+        });
+    }
+
+    setAttachmentByItemID(item, files) {
+        return new Promise((resolve, reject) => {
+            this.buildFileArray(files).then((filesInfo: any) => {
+                item.attachmentFiles.addMultiple(filesInfo).then((r: any) => {
+                    this.getAttachments(item).then(files => {
+                        resolve(files);
+                    });
+                }, error => {
+                    reject(error);
+                });
+            })
+        })
+    }
+
+    deletAttachments(item, files: string[]) {
+        return new Promise((resolve, reject) => {
+            item.attachmentFiles.deleteMultiple(files.toString()).then(r => {
+                resolve(r)
+            }, error => {
+                reject(error);
+            });
+        });
+    }
+
+    deletAttachment(item, files: string) {
+        return new Promise((resolve, reject) => {
+            item.attachmentFiles.deleteMultiple(files).then(r => {
+                resolve(true)
+            }, error => {
+                reject(error);
+            });
+        });
+    }
+
+    buildFileArray(files) {
+        return new Promise((resolve, reject) => {
+            var fileInfos = [];
+            var counter = 0;
+            for (var i = 0; i < files.length; i++) {
+                var toUpload = files[i];
+                var r = new FileReader();
+                r.onloadend = function (e: any) {
+                    counter++;
+                    var fileContent = e.target.result;
+                    fileInfos.push({
+                        name: files[counter - 1].name,
+                        content: fileContent
+                    })
+                    if (files.length == counter) {
+                        resolve(fileInfos);
+                    }
+                }
+                r.readAsArrayBuffer(toUpload);
+            }
+        });
     }
 
 }

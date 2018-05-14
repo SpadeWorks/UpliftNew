@@ -3,6 +3,7 @@ import Promise from "ts-promise";
 import * as Constants from './constants';
 import * as pnp from '../../node_modules/sp-pnp-js/dist/pnp.min';
 import { Utils } from './utils';
+import { Sheq } from './sheq/sheq';
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +22,16 @@ export class DataService {
     });
   }
 
-  getComplaintByID(ID: string) {
+  getComplaintByID(ID: number) {
     return new Promise((resolve, reject) => {
       pnp.sp.web.lists.getByTitle(Constants.Lists.COMPLAINTS).items
         .filter(`${Constants.Complaints.ID} eq '${ID}'`)
+        .select(`${Constants.Complaints.ID},${Constants.Complaints.LEVEL1_LOOKUP}/ID,${Constants.Complaints.LEVEL1_LOOKUP}/Title,${Constants.Complaints.LEVEL2_LOOKUP}/ID,${Constants.Complaints.LEVEL2_LOOKUP}/Title,${Constants.Complaints.LEVEL3_LOOKUP}/ID,${Constants.Complaints.LEVEL3_LOOKUP}/Title,${Constants.Complaints.LEVEL4_LOOKUP}/ID,${Constants.Complaints.LEVEL4_LOOKUP}/Title,${Constants.Complaints.PERSON_RESPONSIBLE}/ID,${Constants.Complaints.PERSON_RESPONSIBLE}/FirstName,${Constants.Complaints.PERSON_RESPONSIBLE}/LastName,${Constants.Complaints.PLANT_NUMBER},${Constants.Complaints.PRODUCTDESCRIPTION},${Constants.Complaints.PRODUCTDESCRIPTION1},${Constants.Complaints.PRODUCTDESCRIPTION2},${Constants.Complaints.PRODUCTDESCRIPTION3},${Constants.Complaints.PRODUCTDESCRIPTION4},${Constants.Complaints.PRODUCTDESCRIPTION5},${Constants.Complaints.QUANTITY},${Constants.Complaints.Quantity_Cases_1},${Constants.Complaints.Quantity_Cases_2},${Constants.Complaints.Quantity_Cases_3},${Constants.Complaints.Quantity_Cases_4},${Constants.Complaints.Quantity_Cases_5},${Constants.Complaints.QUANTITY_PALLET_1},${Constants.Complaints.QUANTITY_PALLET_2},${Constants.Complaints.QUANTITY_PALLET_3},${Constants.Complaints.QUANTITY_PALLET_4},${Constants.Complaints.QUANTITY_PALLET_5},${Constants.Complaints.QUANTITY_SHRINK_1},${Constants.Complaints.QUANTITY_SHRINK_2},${Constants.Complaints.QUANTITY_SHRINK_3},${Constants.Complaints.QUANTITY_SHRINK_4},${Constants.Complaints.QUANTITY_SHRINK_5},${Constants.Complaints.QUANTITY_UNITS_1},${Constants.Complaints.QUANTITY_UNITS_2},${Constants.Complaints.QUANTITY_UNITS_3},${Constants.Complaints.QUANTITY_UNITS_4},${Constants.Complaints.QUANTITY_UNITS_5},${Constants.Complaints.REASON_CODE},${Constants.Complaints.REMEDY_NUMBER},${Constants.Complaints.ROOT_CAUSE},${Constants.Complaints.SITE_NAME}, ${Constants.Complaints.CUSTOMER_NUMBER},${Constants.Complaints.CUSTOMER_CONTACT_DESIGNATION},${Constants.Complaints.CUSTOMER_CONTACT_NAME},${Constants.Complaints.CUSTOMER_NAME},${Constants.Complaints.DATE_OF_INCIDENT},${Constants.Complaints.CUSTOMER_CONTACT},${Constants.Complaints.COMPLAINT_DETAILS},${Constants.Complaints.EXPLANATION}`)
+        .expand(`${Constants.Complaints.LEVEL1_LOOKUP},
+                 ${Constants.Complaints.LEVEL2_LOOKUP},
+                 ${Constants.Complaints.LEVEL3_LOOKUP},
+                 ${Constants.Complaints.LEVEL4_LOOKUP},
+                 ${Constants.Complaints.PERSON_RESPONSIBLE}`)
         .get().then(complaint => {
           resolve(complaint);
         }, error => {
@@ -149,7 +156,7 @@ export class DataService {
     return new Promise((resolve, reject) => {
       pnp.sp.web.lists.getByTitle(Constants.Lists.LOSS_TREE_LEVEL4_MASTER).items
         .select(`${Constants.LossTreeLevel4Master.TITLE}, ID,
-                 ${Constants.LossTreeLevel4Master.EXPLAINATION},
+                 ${Constants.LossTreeLevel4Master.EXPLANATION},
                  ${Constants.LossTreeLevel4Master.LEVEL3_LOOKUP}/ID,
                  ${Constants.LossTreeLevel4Master.LEVEL3_LOOKUP}/Title`)
         .filter(`${Constants.LossTreeLevel4Master.LEVEL3_LOOKUP} eq ${level3ID}`)
@@ -163,4 +170,27 @@ export class DataService {
     });
   }
 
+
+  addAttachment(itemID: number, files: any[]) {
+    let item = pnp.sp.web.lists.getByTitle(Constants.Lists.COMPLAINTS).items.getById(itemID);
+    this._Utils.setAttachmentByItemID(item, files).then(data => {
+      console.log("file attached.");
+    })
+  }
+
+  addOrUpdateSheqItem(sheq: Sheq) {
+    return new Promise((resolve, reject) => {
+      var promise;
+      if(sheq.ID > 0){
+        promise = pnp.sp.web.lists.getByTitle(Constants.Lists.COMPLAINTS).items.getById(sheq.ID).update(sheq);
+      } else{
+        promise = pnp.sp.web.lists.getByTitle(Constants.Lists.COMPLAINTS).items.add(sheq);
+      }
+      promise.then(data => {
+        resolve(data);
+      }, error => {
+        reject(error);
+      })
+    });
+  }
 }
