@@ -4,6 +4,7 @@ import { Utils } from '../utils';
 import { Sheq } from './sheq';
 import * as $ from 'jquery';
 import * as Constants from '../constants';
+import { Product } from "./product";
 import {
   FormBuilder, FormGroup, FormControl,
   FormArray, Validators, FormControlName, AbstractControl
@@ -27,6 +28,7 @@ export class SheqComponent implements OnInit {
   level2Disabled = true;
   level3Disabled = true;
   level4Disabled = true;
+  level4Data = [];
   itemID = 0;
 
 
@@ -38,6 +40,7 @@ export class SheqComponent implements OnInit {
   }
 
   ngOnInit() {
+    var product;
     this.sheqForm = this.fb.group({
       dateOfIncident: ['', [Validators.required]],
       productionSite: ['', Validators.required],
@@ -86,7 +89,7 @@ export class SheqComponent implements OnInit {
           this.level4Disabled = false;
 
           this.sheqForm.patchValue({
-            dateOfIncident: complaint.DateOfIncident,
+            dateOfIncident: new Date(complaint.DateOfIncident).format("MM/dd/yyyy"),
             productionSite: complaint.SiteName,
             // personResponsible: complaint.PersonResponsible,
             customerNumber: complaint.CustomerNumber,
@@ -105,8 +108,56 @@ export class SheqComponent implements OnInit {
             explanation: complaint.Explanation,
           });
 
-          if(complaint.packCode1){
-            this.products.push()
+          if (complaint.PackCode1) {
+            this.products.removeAt(0);
+            product = new Product(complaint.PackCode1,
+              complaint.ProductDescription1,
+              complaint.BatchDetails1,
+              complaint.QuantityUnit1,
+              complaint.QuantityShrink1,
+              complaint.QuantityCases1,
+              complaint.QuantityPallet1);
+            this.products.push(this.buildProduct(product));
+          }
+          if (complaint.PackCode2) {
+            product = new Product(complaint.PackCode2,
+              complaint.ProductDescription2,
+              complaint.BatchDetails2,
+              complaint.QuantityUnit2,
+              complaint.QuantityShrink2,
+              complaint.QuantityCases2,
+              complaint.QuantityPallet2);
+            this.products.push(this.buildProduct(product));
+          }
+          if (complaint.PackCode3) {
+            product = new Product(complaint.PackCode3,
+              complaint.ProductDescription3,
+              complaint.BatchDetails3,
+              complaint.QuantityUnit3,
+              complaint.QuantityShrink3,
+              complaint.QuantityCases3,
+              complaint.QuantityPallet3);
+            this.products.push(this.buildProduct(product));
+          }
+          if (complaint.PackCode4) {
+            product = new Product(complaint.PackCode4,
+              complaint.ProductDescription4,
+              complaint.BatchDetails4,
+              complaint.QuantityUnit4,
+              complaint.QuantityShrink4,
+              complaint.QuantityCases4,
+              complaint.QuantityPallet4);
+            this.products.push(this.buildProduct(product));
+          }
+          if (complaint.PackCode5) {
+            product = new Product(complaint.PackCode5,
+              complaint.ProductDescription5,
+              complaint.BatchDetails5,
+              complaint.QuantityUnit5,
+              complaint.QuantityShrink5,
+              complaint.QuantityCases5,
+              complaint.QuantityPallet5);
+            this.products.push(this.buildProduct(product));
           }
         }
       })
@@ -119,7 +170,7 @@ export class SheqComponent implements OnInit {
       });
     });
 
-    
+
 
     $(".uploadedFileList").on("click", ".removeUploadedFile", (e) => {
       console.log("Deleting file.");
@@ -128,15 +179,15 @@ export class SheqComponent implements OnInit {
 
   }
 
-  buildProduct(): FormGroup {
+  buildProduct(product?: Product): FormGroup {
     return this.fb.group({
-      packCode: '',
-      productDescription: '',
-      batchDetails: '',
-      quantityUnit: '',
-      quantityShrink: '',
-      quantityCases: '',
-      quantityPallet: ''
+      packCode: product ? product.PackCode : '',
+      productDescription: product ? product.ProductDescription : '',
+      batchDetails: product ? product.BatchDetails : '',
+      quantityUnit: product ? product.QuantityUnit : '',
+      quantityShrink: product ? product.QuantityShrink : '',
+      quantityCases: product ? product.QuantityCases : '',
+      quantityPallet: product ? product.QuantityPallet : ''
     })
   }
 
@@ -148,47 +199,59 @@ export class SheqComponent implements OnInit {
 
   level1Change(ID): void {
     if (ID) {
+      this.sheqForm.patchValue({
+        level2: '',
+      });
+      this.level2Disabled = true;
       this._DataService.getLevel2Data(ID).then(data => {
-        $.each(data, (index, item) => {
-          this.level2Options = [{ value: '', label: 'Select' }];
+        this.level2Options = [{ value: '', label: 'Select' }];
+        $.each(data, (index, item) => { 
           this.level2Options.push({ value: item.ID, label: item.Title });
-          this.level2Disabled = false;
         });
+        this.level2Disabled = false;
       });
     }
   }
   level2Change(ID): void {
     if (ID) {
+      this.sheqForm.patchValue({
+        level3: '',
+      });
+      this.level3Disabled = true;
       this._DataService.getLevel3Data(ID).then(data => {
+        this.level3Options = [{ value: '', label: 'Select' }];
         $.each(data, (index, item) => {
-          this.level3Options = [{ value: '', label: 'Select' }];
           this.level3Options.push({ value: item.ID, label: item.Title });
-          this.level3Disabled = false;
         });
+        this.level3Disabled = false;
       });
     }
   }
   level3Change(ID): void {
     if (ID) {
-      this._DataService.getLevel4Data(ID).then(data => {
+      this.sheqForm.patchValue({
+        level4: '',
+      });
+      this.level4Disabled = true;
+      this._DataService.getLevel4Data(ID).then((data: any[]) => {
+        this.level4Data = data;
+        this.level4Options = [{ value: '', label: 'Select' }];
         $.each(data, (index, item) => {
-          this.level4Options = [{ value: '', label: 'Select' }];
           this.level4Options.push({ value: item.ID, label: item.Title });
-          this.level4Disabled = false;
         });
+        this.level4Disabled = false;
       });
     }
   }
 
   level4Change(ID): void {
     if (ID) {
-      this._DataService.getLevel4Data(ID).then((data: any) => {
-        if (data.length) {
+      var selectedItem = this.level4Data.filter(item => item.ID == ID);
+        if (selectedItem.length) {
           this.sheqForm.patchValue({
-            explanation: data[0][Constants.LossTreeLevel4Master.EXPLANATION]
+            explanation: selectedItem[0][Constants.LossTreeLevel4Master.EXPLANATION]
           });
         }
-      });
     }
   }
 
@@ -201,17 +264,15 @@ export class SheqComponent implements OnInit {
       }
     })
   }
-
+  
   addFile(event) {
     this._DataService.addAttachment(12, event.target.files);
   }
 
-
-
   onSubmit(formValues) {
     console.log("Form submitted: ", this.sheqForm);
     var sheq = new Sheq();
-    var date = this.sheqForm.get("dateOfIncident").value;
+    var date = $("#dateIncident").val();
     if (date) {
       var dateObj = new Date(date);
       var isoDate = dateObj.toISOString();
@@ -255,5 +316,8 @@ export class SheqComponent implements OnInit {
       console.log(error);
       alert("Error occurred while submitting the form please resubmit.");
     });
+
+
+
   }
 }

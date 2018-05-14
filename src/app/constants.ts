@@ -57,7 +57,7 @@ export class LossTreeLevel3Master {
 export class LossTreeLevel4Master {
     static TITLE = "Title";
     static LEVEL3_LOOKUP = "Level3Lookup";
-    static EXPLANATION = "Explaination";
+    static EXPLANATION = "Explanation";
 }
 
 export class Complaints {

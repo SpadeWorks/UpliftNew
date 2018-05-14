@@ -161,10 +161,10 @@
                 <label class="form-label">Level 1</label>
                 <div class="ulSelectOutter">
                   <select class="ulSelect" [disableControl]="level1Disabled"
-                    (change)="level1Change($event.target.selectedIndex)"
+                    (change)="level1Change($event.target.value)"
                     formControlName="level1">
                     <option *ngFor="let option of level1Options"
-                      [ngValue]="option.value">{{option.label }}</option>
+                    value="{{option.value}}">{{option.label }}</option>
                   </select>
                 </div>
               </div>
@@ -172,10 +172,10 @@
                 <label class="form-label">Level 2</label>
                 <div class="ulSelectOutter">
                   <select class="ulSelect" [disableControl]="level2Disabled"
-                    (change)="level2Change($event.target.selectedIndex)"
+                    (change)="level2Change($event.target.value)"
                     formControlName="level2">
                     <option *ngFor="let option of level2Options"
-                      [ngValue]="option.value">{{ option.label }}</option>
+                    value="{{option.value}}">{{ option.label }}</option>
                   </select>
                 </div>
               </div>
@@ -185,10 +185,10 @@
                 <label class="form-label">Level 3</label>
                 <div class="ulSelectOutter">
                   <select class="ulSelect" [disableControl]="level3Disabled"
-                    (change)="level3Change($event.target.selectedIndex)"
+                    (change)="level3Change($event.target.value)"
                     formControlName="level3">
                     <option *ngFor="let option of level3Options"
-                      [ngValue]="option.value">{{ option.label }}</option>
+                    value="{{option.value}}">{{ option.label }}</option>
                   </select>
                 </div>
               </div>
@@ -196,10 +196,10 @@
                 <label class="form-label">Level 4</label>
                 <div class="ulSelectOutter">
                   <select class="ulSelect" [disableControl]="level4Disabled"
-                    (change)="level4Change($event.target.selectedIndex)"
+                    (change)="level4Change($event.target.value)"
                     formControlName="level4">
                     <option *ngFor="let option of level4Options"
-                      [ngValue]="option.value">{{ option.label }}</option>
+                      value="{{option.value}}">{{ option.label }}</option>
                   </select>
                 </div>
               </div>

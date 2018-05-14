@@ -22,6 +22,6 @@ export interface Nca {
     level2: string;
     level3: string;
     level4: string;
-    explaination: string;
+    explanation: string;
     attachments: string[];
 }
