@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { Utils } from '../utils';
 import { Sheq } from './sheq';
+import { Complaint } from './Complaint';
 import * as $ from 'jquery';
 import * as Constants from '../constants';
 import { Product } from "./product";
@@ -12,6 +13,7 @@ import {
 } from '@angular/forms';
 import { flatten } from '@angular/compiler';
 import * as moment from 'moment';
+import { IMyDpOptions } from 'mydatepicker';
 @Component({
   selector: 'app-sheq',
   templateUrl: './sheq.component.html',
@@ -28,8 +30,9 @@ export class SheqComponent implements OnInit {
   level2Options = [{ value: '', label: 'Select' }];
   level3Options = [{ value: '', label: 'Select' }];
   level4Options = [{ value: '', label: 'Select' }];
-  approvalStatusOptions = [{value: 'Yes', label: 'Yes'}, {value: 'No', label: 'No'}];
-  complaintStatusOptions = [{value: 'Submitted', label: 'Submitted'}, {value: 'Assigned', label: 'Assigned'}];
+  approvalStatusOptions = [{ value: 'Yes', label: 'Yes' }, { value: 'No', label: 'No' }];
+  complaintStatusOptions = [{ value: 'Submitted', label: 'Submitted' }, { value: 'Assigned', label: 'Assigned' }];
+  personResponsibleOptions = [];
   level1Disabled = true;
   level2Disabled = true;
   level3Disabled = true;
@@ -39,44 +42,62 @@ export class SheqComponent implements OnInit {
   userType = Constants.Globals.ADMIN;
   isResonCodeDisabled = true;
   sheqForm: FormGroup;
+  showStatus: boolean = false;
+
 
   get products(): FormArray {
-    return <FormArray>this.sheqForm.get('products');
+    return <FormArray>this.sheqForm.get('userControls.products');
   }
+
+  public myDatePickerOptions: IMyDpOptions = {
+    dateFormat: Constants.Globals.DATE_FORMAT,
+  };
 
   ngOnInit() {
     var product;
+    var lastDeliveryDate;
+    var dateOfIncident;
+
     this.sheqForm = this.fb.group({
-      dateOfIncident: ['', [Validators.required]],
-      productionSite: ['', Validators.required],
-      personResponsible: '',
-      customerNumber: ['', Validators.required],
-      customerName: '',
-      contactPerson: '',
-      contactPersonDesignation: '',
-      contactNumber: '',
-      complaintDetails: '',
-      rootCause: '',
-      actionTaken: '',
-      reasonCode: ['', Validators.required],
-      level1: '',
-      level2: '',
-      level3: '',
-      level4: '',
-      explanation: '',
-      products: this.fb.array([this.buildProduct()]),
-      attachments: '',
+      userControls: this.fb.group({
+        dateOfIncident: ['', [Validators.required]],
+        customerNumber: ['', Validators.required],
+        customerName: '',
+        contactPerson: '',
+        contactPersonDesignation: '',
+        contactNumber: '',
+        complaintDetails: '',
+        level1: '',
+        level2: '',
+        level3: '',
+        level4: '',
+        explanation: '',
+        products: this.fb.array([this.buildProduct()]),
+        attachments: ''
+      }),
+      scaControls: this.fb.group({
+        productionSite: ['', Validators.required],
+        personResponsible: '',
+      }),
+      approverControls: this.fb.group({
+        approvalStatus: '',
+        invoiceNumber: '',
+        invoiceValue: '',
+        lastDeliveryDate: '',
+      }),
+      responsiblePersonControls: this.fb.group({
+        rootCause: '',
+        actionTaken: '',
+        reasonCode: ['', Validators.required],
+      }),
       complaintStatus: '',
-      approvalStatus: '',
-      invoiceNumber: '',
-      invoiceValue: '',
-      lastDeliveryDate: '',
+      buttons: this.fb.group({
+        cancel: 'Cancel',
+        save: 'Save'
+      })
     });
 
-    this._DataService.getCurrentUserType().then(userType => {
-      this.userType = <string>userType;
-    });
-
+    const controls = this.sheqForm.controls;
     this._DataService.getLevel1Data().then(data => {
       $.each(data, (index, item) => {
         this.level1Options.push({ value: item.ID, label: item.Title });
@@ -84,45 +105,102 @@ export class SheqComponent implements OnInit {
       });
     });
 
+
     this.itemID = +this._utils.getUrlParameters("ID");
     if (this.itemID) {
-      this._DataService.getComplaintByID(this.itemID).then((data: any) => {
-        if (data.length) {
-          var complaint: any = data[0];
-          $.when(this.level1Change(complaint.Level1Lookup.ID),
-            this.level2Change(complaint.Level2Lookup.ID),
-            this.level3Change(complaint.Level3Lookup.ID),
-            this.level4Change(complaint.Level4Lookup.ID)).then((leve1, level2, level3, level4) => {
-              this.sheqForm.patchValue({
-                level1: complaint.Level1Lookup.ID,
-                level2: complaint.Level2Lookup.ID,
-                level3: complaint.Level3Lookup.ID,
-                level4: complaint.Level4Lookup.ID,
-                explanation: complaint.Explanation,
-              });
-              this.level1Disabled = false;
-              this.level2Disabled = false;
-              this.level3Disabled = false;
-              this.level4Disabled = false;
+      this.sheqForm.disable();
+      this._DataService.getComplaintByID(this.itemID).then((complaint: Sheq) => {
+        if (complaint) {
+          this.showStatus = true;
+          this.onProductionSiteChange(complaint.SiteName).then(data => {
+            if (data) {
+              this.sheqForm.controls.scaControls.patchValue({
+                productionSite: complaint.SiteName,
+                personResponsible: $.map(complaint.PersonResponsible.results, r => r.ID.toString()),
+              })
+            }
+          });
+
+          this.level1Change(complaint.Level1LookupId).then(d => {
+            this.level2Change(complaint.Level2LookupId).then(d => {
+              this.level3Change(complaint.Level3LookupId).then(d => {
+                this.level4Change(complaint.Level4LookupId).then(() => {
+                  this.sheqForm.patchValue({
+                    userControls: {
+                      level1: complaint.Level1LookupId,
+                      level2: complaint.Level2LookupId,
+                      level3: complaint.Level3LookupId,
+                      level4: complaint.Level4LookupId,
+                      explanation: complaint.Explanation
+                    }
+                  });
+
+                  // Enable or Disable controls based on user access.
+                  this._DataService.getCurrentUserType().then(userType => {
+                    this.userType = <string>userType;
+                    if (this.userType == Constants.Globals.UPLIFT_SCA) {
+                      controls.userControls.enable();
+                      controls.scaControls.enable();
+                      controls.complaintStatus.enable();
+                      controls.buttons.enable();
+                    } else if (this.userType == Constants.Globals.UPLIFT_APPROVER) {
+                      this.sheqForm.disable();
+                      controls.approverControls.enable();
+                      controls.buttons.enable();
+                    } else if (this.userType == Constants.Globals.UPLIFT_RESPONSIBLE_PERSON) {
+                      this.sheqForm.disable();
+                      controls.responsiblePersonControls.enable();
+                      controls.buttons.enable();
+                    } else {
+                      this.sheqForm.disable();
+                      controls.buttons.disable();
+                    }
+                  });
+                })
+              })
             })
+          })
+          lastDeliveryDate = complaint.LastDeliveryDate? new Date(complaint.LastDeliveryDate) : new Date();
+          dateOfIncident = complaint.DateOfIncident ? new Date(complaint.LastDeliveryDate) : new Date();
           this.sheqForm.patchValue({
-            dateOfIncident: moment(complaint.DateOfIncident).format("MM/DD/YYYY"),
-            productionSite: complaint.SiteName,
-            // personResponsible: complaint.PersonResponsible,
-            customerNumber: complaint.CustomerNumber,
-            customerName: complaint.CustomerName,
-            contactPerson: complaint.CustomerContactName,
-            contactPersonDesignation: complaint.CustomerContactDesignation,
-            contactNumber: complaint.CustomerContact,
-            complaintDetails: complaint.ComplaintDetails,
-            rootCause: complaint.RootCause,
-            actionTaken: complaint.ActionTaken,
-            reasonCode: complaint.ReasonCode,
-            level1: complaint.Level1Lookup.ID,
-            level2: complaint.Level2Lookup.ID,
-            level3: complaint.Level3Lookup.ID,
-            level4: complaint.Level4Lookup.ID,
-            explanation: complaint.Explanation,
+            userControls: {
+              dateOfIncident: {
+                date: {
+                  year: dateOfIncident.getFullYear(),
+                  month: dateOfIncident.getMonth() + 1,
+                  day: dateOfIncident.getDate()
+                }
+              },
+              productionSite: complaint.SiteName,
+              customerNumber: complaint.CustomerNumber,
+              customerName: complaint.CustomerName,
+              contactPerson: complaint.CustomerContactName,
+              contactPersonDesignation: complaint.CustomerContactDesignation,
+              contactNumber: complaint.CustomerContact,
+              complaintDetails: complaint.ComplaintDetails,
+              explanation: complaint.Explanation,
+            },
+            scaControls: {
+              productionSite: complaint.SiteName,
+              // personResponsible: complaint.PersonResponsible ,
+            },
+            approverControls: {
+              approvalStatus: complaint.ApprovalStatus,
+              invoiceNumber: complaint.InvoiceNumber,
+              invoiceValue: complaint.InvoiceValue,
+              lastDeliveryDate: {
+                date: {
+                  year: lastDeliveryDate.getFullYear(),
+                  month: lastDeliveryDate.getMonth() + 1,
+                  day: lastDeliveryDate.getDate()
+                }
+              },
+            },
+            responsiblePersonControls: {
+              rootCause: complaint.RootCause,
+              actionTaken: complaint.ActionTaken,
+              reasonCode: complaint.ReasonCode,
+            },
             complaintStatus: complaint.ComplaintStatus
           });
 
@@ -131,7 +209,7 @@ export class SheqComponent implements OnInit {
             product = new Product(complaint.PackCode1,
               complaint.ProductDescription1,
               complaint.BatchDetails1,
-              complaint.QuantityUnit1,
+              complaint.QuantityUnits1,
               complaint.QuantityShrink1,
               complaint.QuantityCases1,
               complaint.QuantityPallet1);
@@ -141,7 +219,7 @@ export class SheqComponent implements OnInit {
             product = new Product(complaint.PackCode2,
               complaint.ProductDescription2,
               complaint.BatchDetails2,
-              complaint.QuantityUnit2,
+              complaint.QuantityUnits2,
               complaint.QuantityShrink2,
               complaint.QuantityCases2,
               complaint.QuantityPallet2);
@@ -151,7 +229,7 @@ export class SheqComponent implements OnInit {
             product = new Product(complaint.PackCode3,
               complaint.ProductDescription3,
               complaint.BatchDetails3,
-              complaint.QuantityUnit3,
+              complaint.QuantityUnits3,
               complaint.QuantityShrink3,
               complaint.QuantityCases3,
               complaint.QuantityPallet3);
@@ -161,7 +239,7 @@ export class SheqComponent implements OnInit {
             product = new Product(complaint.PackCode4,
               complaint.ProductDescription4,
               complaint.BatchDetails4,
-              complaint.QuantityUnit4,
+              complaint.QuantityUnits4,
               complaint.QuantityShrink4,
               complaint.QuantityCases4,
               complaint.QuantityPallet4);
@@ -171,7 +249,7 @@ export class SheqComponent implements OnInit {
             product = new Product(complaint.PackCode5,
               complaint.ProductDescription5,
               complaint.BatchDetails5,
-              complaint.QuantityUnit5,
+              complaint.QuantityUnits5,
               complaint.QuantityShrink5,
               complaint.QuantityCases5,
               complaint.QuantityPallet5);
@@ -203,6 +281,22 @@ export class SheqComponent implements OnInit {
     });
   }
 
+  onProductionSiteChange(siteName) {
+    return new Promise((resolve, reject) => {
+      this._DataService.getPersonReponsible(siteName).then((data: any) => {
+        if (data.length) {
+          $.map(data[0].PersonResponsible.results, (item, index) => {
+            this.personResponsibleOptions.push({
+              value: item.ID,
+              label: `${item.FirstName} ${item.LastName}`
+            })
+          });
+          resolve(true);
+        }
+      })
+    })
+  }
+
   buildProduct(product?: Product): FormGroup {
     return this.fb.group({
       packCode: product ? product.PackCode : '',
@@ -229,7 +323,9 @@ export class SheqComponent implements OnInit {
     return new Promise((resolve, reject) => {
       if (ID) {
         this.sheqForm.patchValue({
-          level2: '',
+          userControls: {
+            level2: ''
+          }
         });
         this.level2Disabled = true;
         this._DataService.getLevel2Data(ID).then(data => {
@@ -249,7 +345,9 @@ export class SheqComponent implements OnInit {
     return new Promise((resolve, reject) => {
       if (ID) {
         this.sheqForm.patchValue({
-          level3: '',
+          userControls: {
+            level3: ''
+          }
         });
         this.level3Disabled = true;
         this._DataService.getLevel3Data(ID).then(data => {
@@ -268,7 +366,9 @@ export class SheqComponent implements OnInit {
     return new Promise((resolve, reject) => {
       if (ID) {
         this.sheqForm.patchValue({
-          level4: '',
+          userControls: {
+            level4: ''
+          }
         });
         this.level4Disabled = true;
         this._DataService.getLevel4Data(ID).then((data: any[]) => {
@@ -278,6 +378,7 @@ export class SheqComponent implements OnInit {
             this.level4Options.push({ value: item.ID, label: item.Title });
           });
           this.level4Disabled = false;
+          resolve(true);
         });
       }
     });
@@ -289,9 +390,12 @@ export class SheqComponent implements OnInit {
         var selectedItem = this.level4Data.filter(item => item.ID == ID);
         if (selectedItem.length) {
           this.sheqForm.patchValue({
-            explanation: selectedItem[0][Constants.LossTreeLevel4Master.EXPLANATION]
+            userControls: {
+              explanation: selectedItem[0][Constants.LossTreeLevel4Master.EXPLANATION]
+            }
           });
         }
+        resolve(true);
       }
     });
   }
@@ -300,7 +404,9 @@ export class SheqComponent implements OnInit {
     this._DataService.getCustomerInfo($event.target.value).then((data: any[]) => {
       if (data.length) {
         this.sheqForm.patchValue({
-          customerName: data[0]["CustomerName"],
+          userControls: {
+            customerName: data[0]["CustomerName"],
+          }
         });
       }
     })
@@ -341,64 +447,91 @@ export class SheqComponent implements OnInit {
     }
   }
 
+  getISODate(date): string{
+    return new Date(date.date.year, date.date.month -1 , date.date.day).toISOString();
+  }
+
   onSubmit(formValues) {
-    console.log("Form submitted: ", this.sheqForm);
-    var sheq = new Sheq();
-    var date = $("#dateIncident").val();
-    if (date) {
-      var dateObj = new Date(date);
-      var isoDate = dateObj.toISOString();
-      sheq.DateOfIncident = isoDate;
-    }
-
-    sheq.SiteName = this.sheqForm.get("productionSite").value;
-    // sheq.PersonResponsible = this.sheqForm.get("personResponsible").value;
-    sheq.ID = this.itemID || 0;
-    sheq.CustomerNumber = this.sheqForm.get("customerNumber").value;
-    sheq.CustomerName = this.sheqForm.get("customerName").value;
-    sheq.CustomerContactName = this.sheqForm.get("contactPerson").value;
-    sheq.CustomerContactDesignation = this.sheqForm.get("contactPersonDesignation").value;
-    sheq.CustomerContact = this.sheqForm.get("contactNumber").value;
-    sheq.ComplaintDetails = this.sheqForm.get("complaintDetails").value;
-
-    for (var index = 1; index <= 5; index++) {
-      let control = this.sheqForm.controls.products.value[index - 1];
-      sheq['PackCode' + index] = control ? control["packCode"] : '';
-      sheq['ProductDescription' + index] = control ? control["productDescription"] : '';
-      sheq['BatchDetails' + index] = control ? control['batchDetails'] : '';
-      sheq['QuantityUnits' + index] = control ? control["quantityUnit"] : '';
-      sheq['QuantityShrink' + index] = control ? control["quantityShrink"] : '';
-      sheq['QuantityCases' + index] = control ? control["quantityCases"] : '';
-      sheq['QuantityPallet' + index] = control ? control["quantityPallet"] : '';
-    }
-
-    sheq.RootCause = this.sheqForm.get("rootCause").value;
-    sheq.ActionTaken = this.sheqForm.get("actionTaken").value;
-    sheq.ReasonCode = this.sheqForm.get("reasonCode").value;
-    sheq.Level1LookupId = +this.sheqForm.get("level1").value;
-    sheq.Level2LookupId = +this.sheqForm.get("level2").value;
-    sheq.Level3LookupId = +this.sheqForm.get("level3").value;
-    sheq.Level4LookupId = +this.sheqForm.get("level4").value;
-    sheq.Explanation = this.sheqForm.get("explanation").value;
-    sheq.ContentTypeId = "0x0100376BE29451A1A848B7458189992EFFE6";
-    sheq.ComplaintStatus = this.sheqForm.get("complaintStatus").value;
+    this.sheqForm.controls.buttons.disable();
     var self = this;
-    var complaintID;
-    this._DataService.addOrUpdateSheqItem(sheq).then((data: any) => {
-      var currentItemID = this.itemID || data.data.ID;
-      complaintID = this._DataService.generateComplaintID(currentItemID, 5, "SHEQ");
-      if (this.newAttachments.length) {
-        this._DataService.addAttachment(currentItemID, this.newAttachments).then(response => {
-          alert(`Data submitted successfully. ${complaintID} is your complaint ID for future reference.`);
-        }, error => {
-          alert("Error occurred while submitting the form please resubmit.");
-        });
-      } else {
-        alert(`Data submitted successfully. ${complaintID} is your complaint ID for future reference.`);
+    self._DataService.getCurrentUserType().then(userType => {
+      var sheq = new Sheq();
+      var complaintID;
+      let control: any;
+      var responsiblePersons = [];
+      self.userType = <string>userType;
+      sheq.ID = self.itemID || 0;
+      if (self.userType == Constants.Globals.UPLIFT_APPROVER) {
+        sheq.ApprovalStatus = self.sheqForm.get("approverControls.approvalStatus").value;
+        sheq.InvoiceNumber = self.sheqForm.get("approverControls.invoiceNumber").value;
+        sheq.InvoiceValue = self.sheqForm.get("approverControls.invoiceValue").value;
+        sheq.LastDeliveryDate = this.getISODate(self.sheqForm.get("approverControls.lastDeliveryDate").value);
+      } else if (self.userType == Constants.Globals.UPLIFT_RESPONSIBLE_PERSON) {
+        sheq.RootCause = self.sheqForm.get("responsiblePersonControls.rootCause").value;
+        sheq.ActionTaken = self.sheqForm.get("responsiblePersonControls.actionTaken").value;
+        sheq.ReasonCode = self.sheqForm.get("responsiblePersonControls.reasonCode").value;
+        sheq.ComplaintStatus = self.sheqForm.get("complaintStatus").value;
+      } else if (self.userType == Constants.Globals.UPLIFT_SCA || self.userType == Constants.Globals.UPLIFT_USER) {
+        var date = $("#dateIncident").val();
+        sheq.DateOfIncident = this.getISODate(self.sheqForm.get("userControls.dateOfIncident").value);
+        sheq.CustomerNumber = self.sheqForm.get("userControls.customerNumber").value;
+        sheq.CustomerName = self.sheqForm.get("userControls.customerName").value;
+        sheq.CustomerContactName = self.sheqForm.get("userControls.contactPerson").value;
+        sheq.CustomerContactDesignation = self.sheqForm.get("userControls.contactPersonDesignation").value;
+        sheq.CustomerContact = self.sheqForm.get("userControls.contactNumber").value;
+        sheq.ComplaintDetails = self.sheqForm.get("userControls.complaintDetails").value;
+        for (var index = 1; index <= 5; index++) {
+          control = self.products.controls[index - 1];
+          control = control ? control.controls : null;
+          sheq['PackCode' + index] = control ? control["packCode"].value : '';
+          sheq['ProductDescription' + index] = control ? control["productDescription"].value : '';
+          sheq['BatchDetails' + index] = control ? control['batchDetails'].value : '';
+          sheq['QuantityUnits' + index] = control ? control["quantityUnit"].value : '';
+          sheq['QuantityShrink' + index] = control ? control["quantityShrink"].value : '';
+          sheq['QuantityCases' + index] = control ? control["quantityCases"].value : '';
+          sheq['QuantityPallet' + index] = control ? control["quantityPallet"].value : '';
+        }
+        sheq.Level1LookupId = +self.sheqForm.get("userControls.level1").value;
+        sheq.Level2LookupId = +self.sheqForm.get("userControls.level2").value;
+        sheq.Level3LookupId = +self.sheqForm.get("userControls.level3").value;
+        sheq.Level4LookupId = +self.sheqForm.get("userControls.level4").value;
+        sheq.Explanation = self.sheqForm.get("userControls.explanation").value;
+        sheq.ContentTypeId = "0x0100376BE29451A1A848B7458189992EFFE6";
+        sheq.ComplaintStatus = "Submitted";
+        if (self.userType == Constants.Globals.UPLIFT_SCA) {
+          sheq.SiteName = self.sheqForm.get("scaControls.productionSite").value;
+          sheq.ComplaintStatus = self.sheqForm.get("complaintStatus").value;
+          responsiblePersons = self.sheqForm.get("scaControls.personResponsible").value;
+          responsiblePersons = $.map(responsiblePersons, r => +r);
+          sheq.PersonResponsibleId = { results: responsiblePersons };
+        }
       }
-    }, error => {
-      console.log(error);
-      alert("Error occurred while submitting the form please resubmit.");
+      self._DataService.addOrUpdateSheqItem(sheq).then((data: any) => {
+        var currentItemID = self.itemID || data.data.ID;
+        complaintID = self._DataService.generateComplaintID(currentItemID, 5, "SHEQ");
+        if (self.newAttachments.length) {
+          self._DataService.addAttachment(currentItemID, self.newAttachments).then(response => {
+            self.sheqForm.controls.buttons.enable();
+            if(!self._utils.getUrlParameters("ID")){
+              window.location.href = window.location.href.replace('?', `?ID=${currentItemID}&`);
+            }
+            alert(`Data submitted successfully. ${complaintID} is your complaint ID for future reference.`);
+          }, error => {
+            alert("Error occurred while submitting the form please resubmit.");
+            self.sheqForm.controls.buttons.enable();
+          });
+        } else {
+          if(!self._utils.getUrlParameters("ID")){
+            window.location.href = window.location.href.replace('?', `?ID=${currentItemID}&`);
+          }
+          alert(`Data submitted successfully. ${complaintID} is your complaint ID for future reference.`);
+          self.sheqForm.controls.buttons.enable();
+        }
+      }, error => {
+        console.log(error);
+        alert("Error occurred while submitting the form please resubmit.");
+        self.sheqForm.controls.buttons.enable();
+      });
     });
   }
 }

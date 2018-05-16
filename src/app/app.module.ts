@@ -7,7 +7,7 @@ import { SheqComponent } from './sheq/sheq.component';
 import { DataService } from './data.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DisableControlDirective } from './shared/disable-control.directive';
-
+import { MyDatePickerModule } from 'mydatepicker';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,7 +17,8 @@ import { DisableControlDirective } from './shared/disable-control.directive';
   ],
   imports: [
     BrowserModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MyDatePickerModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

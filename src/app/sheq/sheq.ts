@@ -2,13 +2,13 @@ export class Sheq {
     ID: number;
     DateOfIncident: string;
     SiteName: string;
-    PersonResponsible: string;
+    PersonResponsibleId: any;
+    PersonResponsible: any;
     CustomerNumber: string;
     CustomerName: string;
     CustomerContactName: string;
     CustomerContactDesignation: string;
     CustomerContact: string;
-    ComplaintDetails: string;
     PackCode1: string;
     PackCode2: string;
     PackCode3: string;
@@ -51,9 +51,18 @@ export class Sheq {
     Level2LookupId: number;
     Level3LookupId: number;
     Level4LookupId: number;
+    Level1Lookup: any;
+    Level2Lookup: any;
+    Level3Lookup: any;
+    Level4Lookup: any;
     Explanation: string;
     Attachments: string[];
-    UpliftNumber: string;
-    ContentTypeId: string;
     ComplaintStatus: string;
+    ComplaintDetails: string;
+    ApprovalStatus: string;
+    InvoiceNumber: string;
+    LastDeliveryDate: string;
+    InvoiceValue: string;
+    ContentTypeId: string;
+    
 }

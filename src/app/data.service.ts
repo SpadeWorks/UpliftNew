@@ -7,7 +7,7 @@ import { Sheq } from './sheq/sheq';
 import * as $ from 'jquery';
 import { resolve } from 'q';
 
-var _spPageContextInfo: any;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -92,14 +92,85 @@ ${Constants.Complaints.COMPLAINT_STATUS},\
 ${Constants.Complaints.INVOICE_NUMBER},\
 ${Constants.Complaints.INVOICE_VALUE},\
 ${Constants.Complaints.LAST_DELIVERY_DATE},\
-${Constants.Complaints.ROOT_CAUSE}`)
+${Constants.Complaints.ROOT_CAUSE},\
+${Constants.Complaints.ACTION_TAKEN},\
+${Constants.Complaints.APPROVAL_STATUS}`)
         .expand(`${Constants.Complaints.LEVEL1_LOOKUP},\
 ${Constants.Complaints.LEVEL2_LOOKUP},\
 ${Constants.Complaints.LEVEL3_LOOKUP},\
 ${Constants.Complaints.LEVEL4_LOOKUP},\
 ${Constants.Complaints.PERSON_RESPONSIBLE}`)
-        .get().then(complaint => {
-          resolve(complaint);
+        .get().then(data => {
+          var c = data[0];
+          var sheq: Sheq = {
+            ID: c[ID],
+            DateOfIncident: c[Constants.Complaints.DATE_OF_INCIDENT],
+            SiteName: c[Constants.Complaints.SITE_NAME],
+            PersonResponsible: c[Constants.Complaints.PERSON_RESPONSIBLE],
+            PersonResponsibleId: c[Constants.Complaints.PERSON_RESPONSIBLE],
+            CustomerNumber: c[Constants.Complaints.CUSTOMER_NUMBER],
+            CustomerName: c[Constants.Complaints.CUSTOMER_NAME],
+            CustomerContactName: c[Constants.Complaints.CUSTOMER_CONTACT_NAME],
+            CustomerContactDesignation: c[Constants.Complaints.CUSTOMER_CONTACT_DESIGNATION],
+            CustomerContact: c[Constants.Complaints.CUSTOMER_CONTACT],
+            ComplaintDetails: c[Constants.Complaints.COMPLAINT_DETAILS],
+            PackCode1: c[Constants.Complaints.PACKCODE1],
+            PackCode2: c[Constants.Complaints.PACKCODE2],
+            PackCode3: c[Constants.Complaints.PACKCODE3],
+            PackCode4: c[Constants.Complaints.PACKCODE4],
+            PackCode5: c[Constants.Complaints.PACKCODE5],
+            ProductDescription1: c[Constants.Complaints.PRODUCTDESCRIPTION1],
+            ProductDescription2: c[Constants.Complaints.PRODUCTDESCRIPTION2],
+            ProductDescription3: c[Constants.Complaints.PRODUCTDESCRIPTION3],
+            ProductDescription4: c[Constants.Complaints.PRODUCTDESCRIPTION4],
+            ProductDescription5: c[Constants.Complaints.PRODUCTDESCRIPTION5],
+            BatchDetails1: c[Constants.Complaints.BATCH_DETAILS_1],
+            BatchDetails2: c[Constants.Complaints.BATCH_DETAILS_2],
+            BatchDetails3: c[Constants.Complaints.BATCH_DETAILS_3],
+            BatchDetails4: c[Constants.Complaints.BATCH_DETAILS_4],
+            BatchDetails5: c[Constants.Complaints.BATCH_DETAILS_5],
+            QuantityCases1: c[Constants.Complaints.Quantity_Cases_1],
+            QuantityCases2: c[Constants.Complaints.Quantity_Cases_2],
+            QuantityCases3: c[Constants.Complaints.Quantity_Cases_3],
+            QuantityCases4: c[Constants.Complaints.Quantity_Cases_4],
+            QuantityCases5: c[Constants.Complaints.Quantity_Cases_5],
+            QuantityPallet1: c[Constants.Complaints.QUANTITY_PALLET_1],
+            QuantityPallet2: c[Constants.Complaints.QUANTITY_PALLET_2],
+            QuantityPallet3: c[Constants.Complaints.QUANTITY_PALLET_3],
+            QuantityPallet4: c[Constants.Complaints.QUANTITY_PALLET_4],
+            QuantityPallet5: c[Constants.Complaints.QUANTITY_PALLET_5],
+            QuantityShrink1: c[Constants.Complaints.QUANTITY_SHRINK_1],
+            QuantityShrink2: c[Constants.Complaints.QUANTITY_SHRINK_2],
+            QuantityShrink3: c[Constants.Complaints.QUANTITY_SHRINK_3],
+            QuantityShrink4: c[Constants.Complaints.QUANTITY_SHRINK_4],
+            QuantityShrink5: c[Constants.Complaints.QUANTITY_SHRINK_5],
+            QuantityUnits1: c[Constants.Complaints.QUANTITY_UNITS_1],
+            QuantityUnits2: c[Constants.Complaints.QUANTITY_UNITS_2],
+            QuantityUnits3: c[Constants.Complaints.QUANTITY_UNITS_3],
+            QuantityUnits4: c[Constants.Complaints.QUANTITY_UNITS_4],
+            QuantityUnits5: c[Constants.Complaints.QUANTITY_UNITS_5],
+            ReasonCode: c[Constants.Complaints.REASON_CODE],
+            Level1Lookup: c[Constants.Complaints.LEVEL1_LOOKUP]['Title'],
+            Level1LookupId: c[Constants.Complaints.LEVEL1_LOOKUP]['ID'],
+            Level2Lookup: c[Constants.Complaints.LEVEL2_LOOKUP]['Title'],
+            Level2LookupId: c[Constants.Complaints.LEVEL2_LOOKUP]['ID'],
+            Level3Lookup: c[Constants.Complaints.LEVEL3_LOOKUP]['Title'],
+            Level3LookupId: c[Constants.Complaints.LEVEL3_LOOKUP]['ID'],
+            Level4Lookup: c[Constants.Complaints.LEVEL4_LOOKUP]['Title'],
+            Level4LookupId: c[Constants.Complaints.LEVEL4_LOOKUP]['ID'],
+            Explanation: c[Constants.Complaints.EXPLANATION],
+            Attachments: c[Constants.Complaints.ATTACHMENTS],
+            ComplaintStatus: c[Constants.Complaints.COMPLAINT_STATUS],
+            InvoiceNumber: c[Constants.Complaints.INVOICE_NUMBER],
+            InvoiceValue: c[Constants.Complaints.INVOICE_VALUE],
+            LastDeliveryDate: c[Constants.Complaints.LAST_DELIVERY_DATE],
+            RootCause: c[Constants.Complaints.ROOT_CAUSE],
+            ActionTaken: c[Constants.Complaints.ACTION_TAKEN],
+            ApprovalStatus: c[Constants.Complaints.APPROVAL_STATUS],
+            ContentTypeId: c[Constants.Complaints.CONTENT_TYPE_ID]
+          }
+
+          resolve(sheq);
         }, error => {
           this._Utils.clientLog(error);
           reject(error);
@@ -296,7 +367,7 @@ ${Constants.Complaints.PERSON_RESPONSIBLE}`)
     return new Promise((resolve, reject) => {
       var userType = Constants.Globals.UPLIFT_USER;
       pnp.sp.web.siteUsers
-        .getById(_spPageContextInfo.userId)
+        .getById((<any>window)._spPageContextInfo.userId)
         .select('Id').get()
         .then(user => {
           return pnp.sp.web.siteUsers.getById(user.Id).groups.get();
@@ -313,8 +384,8 @@ ${Constants.Complaints.PERSON_RESPONSIBLE}`)
 
           if (userType != Constants.Globals.UPLIFT_SCA) {
             $.map(groups, group => {
-              if (group.LoginName == Constants.Globals.UPLIFT_APPROVERS) {
-                userType = Constants.Globals.UPLIFT_APPROVERS;
+              if (group.LoginName == Constants.Globals.UPLIFT_APPROVER) {
+                userType = Constants.Globals.UPLIFT_APPROVER;
               }
             });
           }

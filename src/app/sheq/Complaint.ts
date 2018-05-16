@@ -1,66 +1,4 @@
-export class Lists {
-    static SITE_MASTER = 'SiteMaster';
-    static CUSTOMER_MASTER = "CustomerMaster";
-    static PACK_CODE_MASTER = "PackCodeMaster";
-    static REASON_CODE_MASTER = "ReasonCodeMaster";
-    static LOSS_TREE_LEVEL1_MASTER = "LossTreeLevel1Master";
-    static LOSS_TREE_LEVEL2_MASTER = "LossTreeLevel2Master";
-    static LOSS_TREE_LEVEL3_MASTER = "LossTreeLevel3Master";
-    static LOSS_TREE_LEVEL4_MASTER = "LossTreeLevel4Master";
-    static COMPLAINTS = "Complaints";
-}
-
-export class SiteMaster {
-    static SITE_NAME = 'SiteName';
-    static PERSON_RESPONSIBLE = "PersonResponsible";
-}
-
-export class CustomerMaster {
-    static CUSTOMER_CONTACT = "CustomerContact";
-    static CUSTOMER_CONTACT_DESIGNATION = "CustomerContactDesignation";
-    static CUSTOMER_NAME = "CustomerName";
-    static CUSTOMER_NUMBER = "CustomerNumber";
-}
-
-export class PackCodeMaster {
-    static PACK_CODE = "PackCode";
-    static PRODUCT_DESCRIPTION = "ProductDescription";
-    static BRAND = "Brand";
-    static CATEGORY = "CategoryText";
-    static DEPARTMENT_TEXT = "DepartmentText";
-    static FACTORY = "Factory";
-    static PACK_SIZE = "PackSize";
-    static PLANT = "Plant";
-    static SECONDARY_VARIANT = "SecondaryVariant"
-    static SUB_CATEGORY_VARIANT = "Sub Category Variant";
-    static UNIT_OF_MESURE = "UnitOfMesure";
-    static VARIANT = "Variant";
-}
-
-export class ReasonCodeMaster {
-    static TITLE = "Title";
-}
-
-export class LossTreeLevel1Master {
-    static TITLE = "Title";
-}
-export class LossTreeLevel2Master {
-    static TITLE = "Title";
-    static LEVEL1_LOOKUP = "Level1Lookup";
-
-}
-export class LossTreeLevel3Master {
-    static TITLE = "Title";
-    static LEVEL2_LOOKUP = "Level2Lookup";
-
-}
-export class LossTreeLevel4Master {
-    static TITLE = "Title";
-    static LEVEL3_LOOKUP = "Level3Lookup";
-    static EXPLANATION = "Explanation";
-}
-
-export class Complaints {
+export class Complaint {
     static ID = "ID";
     static ACTION_TAKEN = "ActionTaken";
     static BATCH_DETAILS_1 = "BatchDetails1";
@@ -127,15 +65,4 @@ export class Complaints {
     static INVOICE_VALUE = "InvoiceValue";
     static LAST_DELIVERY_DATE = "LastDeliveryDate";
     static COMPLAINT_STATUS = "ComplaintStatus";
-    static CONTENT_TYPE_ID = "ContentTypeId";
 } 
-
-export class Globals{
-    static USER = "user";
-    static ADMIN = "admin";
-    static UPLIFT_APPROVER = "Uplift_Approvers";
-    static UPLIFT_SCA = "Uplift_SCA";
-    static UPLIFT_USER = "Uplift_Users";
-    static UPLIFT_RESPONSIBLE_PERSON = "Uplift_Responsible_Persons";
-    static DATE_FORMAT = 'dd.mm.yyyy';
-}
