@@ -121,4 +121,18 @@ export class Complaints {
     static ROOT_CAUSE = "RootCause";
     static SITE_NAME = "SiteName";
     static CUSTOMER_CONTACT = "CustomerContact";
+    static ATTACHMENTS = "Attachments";
+    static APPROVAL_STATUS = "ApprovalStatus";
+    static INVOICE_NUMBER = "InvoiceNumber";
+    static INVOICE_VALUE = "InvoiceValue";
+    static LAST_DELIVERY_DATE = "LastDeliveryDate";
+    static COMPLAINT_STATUS = "ComplaintStatus";
 } 
+
+export class Globals{
+    static USER = "user";
+    static ADMIN = "admin";
+    static UPLIFT_APPROVERS = "Uplift_Approvers";
+    static UPLIFT_SCA = "Uplift_SCA";
+    static UPLIFT_USER = "Uplift_User";
+}

@@ -4,7 +4,10 @@ import * as Constants from './constants';
 import * as pnp from '../../node_modules/sp-pnp-js/dist/pnp.min';
 import { Utils } from './utils';
 import { Sheq } from './sheq/sheq';
+import * as $ from 'jquery';
+import { resolve } from 'q';
 
+var _spPageContextInfo: any;
 @Injectable({
   providedIn: 'root'
 })
@@ -84,8 +87,13 @@ ${Constants.Complaints.LEVEL4_LOOKUP}/ID,\
 ${Constants.Complaints.LEVEL4_LOOKUP}/Title,\
 ${Constants.Complaints.EXPLANATION},\
 ${Constants.Complaints.REMEDY_NUMBER},\
+${Constants.Complaints.ATTACHMENTS},\
+${Constants.Complaints.COMPLAINT_STATUS},\
+${Constants.Complaints.INVOICE_NUMBER},\
+${Constants.Complaints.INVOICE_VALUE},\
+${Constants.Complaints.LAST_DELIVERY_DATE},\
 ${Constants.Complaints.ROOT_CAUSE}`)
-.expand(`${Constants.Complaints.LEVEL1_LOOKUP},\
+        .expand(`${Constants.Complaints.LEVEL1_LOOKUP},\
 ${Constants.Complaints.LEVEL2_LOOKUP},\
 ${Constants.Complaints.LEVEL3_LOOKUP},\
 ${Constants.Complaints.LEVEL4_LOOKUP},\
@@ -229,10 +237,15 @@ ${Constants.Complaints.PERSON_RESPONSIBLE}`)
   }
 
   addAttachment(itemID: number, files: any[]) {
-    let item = pnp.sp.web.lists.getByTitle(Constants.Lists.COMPLAINTS).items.getById(itemID);
-    this._Utils.setAttachmentByItemID(item, files).then(data => {
-      console.log("file attached.");
-    })
+    return new Promise((resolve, reject) => {
+      let item = pnp.sp.web.lists.getByTitle(Constants.Lists.COMPLAINTS).items.getById(itemID);
+      this._Utils.setAttachmentByItemID(item, files).then(data => {
+        resolve(data);
+      }, error => {
+        this._Utils.clientLog(error);
+        reject(error);
+      });
+    });
   }
 
   addOrUpdateSheqItem(sheq: Sheq) {
@@ -247,7 +260,68 @@ ${Constants.Complaints.PERSON_RESPONSIBLE}`)
         resolve(data);
       }, error => {
         reject(error);
-      })
+      });
+    });
+  }
+
+  deleteAttachemnt(itemID: number, fileName: string) {
+    return new Promise((resolve, reject) => {
+      let item = pnp.sp.web.lists.getByTitle(Constants.Lists.COMPLAINTS).items.getById(itemID);
+      this._Utils.deletAttachment(item, fileName).then(data => {
+        resolve(data);
+      }, error => {
+        reject(error);
+      });
+    });
+  }
+
+  getAttachments(itemID: number) {
+    return new Promise((resolve, reject) => {
+      let item = pnp.sp.web.lists.getByTitle(Constants.Lists.COMPLAINTS).items.getById(itemID);
+      this._Utils.getAttachments(item).then(data => {
+        resolve(data);
+      }, error => {
+        reject(error);
+      });
+    });
+  }
+
+  generateComplaintID = function (ID: number, size: number, prefix: string) {
+    var s = String(ID);
+    while (s.length < (size || 2)) { s = "0" + s; }
+    return prefix + s;
+  }
+
+  getCurrentUserType() {
+    return new Promise((resolve, reject) => {
+      var userType = Constants.Globals.UPLIFT_USER;
+      pnp.sp.web.siteUsers
+        .getById(_spPageContextInfo.userId)
+        .select('Id').get()
+        .then(user => {
+          return pnp.sp.web.siteUsers.getById(user.Id).groups.get();
+        }, error => {
+          console.log(error);
+        })
+        .then(groups => {
+          $.map(groups, group => {
+            if (group.LoginName == Constants.Globals.UPLIFT_SCA) {
+              userType = Constants.Globals.UPLIFT_SCA;
+              return false;
+            }
+          });
+
+          if (userType != Constants.Globals.UPLIFT_SCA) {
+            $.map(groups, group => {
+              if (group.LoginName == Constants.Globals.UPLIFT_APPROVERS) {
+                userType = Constants.Globals.UPLIFT_APPROVERS;
+              }
+            });
+          }
+          resolve(Constants.Globals.UPLIFT_SCA);
+        }, error => {
+          console.log(error);
+        });
     });
   }
 }

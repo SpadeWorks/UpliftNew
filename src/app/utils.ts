@@ -96,6 +96,7 @@ export class Utils {
     setAttachmentByItemID(item, files) {
         return new Promise((resolve, reject) => {
             this.buildFileArray(files).then((filesInfo: any) => {
+                console.log("attaching files");
                 item.attachmentFiles.addMultiple(filesInfo).then((r: any) => {
                     this.getAttachments(item).then(files => {
                         resolve(files);
@@ -129,6 +130,7 @@ export class Utils {
 
     buildFileArray(files) {
         return new Promise((resolve, reject) => {
+            console.log("in build file array");
             var fileInfos = [];
             var counter = 0;
             for (var i = 0; i < files.length; i++) {

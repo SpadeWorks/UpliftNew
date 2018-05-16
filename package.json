@@ -24,6 +24,7 @@
     "bootstrap": "^4.1.1",
     "core-js": "^2.5.4",
     "jquery": "^3.3.1",
+    "moment": "^2.22.1",
     "rxjs": "^6.1.0",
     "sp-pnp-js": "^3.0.7",
     "ts-promise": "^1.0.0",

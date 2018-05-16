@@ -8,7 +8,6 @@
         </span>
       </div>
     </div>
-
     <div class="col-xs-12 col-md-6 col-sm-6 text-right">
       <input type="button" value="+ Add NCA Complaint" class="ulBtn brownBtn" />
       <input type="button" value="+ Add SHEQ Complaint" class="ulBtn disableBtn"
@@ -16,222 +15,305 @@
     </div>
   </div>
   <div class="SheqFormWrap">
-    <div class="col-xs-12 col-md-4 col-sm-2">
-      <span class="addCompTxt">Add a new complaint</span>
-      <pre>{{sheqForm.value | json}}</pre>
-    </div>
-    <div class="col-xs-12 col-md-8 col-sm-10 SheqFormFieldsWrap">
-      <div class="row">
-        <div class="col-xs-12 col-md-4 col-sm-4 form-group">
-          <label class="form-label">Date of Incident</label>
-          <div class="dateIncidentField">
-            <input type="text" id="dateIncident" class="form-control ulTxtBox"
-              formControlName="dateOfIncident" />
+    <div data-type="complaint-form">
+      <div class="col-xs-12 col-md-2 col-sm-2">
+        <span class="addCompTxt">Add a new complaint</span>
+      </div>
+      <div class="col-xs-12 col-md-10 col-sm-10 SheqFormFieldsWrap">
+        <div class="row">
+          <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+            <label class="form-label">Date of Incident</label>
+            <div class="dateIncidentField">
+              <input type="text" id="dateIncident" class="form-control ulTxtBox"
+                formControlName="dateOfIncident" />
+            </div>
           </div>
         </div>
-        <div class="col-xs-12 col-md-4 col-sm-4 form-group">
-          <label class="form-label">Production Site</label>
-          <input type="text" class="form-control ulTxtBox"
-            formControlName="productionSite" />
+        <div class="row">
+          <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+            <label class="form-label">Customer Number</label>
+            <input type="text" class="form-control ulTxtBox"
+              formControlName="customerNumber"
+              (blur)="onCusomerNumberChange($event)"
+              />
+          </div>
+          <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+            <label class="form-label">Customer Name</label>
+            <input type="text" class="form-control ulTxtBox"
+              formControlName="customerName" />
+          </div>
         </div>
-        <div class="col-xs-12 col-md-4 col-sm-4 form-group">
-          <label class="form-label">Person Responsible</label>
-          <input type="text" class="form-control ulTxtBox"
-            formControlName="personResponsible" />
+        <div class="row">
+          <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+            <label class="form-label">Contact Person</label>
+            <input type="text" class="form-control ulTxtBox"
+              formControlName="contactPerson" />
+          </div>
+          <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+            <label class="form-label">Contact Person Designation</label>
+            <input type="text" class="form-control ulTxtBox"
+              formControlName="contactPersonDesignation" />
+          </div>
+          <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+            <label class="form-label">Contact Number</label>
+            <input type="phone" class="form-control ulTxtBox"
+              formControlName="contactNumber" />
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12 col-md-4 col-sm-4 form-group">
-          <label class="form-label">Customer Number</label>
-          <input type="text" class="form-control ulTxtBox"
-            formControlName="customerNumber"
-            (blur)="onCusomerNumberChange($event)"
-            />
+        <div class="row">
+          <div class="col-xs-12 col-md-6 col-sm-6 form-group">
+            <label class="form-label">Complaint Details</label>
+            <textarea class="form-control ulTxtBox"
+              formControlName="complaintDetails"></textarea>
+          </div>
         </div>
-        <div class="col-xs-12 col-md-4 col-sm-4 form-group">
-          <label class="form-label">Customer Name</label>
-          <input type="text" class="form-control ulTxtBox"
-            formControlName="customerName" />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12 col-md-4 col-sm-4 form-group">
-          <label class="form-label">Contact Person</label>
-          <input type="text" class="form-control ulTxtBox"
-            formControlName="contactPerson" />
-        </div>
-        <div class="col-xs-12 col-md-4 col-sm-4 form-group">
-          <label class="form-label">Contact Person Designation</label>
-          <input type="text" class="form-control ulTxtBox"
-            formControlName="contactPersonDesignation" />
-        </div>
-        <div class="col-xs-12 col-md-4 col-sm-4 form-group">
-          <label class="form-label">Contact Number</label>
-          <input type="phone" class="form-control ulTxtBox"
-            formControlName="contactNumber" />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12 col-md-6 col-sm-6 form-group">
-          <label class="form-label">Complaint Details</label>
-          <textarea class="form-control ulTxtBox"
-            formControlName="complaintDetails"></textarea>
-        </div>
-      </div>
-      <div formArrayName="products" *ngFor="let product of products.controls;
-        let i=index">
-        <div class="row" [formGroupName]="i">
-          <div class="row">
-            <div class="col-xs-12 col-md-9 col-sm-9 prodDescriField">
-              <div class="col-xs-12 col-md-12 col-sm-12">
-                <label class="form-label" attr.for="{{'packCodeID' + i}}"><b>Pack
-                    Code {{i+1}}</b></label>
-                <input type="text" class="form-control ulTxtBox"
-                  formControlName="packCode" id="{{'packCodeID' + i}}" />
-              </div>
-              <div class="col-xs-12 col-md-12 col-sm-12">
-                <label class="form-label" attr.for="{{'productDescriptionID' +
-                  i}}">Product Description</label>
-                <textarea class="form-control ulTxtBox"
-                  formControlName="productDescription"></textarea>
-              </div>
-              <div class="col-xs-12 col-md-12 col-sm-12">
-                <label class="form-label" attr.for="{{'batchDetailsID' + i}}">Batch
-                  Details</label>
-                <input type="text" class="form-control ulTxtBox"
-                  formControlName="batchDetails" id="{{'batchDetailsID' + i}}"
-                  />
-              </div>
-              <div class="col-xs-12 col-md-6 col-sm-6">
-                <label class="form-label" attr.for="{{'quantityUnitID' + i}}">Quantity
-                  - Unit</label>
-                <input type="text" class="form-control ulTxtBox"
-                  formControlName="quantityUnit" id="{{'quantityUnitID' + i}}"
-                  />
-              </div>
-              <div class="col-xs-12 col-md-6 col-sm-6">
-                <label class="form-label" attr.for="{{'quantityShrinkID' + i}}">Quantity
-                  - Shrink</label>
-                <input type="text" class="form-control ulTxtBox"
-                  formControlName="quantityShrink" id="{{'quantityShrinkID' +
-                  i}}" />
-              </div>
-              <div class="col-xs-12 col-md-6 col-sm-6">
-                <label class="form-label" attr.for="{{'quantityCasesID' + i}}">Quantity
-                  - Cases</label>
-                <input type="text" class="form-control ulTxtBox"
-                  formControlName="quantityCases" id="{{'quantityCasesID' + i}}"
-                  />
-              </div>
-              <div class="col-xs-12 col-md-6 col-sm-6">
-                <label class="form-label" attr.for="{{'quantityPalletID' + i}}">Quantity
-                  - Pallet</label>
-                <input type="text" class="form-control ulTxtBox"
-                  formControlName="quantityPallet" id="{{'quantityPalletID' +
-                  i}}" />
+        <div formArrayName="products" *ngFor="let product of products.controls;
+          let i=index">
+          <div class="row" [formGroupName]="i">
+            <div class="row">
+              <input type="button" value="X" (click)="onRemovePackCode(i)" />
+              <div class="col-xs-12 col-md-9 col-sm-9 prodDescriField">
+                <div class="col-xs-12 col-md-12 col-sm-12">
+                  <label class="form-label" attr.for="{{'packCodeID' + i}}"><b>Pack
+                      Code {{i+1}}</b></label>
+                  <input type="text" class="form-control ulTxtBox"
+                    formControlName="packCode" id="{{'packCodeID' + i}}" />
+                </div>
+                <div class="col-xs-12 col-md-12 col-sm-12">
+                  <label class="form-label" attr.for="{{'productDescriptionID' +
+                    i}}">Product Description</label>
+                  <textarea class="form-control ulTxtBox"
+                    formControlName="productDescription"></textarea>
+                </div>
+                <div class="col-xs-12 col-md-12 col-sm-12">
+                  <label class="form-label" attr.for="{{'batchDetailsID' + i}}">Batch
+                    Details</label>
+                  <input type="text" class="form-control ulTxtBox"
+                    formControlName="batchDetails" id="{{'batchDetailsID' + i}}"
+                    />
+                </div>
+                <div class="col-xs-12 col-md-6 col-sm-6">
+                  <label class="form-label" attr.for="{{'quantityUnitID' + i}}">Quantity
+                    - Unit</label>
+                  <input type="text" class="form-control ulTxtBox"
+                    formControlName="quantityUnit" id="{{'quantityUnitID' + i}}"
+                    />
+                </div>
+                <div class="col-xs-12 col-md-6 col-sm-6">
+                  <label class="form-label" attr.for="{{'quantityShrinkID' +
+                    i}}">Quantity
+                    - Shrink</label>
+                  <input type="text" class="form-control ulTxtBox"
+                    formControlName="quantityShrink" id="{{'quantityShrinkID' +
+                    i}}" />
+                </div>
+                <div class="col-xs-12 col-md-6 col-sm-6">
+                  <label class="form-label" attr.for="{{'quantityCasesID' +
+                    i}}">Quantity
+                    - Cases</label>
+                  <input type="text" class="form-control ulTxtBox"
+                    formControlName="quantityCases" id="{{'quantityCasesID' +
+                    i}}"
+                    />
+                </div>
+                <div class="col-xs-12 col-md-6 col-sm-6">
+                  <label class="form-label" attr.for="{{'quantityPalletID' +
+                    i}}">Quantity
+                    - Pallet</label>
+                  <input type="text" class="form-control ulTxtBox"
+                    formControlName="quantityPallet" id="{{'quantityPalletID' +
+                    i}}" />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-xs-12 col-md-9 col-sm-9 row text-right addPackCodeLink"
-        *ngIf="products.length <5">
-        <a href="javascript:;" (click)="addPackCode()">
-          <span class="addPackCode">+ Add Pack Code</span>
-        </a>
-      </div>
-      <br/>
+        <div class="col-xs-12 col-md-9 col-sm-9 row text-right addPackCodeLink"
+          *ngIf="products.length <5">
+          <a href="javascript:;" (click)="addPackCode()">
+            <span class="addPackCode">+ Add Pack Code</span>
+          </a>
+        </div>
         <br/>
           <br/>
-            <div class="row">
-              <div class="col-xs-12 col-md-6 col-sm-6 form-group">
-                <label class="form-label">Reason Code</label>
-                <div class="ulSelectOutter" *ngIf="!isReasonCodeDisabled">
+            <br/>
+              <div class="row">
+                <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+                  <label class="form-label">Level 1</label>
+                  <div class="ulSelectOutter">
+                    <select class="ulSelect" [disableControl]="level1Disabled"
+                      (change)="level1Change($event.target.value)"
+                      formControlName="level1">
+                      <option *ngFor="let option of level1Options"
+                        value="{{option.value}}">{{option.label }}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+                  <label class="form-label">Level 2</label>
+                  <div class="ulSelectOutter">
+                    <select class="ulSelect" [disableControl]="level2Disabled"
+                      (change)="level2Change($event.target.value)"
+                      formControlName="level2">
+                      <option *ngFor="let option of level2Options"
+                        value="{{option.value}}">{{ option.label }}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+                  <label class="form-label">Level 3</label>
+                  <div class="ulSelectOutter">
+                    <select class="ulSelect" [disableControl]="level3Disabled"
+                      (change)="level3Change($event.target.value)"
+                      formControlName="level3">
+                      <option *ngFor="let option of level3Options"
+                        value="{{option.value}}">{{ option.label }}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+                  <label class="form-label">Level 4</label>
+                  <div class="ulSelectOutter">
+                    <select class="ulSelect" [disableControl]="level4Disabled"
+                      (change)="level4Change($event.target.value)"
+                      formControlName="level4">
+                      <option *ngFor="let option of level4Options"
+                        value="{{option.value}}">{{ option.label }}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6 col-sm-6 form-group">
+                  <label class="form-label">Explanation</label>
+                  <textarea class="form-control ulTxtBox"
+                    formControlName="explanation"></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6 col-sm-6 form-group">
+                  <label class="form-label">File Upload</label>
+                  <div class="fileUploadBlock">
+                    <label for="file-upload" class="custom-file-upload">
+                      Choose File
+                    </label>
+                    <input id="file-upload" class="fileUpload hide"
+                      name="upload_cont_img" type="file" accept="image/*"
+                      formControlName="attachments"
+                      (change)="onFildAdded($event)" />
+                    <ul class="uploadedFileList">
+                      <li class="uploadedFileName" *ngFor="let attachment of
+                        attachments"><a href="{{attachment.url ? attachment.url
+                          :
+                          '#'}}" download><span>{{attachment.name}}</span></a><span
+                          class="removeUploadedFile"
+                          (click)="onRemoveAttachment(attachment)">X</span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div data-type="sca-form">
+            <div class="row" *ngIf="userType== 'Uplift_SCA' || userType==
+              'Uplift_Approvers'" data-for-fields="sca and approvers">
+              <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+                <label class="form-label">Production Site</label>
+                <input type="text" class="form-control ulTxtBox"
+                  formControlName="productionSite" />
+              </div>
+              <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+                <label class="form-label">Person Responsible</label>
+                <input type="text" class="form-control ulTxtBox"
+                  formControlName="personResponsible" />
+              </div>
+              <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+                <label class="form-label">Complaint Status</label>
+                <div class="ulSelectOutter">
                   <select class="ulSelect"
-                    [disableControl]="isReasonCodeDisabled"
-                    formControlName="reasonCode">
-                    <option *ngFor="let reasonCode of reasonCodes"
-                      value="{{reasonCode.value}}">{{ reasonCode.label }}</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12 col-md-4 col-sm-4 form-group">
-                <label class="form-label">Level 1</label>
-                <div class="ulSelectOutter">
-                  <select class="ulSelect" [disableControl]="level1Disabled"
-                    (change)="level1Change($event.target.value)"
-                    formControlName="level1">
-                    <option *ngFor="let option of level1Options"
-                    value="{{option.value}}">{{option.label }}</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-xs-12 col-md-4 col-sm-4 form-group">
-                <label class="form-label">Level 2</label>
-                <div class="ulSelectOutter">
-                  <select class="ulSelect" [disableControl]="level2Disabled"
-                    (change)="level2Change($event.target.value)"
-                    formControlName="level2">
-                    <option *ngFor="let option of level2Options"
-                    value="{{option.value}}">{{ option.label }}</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12 col-md-4 col-sm-4 form-group">
-                <label class="form-label">Level 3</label>
-                <div class="ulSelectOutter">
-                  <select class="ulSelect" [disableControl]="level3Disabled"
-                    (change)="level3Change($event.target.value)"
-                    formControlName="level3">
-                    <option *ngFor="let option of level3Options"
-                    value="{{option.value}}">{{ option.label }}</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-xs-12 col-md-4 col-sm-4 form-group">
-                <label class="form-label">Level 4</label>
-                <div class="ulSelectOutter">
-                  <select class="ulSelect" [disableControl]="level4Disabled"
-                    (change)="level4Change($event.target.value)"
-                    formControlName="level4">
-                    <option *ngFor="let option of level4Options"
+                    formControlName="complaintStatus">
+                    <option *ngFor="let option of complaintStatusOptions"
                       value="{{option.value}}">{{ option.label }}</option>
                   </select>
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-xs-12 col-md-6 col-sm-6 form-group">
-                <label class="form-label">Explanation</label>
-                <textarea class="form-control ulTxtBox"
-                  formControlName="explanation"></textarea>
+          </div>
+          <div data-type="approver-form">
+            <div *ngIf="userType== 'Uplift_Approvers'"
+              data-for-fields="approvers">
+              <div class="row">
+                <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+                  <label class="form-label">Invoice Number</label>
+                  <input type="text" class="form-control ulTxtBox"
+                    formControlName="invoiceNumber" />
+                </div>
+                <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+                  <label class="form-label">Invoice Value</label>
+                  <input type="text" class="form-control ulTxtBox"
+                    formControlName="invoiceValue" />
+                </div>
+                <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+                  <label class="form-label">Date of last delivery</label>
+                  <div class="dateIncidentField">
+                    <input type="text" id="lastDeliveryDate" class="form-control
+                      ulTxtBox"
+                      formControlName="lastDeliveryDate" />
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12 col-md-6 col-sm-6 form-group">
-                <label class="form-label">File Upload</label>
-                <div class="fileUploadBlock">
-                  <label for="file-upload" class="custom-file-upload">
-                    Choose File
-                  </label>
-                  <input id="file-upload" class="fileUpload hide"
-                    name="upload_cont_img" type="file" accept="image/*"
-                    formControlName="attachments"
-                    (change)="addFile($event)" />
-                  <ul class="uploadedFileList">
-                  </ul>
+              <div class="row">
+                <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+                  <label class="form-label">Approved</label>
+                  <div class="ulSelectOutter">
+                    <select class="ulSelect"
+                      formControlName="approvalStatus">
+                      <option *ngFor="let option of approvalStatusOptions"
+                        value="{{option.value}}">{{ option.label }}</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="">
-              <input type="button" class="ulBtn ulCancelBtn" value="Cancel" />
-              <input type="button" class="ulBtn ulSubmitBtn" value="Submit"
-                (click)="onSubmit()" />
+          </div>
+          <div data-type="responsible-person-form">
+            <div *ngIf="userType== 'Uplift_Responsible_Person'"
+              data-for-fields="personResponsible">
+              <div class="row">
+                <div class="col-xs-12 col-md-6 col-sm-6 form-group">
+                  <label class="form-label">Reason Code</label>
+                  <div class="ulSelectOutter" *ngIf="!isReasonCodeDisabled">
+                    <select class="ulSelect"
+                      [disableControl]="isReasonCodeDisabled"
+                      formControlName="reasonCode">
+                      <option *ngFor="let reasonCode of reasonCodes"
+                        value="{{reasonCode.value}}">{{ reasonCode.label }}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6 col-sm-6 form-group">
+                  <label class="form-label">Root Cause</label>
+                  <textarea class="form-control ulTxtBox"
+                    formControlName="rootCause"></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6 col-sm-6 form-group">
+                  <label class="form-label">Action Taken</label>
+                  <textarea class="form-control ulTxtBox"
+                    formControlName="actionTaken"></textarea>
+                </div>
+              </div>
             </div>
           </div>
-  </div>
-</form>
+          <div class="">
+            <input type="button" class="ulBtn ulCancelBtn" value="Cancel" />
+            <input type="button" class="ulBtn ulSubmitBtn" value="Submit"
+              (click)="onSubmit()" />
+          </div>
+        </div>
+      </form>>

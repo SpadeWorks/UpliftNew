@@ -55,4 +55,5 @@ export class Sheq {
     Attachments: string[];
     UpliftNumber: string;
     ContentTypeId: string;
+    ComplaintStatus: string;
 }

@@ -5,11 +5,13 @@ import { Sheq } from './sheq';
 import * as $ from 'jquery';
 import * as Constants from '../constants';
 import { Product } from "./product";
+import Promise from "ts-promise";
 import {
   FormBuilder, FormGroup, FormControl,
   FormArray, Validators, FormControlName, AbstractControl
 } from '@angular/forms';
 import { flatten } from '@angular/compiler';
+import * as moment from 'moment';
 @Component({
   selector: 'app-sheq',
   templateUrl: './sheq.component.html',
@@ -18,20 +20,23 @@ import { flatten } from '@angular/compiler';
 export class SheqComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private _DataService: DataService, private _utils: Utils) { }
-
+  baseSiteUrl = `${location.protocol}//${location.hostname}`;
+  attachments = [];
+  newAttachments = [];
   reasonCodes = [{ value: '', label: 'Select' }];
   level1Options = [{ value: '', label: 'Select' }];
   level2Options = [{ value: '', label: 'Select' }];
   level3Options = [{ value: '', label: 'Select' }];
   level4Options = [{ value: '', label: 'Select' }];
+  approvalStatusOptions = [{value: 'Yes', label: 'Yes'}, {value: 'No', label: 'No'}];
+  complaintStatusOptions = [{value: 'Submitted', label: 'Submitted'}, {value: 'Assigned', label: 'Assigned'}];
   level1Disabled = true;
   level2Disabled = true;
   level3Disabled = true;
   level4Disabled = true;
   level4Data = [];
   itemID = 0;
-
-
+  userType = Constants.Globals.ADMIN;
   isResonCodeDisabled = true;
   sheqForm: FormGroup;
 
@@ -60,7 +65,16 @@ export class SheqComponent implements OnInit {
       level4: '',
       explanation: '',
       products: this.fb.array([this.buildProduct()]),
-      attachments: ''
+      attachments: '',
+      complaintStatus: '',
+      approvalStatus: '',
+      invoiceNumber: '',
+      invoiceValue: '',
+      lastDeliveryDate: '',
+    });
+
+    this._DataService.getCurrentUserType().then(userType => {
+      this.userType = <string>userType;
     });
 
     this._DataService.getLevel1Data().then(data => {
@@ -75,21 +89,24 @@ export class SheqComponent implements OnInit {
       this._DataService.getComplaintByID(this.itemID).then((data: any) => {
         if (data.length) {
           var complaint: any = data[0];
-          this.level1Options.push({ value: complaint.Level1Lookup.ID, label: complaint.Level1Lookup.Title });
-          this.level1Change(complaint.Level1Lookup.ID);
-          this.level2Options.push({ value: complaint.Level2Lookup.ID, label: complaint.Level2Lookup.Title });
-          this.level2Change(complaint.Level2Lookup.ID);
-          this.level3Options.push({ value: complaint.Level3Lookup.ID, label: complaint.Level3Lookup.Title });
-          this.level3Change(complaint.Level3Lookup.ID);
-          this.level4Options.push({ value: complaint.Level4Lookup.ID, label: complaint.Level4Lookup.Title });
-          this.level4Change(complaint.Level4Lookup.ID);
-          this.level1Disabled = false;
-          this.level2Disabled = false;
-          this.level3Disabled = false;
-          this.level4Disabled = false;
-
+          $.when(this.level1Change(complaint.Level1Lookup.ID),
+            this.level2Change(complaint.Level2Lookup.ID),
+            this.level3Change(complaint.Level3Lookup.ID),
+            this.level4Change(complaint.Level4Lookup.ID)).then((leve1, level2, level3, level4) => {
+              this.sheqForm.patchValue({
+                level1: complaint.Level1Lookup.ID,
+                level2: complaint.Level2Lookup.ID,
+                level3: complaint.Level3Lookup.ID,
+                level4: complaint.Level4Lookup.ID,
+                explanation: complaint.Explanation,
+              });
+              this.level1Disabled = false;
+              this.level2Disabled = false;
+              this.level3Disabled = false;
+              this.level4Disabled = false;
+            })
           this.sheqForm.patchValue({
-            dateOfIncident: new Date(complaint.DateOfIncident).format("MM/dd/yyyy"),
+            dateOfIncident: moment(complaint.DateOfIncident).format("MM/DD/YYYY"),
             productionSite: complaint.SiteName,
             // personResponsible: complaint.PersonResponsible,
             customerNumber: complaint.CustomerNumber,
@@ -106,6 +123,7 @@ export class SheqComponent implements OnInit {
             level3: complaint.Level3Lookup.ID,
             level4: complaint.Level4Lookup.ID,
             explanation: complaint.Explanation,
+            complaintStatus: complaint.ComplaintStatus
           });
 
           if (complaint.PackCode1) {
@@ -159,6 +177,20 @@ export class SheqComponent implements OnInit {
               complaint.QuantityPallet5);
             this.products.push(this.buildProduct(product));
           }
+          if (complaint.Attachments) {
+            this._DataService.getAttachments(this.itemID).then((data: any) => {
+              this.attachments = [];
+              $.map(data.files, (item, index) => {
+                this.attachments.push({
+                  name: item.FileName,
+                  url: `${this.baseSiteUrl}${item.ServerRelativePath.DecodedUrl}`,
+                  isAttached: true
+                });
+              });
+            }, error => {
+              console.log(error);
+            })
+          }
         }
       })
     }
@@ -169,14 +201,6 @@ export class SheqComponent implements OnInit {
         this.isResonCodeDisabled = false;
       });
     });
-
-
-
-    $(".uploadedFileList").on("click", ".removeUploadedFile", (e) => {
-      console.log("Deleting file.");
-    });
-
-
   }
 
   buildProduct(product?: Product): FormGroup {
@@ -197,62 +221,79 @@ export class SheqComponent implements OnInit {
     }
   }
 
-  level1Change(ID): void {
-    if (ID) {
-      this.sheqForm.patchValue({
-        level2: '',
-      });
-      this.level2Disabled = true;
-      this._DataService.getLevel2Data(ID).then(data => {
-        this.level2Options = [{ value: '', label: 'Select' }];
-        $.each(data, (index, item) => { 
-          this.level2Options.push({ value: item.ID, label: item.Title });
-        });
-        this.level2Disabled = false;
-      });
-    }
-  }
-  level2Change(ID): void {
-    if (ID) {
-      this.sheqForm.patchValue({
-        level3: '',
-      });
-      this.level3Disabled = true;
-      this._DataService.getLevel3Data(ID).then(data => {
-        this.level3Options = [{ value: '', label: 'Select' }];
-        $.each(data, (index, item) => {
-          this.level3Options.push({ value: item.ID, label: item.Title });
-        });
-        this.level3Disabled = false;
-      });
-    }
-  }
-  level3Change(ID): void {
-    if (ID) {
-      this.sheqForm.patchValue({
-        level4: '',
-      });
-      this.level4Disabled = true;
-      this._DataService.getLevel4Data(ID).then((data: any[]) => {
-        this.level4Data = data;
-        this.level4Options = [{ value: '', label: 'Select' }];
-        $.each(data, (index, item) => {
-          this.level4Options.push({ value: item.ID, label: item.Title });
-        });
-        this.level4Disabled = false;
-      });
-    }
+  onRemovePackCode(index) {
+    this.products.removeAt(index);
   }
 
-  level4Change(ID): void {
-    if (ID) {
-      var selectedItem = this.level4Data.filter(item => item.ID == ID);
+  level1Change(ID) {
+    return new Promise((resolve, reject) => {
+      if (ID) {
+        this.sheqForm.patchValue({
+          level2: '',
+        });
+        this.level2Disabled = true;
+        this._DataService.getLevel2Data(ID).then(data => {
+          this.level2Options = [{ value: '', label: 'Select' }];
+          this.level3Options = [{ value: '', label: 'Select' }];
+          this.level4Options = [{ value: '', label: 'Select' }];
+          $.each(data, (index, item) => {
+            this.level2Options.push({ value: item.ID, label: item.Title });
+          });
+          this.level2Disabled = false;
+          resolve(true);
+        });
+      }
+    });
+  }
+  level2Change(ID) {
+    return new Promise((resolve, reject) => {
+      if (ID) {
+        this.sheqForm.patchValue({
+          level3: '',
+        });
+        this.level3Disabled = true;
+        this._DataService.getLevel3Data(ID).then(data => {
+          this.level3Options = [{ value: '', label: 'Select' }];
+          this.level4Options = [{ value: '', label: 'Select' }];
+          $.each(data, (index, item) => {
+            this.level3Options.push({ value: item.ID, label: item.Title });
+          });
+          this.level3Disabled = false;
+          resolve(true);
+        });
+      }
+    })
+  }
+  level3Change(ID) {
+    return new Promise((resolve, reject) => {
+      if (ID) {
+        this.sheqForm.patchValue({
+          level4: '',
+        });
+        this.level4Disabled = true;
+        this._DataService.getLevel4Data(ID).then((data: any[]) => {
+          this.level4Data = data;
+          this.level4Options = [{ value: '', label: 'Select' }];
+          $.each(data, (index, item) => {
+            this.level4Options.push({ value: item.ID, label: item.Title });
+          });
+          this.level4Disabled = false;
+        });
+      }
+    });
+  }
+
+  level4Change(ID) {
+    return new Promise((resolve, reject) => {
+      if (ID) {
+        var selectedItem = this.level4Data.filter(item => item.ID == ID);
         if (selectedItem.length) {
           this.sheqForm.patchValue({
             explanation: selectedItem[0][Constants.LossTreeLevel4Master.EXPLANATION]
           });
         }
-    }
+      }
+    });
   }
 
   onCusomerNumberChange($event) {
@@ -264,9 +305,40 @@ export class SheqComponent implements OnInit {
       }
     })
   }
-  
-  addFile(event) {
-    this._DataService.addAttachment(12, event.target.files);
+
+  onFildAdded($event) {
+    var fileExists = false;
+    var newFile = $event.target.files[0];
+    $.map(this.attachments, (item, index) => {
+      if (item.name === newFile.name) {
+        fileExists = true;
+        return false;
+      }
+    })
+    if (!fileExists) {
+      this.newAttachments.push(newFile);
+      this.attachments.push(newFile);
+    } else {
+      alert(`File with Name: "${newFile.name}" alredy attached.`);
+    }
+  }
+
+  onRemoveAttachment(removedFile: any) {
+    this.attachments = this.attachments.filter((item: any) => {
+      return item.name != removedFile.name;
+    });
+
+    this.newAttachments = this.newAttachments.filter((item: any) => {
+      return item.name != removedFile.name;
+    });
+
+    if (this.itemID) {
+      this._DataService.deleteAttachemnt(this.itemID, removedFile.name).then(data => {
+        console.log("File deleted");
+      }, error => {
+        console.log(`Error occured in file deletion : ${error}`);
+      });
+    }
   }
 
   onSubmit(formValues) {
@@ -289,16 +361,17 @@ export class SheqComponent implements OnInit {
     sheq.CustomerContact = this.sheqForm.get("contactNumber").value;
     sheq.ComplaintDetails = this.sheqForm.get("complaintDetails").value;
 
-    $.each(this.sheqForm.controls.products.value, (i, control) => {
-      var index = i + 1;
-      sheq['PackCode' + index] = control["packCode"];
-      sheq['ProductDescription' + index] = control["productDescription"];
-      sheq['BatchDetails' + index] = control['batchDetails'];
-      sheq['QuantityUnits' + index] = control["quantityUnit"];
-      sheq['QuantityShrink' + index] = control["quantityShrink"];
-      sheq['QuantityCases' + index] = control["quantityCases"];
-      sheq['QuantityPallet' + index] = control["quantityPallet"];
-    });
+    for (var index = 1; index <= 5; index++) {
+      let control = this.sheqForm.controls.products.value[index - 1];
+      sheq['PackCode' + index] = control ? control["packCode"] : '';
+      sheq['ProductDescription' + index] = control ? control["productDescription"] : '';
+      sheq['BatchDetails' + index] = control ? control['batchDetails'] : '';
+      sheq['QuantityUnits' + index] = control ? control["quantityUnit"] : '';
+      sheq['QuantityShrink' + index] = control ? control["quantityShrink"] : '';
+      sheq['QuantityCases' + index] = control ? control["quantityCases"] : '';
+      sheq['QuantityPallet' + index] = control ? control["quantityPallet"] : '';
+    }
+
     sheq.RootCause = this.sheqForm.get("rootCause").value;
     sheq.ActionTaken = this.sheqForm.get("actionTaken").value;
     sheq.ReasonCode = this.sheqForm.get("reasonCode").value;
@@ -308,16 +381,24 @@ export class SheqComponent implements OnInit {
     sheq.Level4LookupId = +this.sheqForm.get("level4").value;
     sheq.Explanation = this.sheqForm.get("explanation").value;
     sheq.ContentTypeId = "0x0100376BE29451A1A848B7458189992EFFE6";
-
-    this._DataService.addOrUpdateSheqItem(sheq).then(data => {
-      console.log(data);
-      alert("Data submitted successfully.");
+    sheq.ComplaintStatus = this.sheqForm.get("complaintStatus").value;
+    var self = this;
+    var complaintID;
+    this._DataService.addOrUpdateSheqItem(sheq).then((data: any) => {
+      var currentItemID = this.itemID || data.data.ID;
+      complaintID = this._DataService.generateComplaintID(currentItemID, 5, "SHEQ");
+      if (this.newAttachments.length) {
+        this._DataService.addAttachment(currentItemID, this.newAttachments).then(response => {
+          alert(`Data submitted successfully. ${complaintID} is your complaint ID for future reference.`);
+        }, error => {
+          alert("Error occurred while submitting the form please resubmit.");
+        });
+      } else {
+        alert(`Data submitted successfully. ${complaintID} is your complaint ID for future reference.`);
+      }
     }, error => {
       console.log(error);
       alert("Error occurred while submitting the form please resubmit.");
     });
-
-
-
   }
 }
