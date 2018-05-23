@@ -38,6 +38,10 @@ export class Nca {
     InvoiceValue: string;
     ContentTypeId: string;
     ApproverComments: string;
+    ComplaintID: string;
+    ScaApprover: string;
+    SubmittedOn: string;
+    ApproverName: any[];
     
 }
 

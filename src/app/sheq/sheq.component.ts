@@ -199,6 +199,9 @@ export class SheqComponent implements OnInit {
                       controls.userControls.enable();
                       controls.scaControls.enable();
                       controls.complaintStatus.enable();
+                      if (userType.indexOf(Constants.Globals.UPLIFT_RESPONSIBLE_PERSON) > -1) {
+                        controls.responsiblePersonControls.enable();
+                      }
                       controls.buttons.enable();
                       if (complaint.ComplaintStatus != '') {
                         this.scaControlsVisible = true;
@@ -518,109 +521,151 @@ export class SheqComponent implements OnInit {
     return controlName ? ((val = this.sheqForm.get(controlName).value) ? val : '') : '';
   }
 
-  updateData() {
-    this.sheqForm.controls.buttons.disable();
-    var self = this;
-    var sheq = new Sheq();
-    var complaintID;
-    let control: any;
-    var responsiblePersons = [];
-    sheq.ID = self.itemID || 0;
-
-    if (this.userType.indexOf(Constants.Globals.UPLIFT_USER) > -1) {
-      sheq.DateOfIncident = this.getISODate(this.getControlValue("userControls.dateOfIncident")) || new Date().toISOString();
-      sheq.CustomerNumber = this.getControlValue("userControls.customerNumber");
-      sheq.CustomerName = this.getControlValue("userControls.customerName");
-      sheq.CustomerContactName = this.getControlValue("userControls.contactPerson");
-      sheq.CustomerContactDesignation = this.getControlValue("userControls.contactPersonDesignation");
-      sheq.CustomerContact = this.getControlValue("userControls.contactNumber");
-      sheq.ComplaintDetails = this.getControlValue("userControls.complaintDetails");
-      sheq.Level1LookupId = +this.getControlValue("userControls.level1");
-      sheq.Level2LookupId = +this.getControlValue("userControls.level2");
-      sheq.Level3LookupId = +this.getControlValue("userControls.level3");
-      sheq.Level4LookupId = +this.getControlValue("userControls.level4");
-      sheq.Explanation = this.getControlValue("userControls.explanation");
-      for (var index = 1; index <= 5; index++) {
-        control = self.products.controls[index - 1];
-        control = control ? control.controls : null;
-        sheq['PackCode' + index] = control ? control["packCode"].value : '';
-        sheq['ProductDescription' + index] = control ? control["productDescription"].value : '';
-        sheq['BatchDetails' + index] = control ? control['batchDetails'].value : '';
-        sheq['QuantityUnits' + index] = control ? control["quantityUnit"].value.toString() : '';
-        sheq['QuantityShrink' + index] = control ? control["quantityShrink"].value.toString() : '';
-        sheq['QuantityCases' + index] = control ? control["quantityCases"].value.toString() : '';
-        sheq['QuantityPallet' + index] = control ? control["quantityPallet"].value.toString() : '';
+  updateComplaintID(id: number, ComplaintID: string) {
+    return new Promise((resolve, reject) => {
+      var obj = {
+        ID: id,
+        ComplaintID: ComplaintID
       }
-    }
-    if (this.userType.indexOf(Constants.Globals.UPLIFT_SCA) > -1) {
-      sheq.SiteName = this.getControlValue("scaControls.productionSite");
-      responsiblePersons = this.getControlValue("scaControls.personResponsible");
-      if (responsiblePersons) {
-        responsiblePersons = $.map(responsiblePersons, r => +r);
-        sheq.PersonResponsibleId = { results: responsiblePersons };
-      }
-    }
-    if (this.userType.indexOf(Constants.Globals.UPLIFT_APPROVER) > -1) {
-      sheq.ApprovalStatus = this.getControlValue("approverControls.approvalStatus");
-      sheq.InvoiceNumber = this.getControlValue("approverControls.invoiceNumber");
-      sheq.InvoiceValue = this.getControlValue("approverControls.invoiceValue");
-      sheq.ApproverComments = this.getControlValue("approverControls.comments");
-      sheq.LastDeliveryDate = this.getISODate(this.getControlValue("approverControls.lastDeliveryDate")) || new Date().toISOString();
-    }
-    if (this.userType.indexOf(Constants.Globals.UPLIFT_RESPONSIBLE_PERSON) > -1) {
-      sheq.RootCause = this.getControlValue("responsiblePersonControls.rootCause");
-      sheq.ActionTaken = this.getControlValue("responsiblePersonControls.actionTaken");
-      sheq.ReasonCode = this.getControlValue("responsiblePersonControls.reasonCode");
-    }
-
-    if(sheq.ApprovalStatus.toLowerCase() == Constants.Globals.NO){
-      sheq.ComplaintStatus = Constants.Globals.REJECTED;
-    } else{
-      sheq.ComplaintStatus = this.getControlValue("complaintStatus") || Constants.Globals.SUBMITTED;
-    }
-
-    
-    sheq.ContentTypeId = Constants.Globals.sheqContentTypeID;
-    console.log(sheq);
-
-
-    self._DataService.addOrUpdateItem(sheq).then((data: any) => {
-      var currentItemID = self.itemID || data.data.ID;
-      complaintID = self._DataService.generateComplaintID(currentItemID, 5, "SHEQ");
-      if (self.newAttachments.length) {
-        self._DataService.addAttachment(currentItemID, self.newAttachments).then(response => {
-          self.sheqForm.controls.buttons.enable();
-
-          alert(`Data submitted successfully. ${complaintID} is your complaint ID for future reference.`);
-        }, error => {
-          alert("Error occurred while submitting the form please resubmit.");
-          self.sheqForm.controls.buttons.enable();
-        });
-      } else {
-        alert(`Data submitted successfully. ${complaintID} is your complaint ID for future reference.`);
-        self.sheqForm.controls.buttons.enable();
-      }
-
-      if (!self._utils.getUrlParameters("ID")) {
-        window.location.href = window.location.href.replace('?', `?ID=${currentItemID}&`);
-      } else {
-        window.location.href = window.location.href;
-      }
-
-    }, error => {
-      console.log(error);
-      alert("Error occurred while submitting the form please resubmit.");
-      self.sheqForm.controls.buttons.enable();
+      this._DataService.addOrUpdateItem(obj).then((data: any) => {
+        resolve(data);
+      }, err => {
+        console.log(err);
+        alert("Error occurred while submitting the form please resubmit.");
+      });
     });
   }
 
+  onCancel() {
+    let source = this._utils.getUrlParameters("Source");
+    window.location.href = source;
+  }
+
+  updateData() {
+    return new Promise((resolve, reject) => {
+      var self = this;
+      var sheq = new Sheq();
+      var complaintID;
+      let control: any;
+      var responsiblePersons = [];
+      sheq.ID = self.itemID || 0;
+      if (this.userType.indexOf(Constants.Globals.UPLIFT_USER) > -1) {
+        sheq.DateOfIncident = this.getISODate(this.getControlValue("userControls.dateOfIncident")) || new Date().toISOString();
+        sheq.CustomerNumber = this.getControlValue("userControls.customerNumber");
+        sheq.CustomerName = this.getControlValue("userControls.customerName");
+        sheq.CustomerContactName = this.getControlValue("userControls.contactPerson");
+        sheq.CustomerContactDesignation = this.getControlValue("userControls.contactPersonDesignation");
+        sheq.CustomerContact = this.getControlValue("userControls.contactNumber");
+        sheq.ComplaintDetails = this.getControlValue("userControls.complaintDetails");
+        sheq.Level1LookupId = +this.getControlValue("userControls.level1");
+        sheq.Level2LookupId = +this.getControlValue("userControls.level2");
+        sheq.Level3LookupId = +this.getControlValue("userControls.level3");
+        sheq.Level4LookupId = +this.getControlValue("userControls.level4");
+        sheq.Explanation = this.getControlValue("userControls.explanation");
+        for (var index = 1; index <= 5; index++) {
+          control = self.products.controls[index - 1];
+          control = control ? control.controls : null;
+          sheq['PackCode' + index] = control ? control["packCode"].value : '';
+          sheq['ProductDescription' + index] = control ? control["productDescription"].value : '';
+          sheq['BatchDetails' + index] = control ? control['batchDetails'].value : '';
+          sheq['QuantityUnits' + index] = control && control["quantityUnit"].value ?
+            control["quantityUnit"].value.toString() : '';
+          sheq['QuantityShrink' + index] = control && control["quantityShrink"].value ?
+            control["quantityShrink"].value.toString() : '';
+          sheq['QuantityCases' + index] = control && control["quantityCases"].value ?
+            control["quantityCases"].value.toString() : '';
+          sheq['QuantityPallet' + index] = control && control["quantityPallet"].value ?
+            control["quantityPallet"].value.toString() : '';
+        }
+      }
+      if (this.userType.indexOf(Constants.Globals.UPLIFT_SCA) > -1) {
+        sheq.SiteName = this.getControlValue("scaControls.productionSite");
+        responsiblePersons = this.getControlValue("scaControls.personResponsible");
+        if (responsiblePersons) {
+          responsiblePersons = $.map(responsiblePersons, r => +r);
+          sheq.PersonResponsibleId = { results: responsiblePersons };
+        }
+      }
+      if (this.userType.indexOf(Constants.Globals.UPLIFT_APPROVER) > -1) {
+        sheq.ApprovalStatus = this.getControlValue("approverControls.approvalStatus");
+        sheq.InvoiceNumber = this.getControlValue("approverControls.invoiceNumber");
+        sheq.InvoiceValue = this.getControlValue("approverControls.invoiceValue");
+        sheq.ApproverComments = this.getControlValue("approverControls.comments");
+        sheq.LastDeliveryDate = this.getISODate(this.getControlValue("approverControls.lastDeliveryDate")) || new Date().toISOString();
+      }
+      if (this.userType.indexOf(Constants.Globals.UPLIFT_RESPONSIBLE_PERSON) > -1) {
+        sheq.RootCause = this.getControlValue("responsiblePersonControls.rootCause");
+        sheq.ActionTaken = this.getControlValue("responsiblePersonControls.actionTaken");
+        sheq.ReasonCode = this.getControlValue("responsiblePersonControls.reasonCode");
+      }
+
+      if (sheq.ApprovalStatus.toLowerCase() == Constants.Globals.NO) {
+        sheq.ComplaintStatus = Constants.Globals.REJECTED;
+      } else {
+        sheq.ComplaintStatus = this.getControlValue("complaintStatus") || Constants.Globals.SUBMITTED;
+      }
+
+      sheq.SubmittedOn = new Date().toISOString();
+      sheq.ContentTypeId = Constants.Globals.sheqContentTypeID;
+      console.log(sheq);
+      self._DataService.addOrUpdateItem(sheq).then((data: any) => {
+        var currentItemID = self.itemID || data.data.ID;
+        complaintID = self._DataService.generateComplaintID(currentItemID, 5, "SHEQ");
+        if (self.newAttachments.length) {
+          self._DataService.addAttachment(currentItemID, self.newAttachments).then(response => {
+            this.updateComplaintID(currentItemID, complaintID).then(d => {
+              resolve({ id: currentItemID, complaintID: complaintID });
+            })
+          }, error => {
+            reject(error);
+          });
+        } else {
+          this.updateComplaintID(currentItemID, complaintID).then(d => {
+            resolve({ id: currentItemID, complaintID: complaintID });
+          })
+        }
+      }, error => {
+        console.log(error);
+        reject(error);
+      });
+    });
+  }
+
+  handleSuccess(data) {
+    this.sheqForm.controls.buttons.enable();
+    this.formLoading = true;
+    if (!this._utils.getUrlParameters("ID")) {
+      alert(`Data submitted successfully. ${data.complaintID} is your complaint ID for future reference.`);
+      window.location.href = window.location.href.replace('?', `?ID=${data.id}&`);
+    } else {
+      window.location.href = window.location.href;
+    }
+  }
+
+  handleError(data) {
+    this.sheqForm.controls.buttons.enable();
+    this.formLoading = true;
+    alert(`Following error occured while submitting the form : \n err`);
+  }
+
   onSubmit() {
+    var self = this;
+    this.sheqForm.controls.buttons.disable();
+    this.formLoading = true;
     if (this.userType.length > 0) {
-      this.updateData();
+      this.updateData().then(data => {
+        this.handleSuccess(data);
+      }, err => {
+        this.handleError(err)
+      });
     } else {
       this._DataService.getCurrentUserType([]).then((userType: string[]) => {
         this.userType = userType;
-        this.updateData();
+        this.updateData().then(data => {  
+          this.handleSuccess(data);
+        }, err => {
+          this.handleError(err);
+        })
       });
     }
   }

@@ -73,4 +73,8 @@ export class Sheq {
     QuantityUnit: string;
     RemedyNumber: string;
     DeliveryNumber: string;
+    ComplaintID?: string;
+    ScaApprover?: string;
+    SubmittedOn?: string;
+    ApproverName?: any[];
 }

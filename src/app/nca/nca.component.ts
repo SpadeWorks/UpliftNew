@@ -178,14 +178,8 @@ export class NcaComponent implements OnInit {
                         this.scaControlsVisible = true;
                       }
 
-                      if (complaint.ComplaintStatus == Constants.Globals.ASSIGNED &&
-                        complaint.ApprovalStatus == Constants.Globals.YES) {
-                        this.approverControlsVisible = true;
-                      }
-
                       if (complaint.ComplaintStatus != Constants.Globals.SUBMITTED &&
-                        complaint.ComplaintStatus != Constants.Globals.ASSIGNED &&
-                        complaint.ApprovalStatus == Constants.Globals.YES) {
+                        complaint.ComplaintStatus != Constants.Globals.ASSIGNED) {
                         this.responsiblePersongsControlVisible = true;
                       }
 
@@ -195,18 +189,8 @@ export class NcaComponent implements OnInit {
                       controls.responsiblePersonControls.enable();
                       controls.buttons.enable();
                       controls.complaintStatus.enable();
-                      if (complaint.ComplaintStatus == Constants.Globals.ASSIGNED &&
-                        complaint.ApprovalStatus == Constants.Globals.YES) {
+                      if (complaint.ComplaintStatus != Constants.Globals.SUBMITTED) {
                         this.responsiblePersongsControlVisible = true;
-                      }
-                    }
-
-                    if (userType.indexOf(Constants.Globals.UPLIFT_APPROVER) > -1) {
-                      this.ncaForm.disable();
-                      controls.approverControls.enable();
-                      controls.buttons.enable();
-                      if (complaint.ComplaintStatus == Constants.Globals.ASSIGNED) {
-                        this.approverControlsVisible = true;
                       }
                     }
 
@@ -490,93 +474,113 @@ export class NcaComponent implements OnInit {
     return controlName ? ((val = this.ncaForm.get(controlName).value) ? val : '') : '';
   }
 
+  onCancel() {
+    let source = this._utils.getUrlParameters("Source");
+    window.location.href = source;
+  }
+
   updateData() {
-    this.ncaForm.controls.buttons.disable();
-    var self = this;
-    var nca = new Nca();
-    var complaintID;
-    let control: any;
-    var responsiblePersons = [];
-    nca.ID = self.itemID || 0;
+    return new Promise((resolve, reject) => {
+      var self = this;
+      var nca = new Nca();
+      var complaintID;
+      let control: any;
+      var responsiblePersons = [];
+      nca.ID = self.itemID || 0;
 
-    if (this.userType.indexOf(Constants.Globals.UPLIFT_USER) > -1) {
-      nca.DateOfIncident = this.getISODate(this.getControlValue("userControls.dateOfIncident")) || new Date().toISOString();
-      nca.PlantNumber = this.getControlValue("userControls.plantNumber");
-      nca.PlantName = this.getControlValue("userControls.plantName");
-      nca.PlantContactName = this.getControlValue("userControls.plantContactName");
-      nca.CustomerNumber = this.getControlValue("userControls.customerNumber");
-      nca.CustomerName = this.getControlValue("userControls.customerName");
-      nca.ComplaintDetails = this.getControlValue("userControls.complaintDetails");
-      nca.PackCode1 = this.getControlValue("userControls.packCode1");
-      nca.ProductDescription1 = this.getControlValue("userControls.productDescription1");
-      nca.BBEExpiry = this.getISODate(this.getControlValue("userControls.expiryDate")) || new Date().toISOString();
-      nca.Quantity = this.getControlValue("userControls.quantity").toString();
-      nca.QuantityUnit = this.getControlValue("userControls.quantityUnit");
-      nca.RemedyNumber = this.getControlValue("userControls.remedyNumber");
-      nca.DeliveryNumber = this.getControlValue("userControls.deliveryNumber");
-      nca.QuantityUnit = this.getControlValue("userControls.quantityUnit");
-      nca.Level1LookupId = +this.getControlValue("userControls.level1");
-      nca.Level2LookupId = +this.getControlValue("userControls.level2");
-      nca.Level3LookupId = +this.getControlValue("userControls.level3");
-      nca.Level4LookupId = +this.getControlValue("userControls.level4");
-      nca.Explanation = this.getControlValue("userControls.explanation");
-    }
-    if (this.userType.indexOf(Constants.Globals.UPLIFT_SCA) > -1) {
-      nca.SiteName = this.getControlValue("scaControls.productionSite");
-      responsiblePersons = this.getControlValue("scaControls.personResponsible");
-      if (responsiblePersons) {
-        responsiblePersons = $.map(responsiblePersons, r => +r);
-        nca.PersonResponsibleId = { results: responsiblePersons };
+      if (this.userType.indexOf(Constants.Globals.UPLIFT_USER) > -1) {
+        nca.DateOfIncident = this.getISODate(this.getControlValue("userControls.dateOfIncident")) || new Date().toISOString();
+        nca.PlantNumber = this.getControlValue("userControls.plantNumber");
+        nca.PlantName = this.getControlValue("userControls.plantName");
+        nca.PlantContactName = this.getControlValue("userControls.plantContactName");
+        nca.CustomerNumber = this.getControlValue("userControls.customerNumber");
+        nca.CustomerName = this.getControlValue("userControls.customerName");
+        nca.ComplaintDetails = this.getControlValue("userControls.complaintDetails");
+        nca.PackCode1 = this.getControlValue("userControls.packCode1");
+        nca.ProductDescription1 = this.getControlValue("userControls.productDescription1");
+        nca.BBEExpiry = this.getISODate(this.getControlValue("userControls.expiryDate")) || new Date().toISOString();
+        nca.Quantity = this.getControlValue("userControls.quantity").toString();
+        nca.QuantityUnit = this.getControlValue("userControls.quantityUnit");
+        nca.RemedyNumber = this.getControlValue("userControls.remedyNumber");
+        nca.DeliveryNumber = this.getControlValue("userControls.deliveryNumber");
+        nca.QuantityUnit = this.getControlValue("userControls.quantityUnit");
+        nca.Level1LookupId = +this.getControlValue("userControls.level1");
+        nca.Level2LookupId = +this.getControlValue("userControls.level2");
+        nca.Level3LookupId = +this.getControlValue("userControls.level3");
+        nca.Level4LookupId = +this.getControlValue("userControls.level4");
+        nca.Explanation = this.getControlValue("userControls.explanation");
       }
-    }
-    if (this.userType.indexOf(Constants.Globals.UPLIFT_RESPONSIBLE_PERSON) > -1) {
-      nca.RootCause = this.getControlValue("responsiblePersonControls.rootCause");
-      nca.ActionTaken = this.getControlValue("responsiblePersonControls.actionTaken");
-      nca.ReasonCode = this.getControlValue("responsiblePersonControls.reasonCode");
-    }
-
-    nca.ComplaintStatus = this.getControlValue("complaintStatus") || "Submitted";
-    nca.ContentTypeId = Constants.Globals.ncaContentTypeID;
-    console.log(nca);
-
-
-    self._DataService.addOrUpdateItem(nca).then((data: any) => {
-      var currentItemID = self.itemID || data.data.ID;
-      complaintID = self._DataService.generateComplaintID(currentItemID, 5, "nca");
-      if (self.newAttachments.length) {
-        self._DataService.addAttachment(currentItemID, self.newAttachments).then(response => {
-          self.ncaForm.controls.buttons.enable();
-
-          alert(`Data submitted successfully. ${complaintID} is your complaint ID for future reference.`);
-        }, error => {
-          alert("Error occurred while submitting the form please resubmit.");
-          self.ncaForm.controls.buttons.enable();
-        });
-      } else {
-        alert(`Data submitted successfully. ${complaintID} is your complaint ID for future reference.`);
+      if (this.userType.indexOf(Constants.Globals.UPLIFT_SCA) > -1) {
+        nca.SiteName = this.getControlValue("scaControls.productionSite");
+        responsiblePersons = this.getControlValue("scaControls.personResponsible");
+        if (responsiblePersons) {
+          responsiblePersons = $.map(responsiblePersons, r => +r);
+          nca.PersonResponsibleId = { results: responsiblePersons };
+        }
+      }
+      if (this.userType.indexOf(Constants.Globals.UPLIFT_RESPONSIBLE_PERSON) > -1) {
+        nca.RootCause = this.getControlValue("responsiblePersonControls.rootCause");
+        nca.ActionTaken = this.getControlValue("responsiblePersonControls.actionTaken");
+        nca.ReasonCode = this.getControlValue("responsiblePersonControls.reasonCode");
+      }
+      nca.ComplaintStatus = this.getControlValue("complaintStatus") || "Submitted";
+      nca.ContentTypeId = Constants.Globals.ncaContentTypeID;
+      console.log(nca);
+      self._DataService.addOrUpdateItem(nca).then((data: any) => {
+        var currentItemID = self.itemID || data.data.ID;
+        complaintID = self._DataService.generateComplaintID(currentItemID, 5, "nca");
+        if (self.newAttachments.length) {
+          self._DataService.addAttachment(currentItemID, self.newAttachments).then(response => {
+            resolve({ id: currentItemID, complaintID: complaintID });
+          }, error => {
+            reject(error);
+          });
+        } else {
+          resolve({ id: currentItemID, complaintID: complaintID });
+        }
+      }, error => {
+        console.log(error);
+        alert("Error occurred while submitting the form please resubmit.");
         self.ncaForm.controls.buttons.enable();
-      }
+      });
+    })
+  }
 
-      if (!self._utils.getUrlParameters("ID")) {
-        window.location.href = window.location.href.replace('?', `?ID=${currentItemID}&`);
-      } else {
-        window.location.href = window.location.href;
-      }
+  handleSuccess(data) {
+    this.ncaForm.controls.buttons.enable();
+    this.formLoading = true;
+    if (!this._utils.getUrlParameters("ID")) {
+      alert(`Data submitted successfully. ${data.complaintID} is your complaint ID for future reference.`);
+      window.location.href = window.location.href.replace('?', `?ID=${data.id}&`);
+    } else {
+      window.location.href = window.location.href;
+    }
+  }
 
-    }, error => {
-      console.log(error);
-      alert("Error occurred while submitting the form please resubmit.");
-      self.ncaForm.controls.buttons.enable();
-    });
+  handleError(data) {
+    this.ncaForm.controls.buttons.enable();
+    this.formLoading = true;
+    alert(`Following error occured while submitting the form : \n err`);
   }
 
   onSubmit() {
+    var self = this;
+    this.ncaForm.controls.buttons.disable();
+    this.formLoading = true;
     if (this.userType.length > 0) {
-      this.updateData();
+      this.updateData().then(data => {
+        this.handleSuccess(data);
+      }, err => {
+        this.handleError(err)
+      });
     } else {
       this._DataService.getCurrentUserType([]).then((userType: string[]) => {
         this.userType = userType;
-        this.updateData();
+        this.updateData().then(data => {  
+          this.handleSuccess(data);
+        }, err => {
+          this.handleError(err);
+        })
       });
     }
   }

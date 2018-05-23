@@ -1,14 +1,25 @@
 <div *ngIf="formLoading" class="loader-container"> 
     <loaders-css [loader]="'ball-spin-fade-loader'" [loaderClass]="'my-loader'" ></loaders-css>
 </div>
-
-<form [formGroup]="sheqForm" *ngIf="!formLoading">
+<form [formGroup]="sheqForm">
   <div class="SheqFormWrap">
     <div class="col-xs-12 col-md-2 col-sm-2">
       <span class="addCompTxt">Add a new complaint</span>
     </div>
     <div class="col-xs-12 col-md-10 col-sm-10 SheqFormFieldsWrap">
       <div data-type="complaint-form" formGroupName="userControls">
+        <div class="row complaintStatus">
+          <div class="col-xs-12 col-md-4 col-sm-4 form-group" *ngIf="complaintStatusVisible">
+            <span>Current Complaint Status: </span>
+            <span [ngClass]="{'StateResolvd': complaintStatus == 'Resolved',
+                              'StateDrafted': complaintStatus == 'Drafted',
+                              'StateSubmitted': complaintStatus == 'Submitted',
+                              'StateAssigned': complaintStatus == 'Assigned',
+                              'StateWIP': complaintStatus == 'WIP',
+                              'StatePending': complaintStatus == 'Pending',
+                              'StateRejected': complaintStatus == 'Rejected'}" formGroupName="complaintStatus">Resolved</span>
+          </div>
+        </div>
         <div class="row">
           <div class="col-xs-12 col-md-4 col-sm-4 form-group">
             <label class="form-label">Date of Incident</label>
@@ -122,9 +133,7 @@
             </a>
           </div>
         </div>
-        <br/>
-          <br/>
-            <br/>
+
               <div class="row">
                 <div class="col-xs-12 col-md-4 col-sm-4 form-group">
                   <label class="form-label">Level 1</label>
@@ -277,9 +286,8 @@
               <div class="row">
                 <div class="col-xs-12 col-md-8 col-sm-8 form-group">
                   <label class="form-label">Reason Code</label>
-                  <div class="ulSelectOutter" *ngIf="!isReasonCodeDisabled">
+                  <div class="ulSelectOutter">
                     <select class="ulSelect"
-                      [disableControl]="isReasonCodeDisabled"
                       formControlName="reasonCode">
                       <option *ngFor="let reasonCode of reasonCodes"
                         value="{{reasonCode.value}}">{{ reasonCode.label }}</option>
@@ -316,7 +324,7 @@
             <div class="row" formGroupName="buttons">
               <div class="col-xs-12 col-md-12 col-sm-12 form-group">
                 <input type="button" class="ulBtn ulCancelBtn" value="Cancel"
-                  formControlName="cancel" />
+                  formControlName="cancel" (click)="onCancel()"/>
                 <input type="button" class="ulBtn ulSubmitBtn" value="Submit"
                   (click)="onSubmit()" formControlName="save" />
               </div>

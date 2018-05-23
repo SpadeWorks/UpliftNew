@@ -151,13 +151,17 @@ export class Globals{
     static UPLIFT_RESPONSIBLE_PERSON = "Uplift_Responsible_Persons";
     static DATE_FORMAT = 'dd.mm.yyyy';
     static SUBMITTED = "Submitted";
-    static YES = "Yes";
+    static RESOLVED = "Resolved";
+    static REJECTED = "Rejected";
     static ASSIGNED = "Assigned";
+    static WIP = "WIP";
+
+    static YES = "Yes";
+    
     static sheqContentTypeID = "0x0100376BE29451A1A848B7458189992EFFE6003CEA548302DF454C94BB323DBED7CFE6";
     static ncaContentTypeID = "0x0100FD4838C96DB49E48BCCBFEA748374DA0";
     static sheqContentType = "SHEQ_CT";
     static ncaContentType = "NCA_CT";
-    static REJECTED: "Rejected";
     static NO = "No";
      
 }

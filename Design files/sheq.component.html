@@ -2,13 +2,19 @@
   <loaders-css [loader]="'ball-spin-fade-loader'" [loaderClass]="'my-loader'"></loaders-css>
 </div>
 
-<form [formGroup]="ncaForm" >
+<form [formGroup]="sheqForm" *ngIf="!formLoading">
   <div class="SheqFormWrap">
     <div class="col-xs-12 col-md-2 col-sm-2">
       <span class="addCompTxt">Add a new complaint</span>
     </div>
     <div class="col-xs-12 col-md-10 col-sm-10 SheqFormFieldsWrap">
       <div data-type="complaint-form" formGroupName="userControls">
+        <div class="row complaintStatus">
+          <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+            <span>Current Complaint Status: </span>
+            <span class="StateResolvd">Resolved</span>
+          </div>
+        </div>
         <div class="row">
           <div class="col-xs-12 col-md-4 col-sm-4 form-group">
             <label class="form-label">Date of Incident</label>
@@ -16,26 +22,6 @@
               formControlName="dateOfIncident"></my-date-picker>
           </div>
         </div>
-        <div class="row">
-          <div class="col-xs-12 col-md-4 col-sm-4 form-group">
-            <label class="form-label">Plant Number</label>
-            <input type="text" class="form-control ulTxtBox"
-              formControlName="plantNumber"
-              (blur)="onPlantNumberChange($event)"
-              />
-          </div>
-          <div class="col-xs-12 col-md-4 col-sm-4 form-group">
-            <label class="form-label">Plant Name</label>
-            <input type="text" class="form-control ulTxtBox"
-              formControlName="plantName" />
-          </div>
-          <div class="col-xs-12 col-md-4 col-sm-4 form-group">
-            <label class="form-label">Plant Contact Name</label>
-            <input type="text" class="form-control ulTxtBox"
-              formControlName="plantContactName" />
-          </div>
-        </div>
-
         <div class="row">
           <div class="col-xs-12 col-md-4 col-sm-4 form-group">
             <label class="form-label">Customer Number</label>
@@ -51,62 +37,98 @@
           </div>
         </div>
         <div class="row">
+          <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+            <label class="form-label">Contact Person</label>
+            <input type="text" class="form-control ulTxtBox"
+              formControlName="contactPerson" />
+          </div>
+          <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+            <label class="form-label">Contact Person Designation</label>
+            <input type="text" class="form-control ulTxtBox"
+              formControlName="contactPersonDesignation" />
+          </div>
+          <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+            <label class="form-label">Contact Number</label>
+            <input type="phone" class="form-control ulTxtBox"
+              formControlName="contactNumber" />
+          </div>
+        </div>
+        <div class="row">
           <div class="col-xs-12 col-md-6 col-sm-6 form-group">
             <label class="form-label">Complaint Details</label>
             <textarea class="form-control ulTxtBox"
               formControlName="complaintDetails"></textarea>
           </div>
         </div>
-        <div class="row">
-          <div class="col-xs-12 col-md-8 col-sm-8 prodDescriField">
-            <div class="col-xs-12 col-md-12 col-sm-12">
-              <label class="form-label" for="packCode1">
-                <b>Pack Code</b>
-              </label>
-              <input type="text" class="form-control ulTxtBox"
-                formControlName="packCode1" id="packCode1" />
-            </div>
-            <div class="col-xs-12 col-md-12 col-sm-12">
-              <label class="form-label" for="productDescription1">Product
-                Description</label>
-              <textarea class="form-control ulTxtBox"
-                formControlName="productDescription1" id="productDescription1"></textarea>
-            </div>
-            <div class="col-xs-12 col-md-12 col-sm-12">
-                <label class="form-label" for="expiryDate">Expiry Date</label>
-            <my-date-picker name="expiryDate" [options]="myDatePickerOptions"
-              formControlName="expiryDate" id="expiryDate"></my-date-picker>
+        <div formArrayName="products" *ngFor="let product of products.controls;
+          let i=index">
+          <div class="row" [formGroupName]="i">
 
-            </div>
-            <div class="col-xs-12 col-md-6 col-sm-6">
-              <label class="form-label" for="quantity">Quantity</label>
-              <input type="number" class="form-control ulTxtBox"
-                formControlName="quantity" id="quantity" />
-            </div>
-            <div class="col-xs-12 col-md-6 col-sm-6">
-              <label class="form-label">&nbsp;</label>
-              <div class="ulSelectOutter">
-                <select class="ulSelect" formControlName="quantityUnit" >
-                  <option *ngFor="let option of quantityOptions"
-                    value="{{option.value}}">{{option.label }}</option>
-                </select>
+            <div class="col-xs-12 col-md-8 col-sm-8 prodDescriField">
+              <div class="text-right removePackCode">
+                <input type="button" value="X" (click)="onRemovePackCode(i)" />
+              </div>
+              <div class="col-xs-12 col-md-12 col-sm-12">
+                <label class="form-label" attr.for="{{'packCodeID' + i}}">
+                  <b>Pack Code {{i+1}}</b>
+                </label>
+                <input type="text" class="form-control ulTxtBox"
+                  formControlName="packCode" id="{{'packCodeID' + i}}" />
+              </div>
+              <div class="col-xs-12 col-md-12 col-sm-12">
+                <label class="form-label" attr.for="{{'productDescriptionID' +
+                  i}}">Product Description</label>
+                <textarea class="form-control ulTxtBox"
+                  formControlName="productDescription"></textarea>
+              </div>
+              <div class="col-xs-12 col-md-12 col-sm-12">
+                <label class="form-label" attr.for="{{'batchDetailsID' + i}}">Batch
+                  Details
+                </label>
+                <input type="text" class="form-control ulTxtBox"
+                  formControlName="batchDetails" id="{{'batchDetailsID' + i}}"
+                  />
+              </div>
+              <div class="col-xs-12 col-md-6 col-sm-6">
+                <label class="form-label" attr.for="{{'quantityUnitID' + i}}">Quantity
+                  - Unit</label>
+                <input type="number" class="form-control ulTxtBox"
+                  formControlName="quantityUnit" id="{{'quantityUnitID' + i}}"
+                  />
+              </div>
+              <div class="col-xs-12 col-md-6 col-sm-6">
+                <label class="form-label" attr.for="{{'quantityShrinkID' +
+                  i}}">Quantity - Shrink</label>
+                <input type="number" class="form-control ulTxtBox"
+                  formControlName="quantityShrink" id="{{'quantityShrinkID' +
+                  i}}" />
+              </div>
+              <div class="col-xs-12 col-md-6 col-sm-6">
+                <label class="form-label" attr.for="{{'quantityCasesID' +
+                  i}}">Quantity - Cases</label>
+                <input type="number" class="form-control ulTxtBox"
+                  formControlName="quantityCases" id="{{'quantityCasesID' +
+                  i}}" />
+              </div>
+              <div class="col-xs-12 col-md-6 col-sm-6">
+                <label class="form-label" attr.for="{{'quantityPalletID' +
+                  i}}">Quantity - Pallet</label>
+                <input type="number" class="form-control ulTxtBox"
+                  formControlName="quantityPallet" id="{{'quantityPalletID' +
+                  i}}" />
               </div>
             </div>
           </div>
         </div>
-
         <div class="row">
-          <div class="col-xs-12 col-md-4 col-sm-4 form-group">
-            <label class="form-label" for="remedyNumber">Remedy Number</label>
-            <input type="text" class="form-control ulTxtBox"
-              formControlName="remedyNumber" id="remedyNumber" />
-          </div>
-          <div class="col-xs-12 col-md-4 col-sm-4 form-group">
-            <label class="form-label" for="deliveryNumber">Delivery Number</label>
-            <input type="text" class="form-control ulTxtBox" id="deliveryNumber"
-              formControlName="deliveryNumber" />
+          <div class="col-xs-12 col-md-8 col-sm-8 text-right addPackCodeLink"
+            *ngIf="products.length <5">
+            <a href="javascript:;" (click)="addPackCode()">
+              <span class="addPackCode">+ Add Pack Code</span>
+            </a>
           </div>
         </div>
+
         <div class="row">
           <div class="col-xs-12 col-md-4 col-sm-4 form-group">
             <label class="form-label">Level 1</label>
@@ -210,6 +232,49 @@
           </div>
         </div>
       </div>
+
+      <div data-type="approver-form" formGroupName="approverControls"
+        *ngIf="approverControlsVisible" class="row approverCheck">
+        <label class="form-label form-labelBig">Approval Check</label>
+        <div class="col-xs-12 col-md-8 col-sm-8 prodDescriField">
+          <div class="row">
+            <div class="col-xs-12 col-md-6 col-sm-6">
+              <label class="form-label">Invoice Number</label>
+              <input type="text" class="form-control ulTxtBox"
+                formControlName="invoiceNumber" />
+            </div>
+            <div class="col-xs-12 col-md-6 col-sm-6">
+              <label class="form-label">Invoice Value</label>
+              <input type="text" class="form-control ulTxtBox"
+                formControlName="invoiceValue" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-md-6 col-sm-6">
+              <label class="form-label">Last Delivery Date</label>
+              <my-date-picker name="mydate"
+                [options]="myDatePickerOptions"
+                formControlName="lastDeliveryDate"></my-date-picker>
+            </div>
+            <div class="col-xs-12 col-md-6 col-sm-6">
+              <label class="form-label">Approved</label>
+              <div class="ulSelectOutter">
+                <select class="ulSelect" formControlName="approvalStatus">
+                  <option *ngFor="let option of approvalStatusOptions"
+                    value="{{option.value}}">{{ option.label }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-md-12 col-sm-12">
+              <label class="form-label">Comments</label>
+              <textarea class="form-control ulTxtBox"
+                formControlName="comments"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
       <div data-type="responsible-person-form"
         formGroupName="responsiblePersonControls"
         *ngIf="responsiblePersongsControlVisible">
@@ -254,7 +319,7 @@
       </div>
       <div class="row" formGroupName="buttons">
         <div class="col-xs-12 col-md-12 col-sm-12 form-group">
-          <input type="button" class="ulBtn ulCancelBtn" value="Cancel" (click)="onCanel()"
+          <input type="button" class="ulBtn ulCancelBtn" value="Cancel"
             formControlName="cancel" />
           <input type="button" class="ulBtn ulSubmitBtn" value="Submit"
             (click)="onSubmit()" formControlName="save" />
