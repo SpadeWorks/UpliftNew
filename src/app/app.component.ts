@@ -24,4 +24,18 @@ export class AppComponent implements OnInit {
       this.isSheq = false;
     }
   }
+
+  addNCA(){
+    window.location.href = (<any>window)._spPageContextInfo.siteAbsoluteUrl + 
+                            "/Pages/Complaint.aspx?" +
+                            "Source=" + window.location.href.split("?")[0] + 
+                            "&ContentTypeId=" + Constants.Globals.ncaContentTypeID;
+  }
+
+  addSheq(){
+    window.location.href = (<any>window)._spPageContextInfo.siteAbsoluteUrl + 
+                            "/Pages/Complaint.aspx?" +
+                            "Source=" + window.location.href.split("?")[0] + 
+                            "&ContentTypeId=" + Constants.Globals.sheqContentTypeID;
+  }
 }
