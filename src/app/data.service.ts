@@ -94,6 +94,17 @@ ${Constants.Complaints.INVOICE_VALUE},\
 ${Constants.Complaints.LAST_DELIVERY_DATE},\
 ${Constants.Complaints.ROOT_CAUSE},\
 ${Constants.Complaints.ACTION_TAKEN},\
+${Constants.Complaints.Approver_Comments},\
+${Constants.Complaints.PLANT_NAME},\
+${Constants.Complaints.PLANT_NUMBER},\
+${Constants.Complaints.PLANT_CONTACT_NAME},\
+${Constants.Complaints.PACKCODE1},\
+${Constants.Complaints.PRODUCTDESCRIPTION1},\
+${Constants.Complaints.BBE_EXPIRY},\
+${Constants.Complaints.QUANTITY},\
+${Constants.Complaints.QUANTITY_UNIT},\
+${Constants.Complaints.REMEDY_NUMBER},\
+${Constants.Complaints.DELIVERY_NUMBER},\
 ${Constants.Complaints.APPROVAL_STATUS}`)
         .expand(`${Constants.Complaints.LEVEL1_LOOKUP},\
 ${Constants.Complaints.LEVEL2_LOOKUP},\
@@ -167,9 +178,17 @@ ${Constants.Complaints.PERSON_RESPONSIBLE}`)
             RootCause: c[Constants.Complaints.ROOT_CAUSE],
             ActionTaken: c[Constants.Complaints.ACTION_TAKEN],
             ApprovalStatus: c[Constants.Complaints.APPROVAL_STATUS],
-            ContentTypeId: c[Constants.Complaints.CONTENT_TYPE_ID]
+            ContentTypeId: c[Constants.Complaints.CONTENT_TYPE_ID],
+            ApproverComments: c[Constants.Complaints.Approver_Comments],
+            PlantNumber: c[Constants.Complaints.PLANT_NUMBER],
+            PlantName: c[Constants.Complaints.PLANT_NAME],
+            PlantContactName: c[Constants.Complaints.PLANT_CONTACT_NAME],
+            BBEExpiry: c[Constants.Complaints.BBE_EXPIRY],
+            Quantity: c[Constants.Complaints.QUANTITY],
+            QuantityUnit: c[Constants.Complaints.QUANTITY_UNIT],
+            RemedyNumber: c[Constants.Complaints.REMEDY_NUMBER],
+            DeliveryNumber: c[Constants.Complaints.DELIVERY_NUMBER]
           }
-
           resolve(sheq);
         }, error => {
           this._Utils.clientLog(error);
@@ -207,6 +226,23 @@ ${Constants.Complaints.PERSON_RESPONSIBLE}`)
         .filter(`${Constants.CustomerMaster.CUSTOMER_NUMBER} eq '${customerNumber}'`)
         .get().then(customer => {
           resolve(customer);
+        }, error => {
+          this._Utils.clientLog(error);
+          reject(error);
+        })
+    });
+  }
+
+  getPlantInfo(plantNumber: string) {
+    return new Promise((resolve, reject) => {
+      pnp.sp.web.lists.getByTitle(Constants.Lists.PLANT_MASTER).items
+        .select(`${Constants.PlantMaster.PLANT_NUMBER},
+                ${Constants.PlantMaster.PLANT_NAME},
+                ${Constants.PlantMaster.PLANT_CONTACT_DESIGNATION},
+                ${Constants.PlantMaster.PLANT_CONTACT_Number}`)
+        .filter(`${Constants.PlantMaster.PLANT_NUMBER} eq '${plantNumber}'`)
+        .get().then(plant => {
+          resolve(plant);
         }, error => {
           this._Utils.clientLog(error);
           reject(error);
@@ -319,13 +355,13 @@ ${Constants.Complaints.PERSON_RESPONSIBLE}`)
     });
   }
 
-  addOrUpdateSheqItem(sheq: Sheq) {
+  addOrUpdateItem(item: any) {
     return new Promise((resolve, reject) => {
       var promise;
-      if (sheq.ID > 0) {
-        promise = pnp.sp.web.lists.getByTitle(Constants.Lists.COMPLAINTS).items.getById(sheq.ID).update(sheq);
+      if (item.ID > 0) {
+        promise = pnp.sp.web.lists.getByTitle(Constants.Lists.COMPLAINTS).items.getById(item.ID).update(item);
       } else {
-        promise = pnp.sp.web.lists.getByTitle(Constants.Lists.COMPLAINTS).items.add(sheq);
+        promise = pnp.sp.web.lists.getByTitle(Constants.Lists.COMPLAINTS).items.add(item);
       }
       promise.then(data => {
         resolve(data);
@@ -363,9 +399,9 @@ ${Constants.Complaints.PERSON_RESPONSIBLE}`)
     return prefix + s;
   }
 
-  getCurrentUserType() {
+  getCurrentUserType(personResponsible: number[]) {
     return new Promise((resolve, reject) => {
-      var userType = Constants.Globals.UPLIFT_USER;
+      var userType = [Constants.Globals.UPLIFT_USER];
       pnp.sp.web.siteUsers
         .getById((<any>window)._spPageContextInfo.userId)
         .select('Id').get()
@@ -375,21 +411,27 @@ ${Constants.Complaints.PERSON_RESPONSIBLE}`)
           console.log(error);
         })
         .then(groups => {
-          $.map(groups, group => {
-            if (group.LoginName == Constants.Globals.UPLIFT_SCA) {
-              userType = Constants.Globals.UPLIFT_SCA;
-              return false;
-            }
-          });
-
-          if (userType != Constants.Globals.UPLIFT_SCA) {
+          if (groups.length) {
             $.map(groups, group => {
+              if (group.LoginName == Constants.Globals.UPLIFT_SCA) {
+                userType.push(Constants.Globals.UPLIFT_SCA);
+              }
               if (group.LoginName == Constants.Globals.UPLIFT_APPROVER) {
-                userType = Constants.Globals.UPLIFT_APPROVER;
+                userType.push(Constants.Globals.UPLIFT_APPROVER);
               }
             });
           }
-          resolve(Constants.Globals.UPLIFT_SCA);
+          if (personResponsible) {
+            $.map(personResponsible, (item, index) => {
+              if (item.ID == (<any>window)._spPageContextInfo.userId) {
+                userType.push(Constants.Globals.UPLIFT_RESPONSIBLE_PERSON);
+                return false;
+              }
+            });
+          }
+          console.log(userType);
+          resolve(userType);
+
         }, error => {
           console.log(error);
         });

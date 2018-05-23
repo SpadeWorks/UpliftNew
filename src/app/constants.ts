@@ -8,6 +8,7 @@ export class Lists {
     static LOSS_TREE_LEVEL3_MASTER = "LossTreeLevel3Master";
     static LOSS_TREE_LEVEL4_MASTER = "LossTreeLevel4Master";
     static COMPLAINTS = "Complaints";
+    static PLANT_MASTER = "PlantMaster";
 }
 
 export class SiteMaster {
@@ -20,6 +21,14 @@ export class CustomerMaster {
     static CUSTOMER_CONTACT_DESIGNATION = "CustomerContactDesignation";
     static CUSTOMER_NAME = "CustomerName";
     static CUSTOMER_NUMBER = "CustomerNumber";
+}
+
+export class PlantMaster {
+    static PLANT_CONTACT_NAME = "PlantContactName";
+    static PLANT_CONTACT_Number = "PlantContactNumber";
+    static PLANT_CONTACT_DESIGNATION = "PlantContactDesignation";
+    static PLANT_NAME = "PlantName";
+    static PLANT_NUMBER = "PlantNumber";
 }
 
 export class PackCodeMaster {
@@ -128,6 +137,9 @@ export class Complaints {
     static LAST_DELIVERY_DATE = "LastDeliveryDate";
     static COMPLAINT_STATUS = "ComplaintStatus";
     static CONTENT_TYPE_ID = "ContentTypeId";
+    static Approver_Comments = "ApproverComments";
+    static PLANT_CONTACT_NAME = "PlantContactName";
+    static QUANTITY_UNIT = "QuantityUnit";
 } 
 
 export class Globals{
@@ -138,4 +150,14 @@ export class Globals{
     static UPLIFT_USER = "Uplift_Users";
     static UPLIFT_RESPONSIBLE_PERSON = "Uplift_Responsible_Persons";
     static DATE_FORMAT = 'dd.mm.yyyy';
+    static SUBMITTED = "Submitted";
+    static YES = "Yes";
+    static ASSIGNED = "Assigned";
+    static sheqContentTypeID = "0x0100376BE29451A1A848B7458189992EFFE6003CEA548302DF454C94BB323DBED7CFE6";
+    static ncaContentTypeID = "0x0100FD4838C96DB49E48BCCBFEA748374DA0";
+    static sheqContentType = "SHEQ_CT";
+    static ncaContentType = "NCA_CT";
+    static REJECTED: "Rejected";
+    static NO = "No";
+     
 }

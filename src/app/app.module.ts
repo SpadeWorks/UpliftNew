@@ -8,6 +8,7 @@ import { DataService } from './data.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DisableControlDirective } from './shared/disable-control.directive';
 import { MyDatePickerModule } from 'mydatepicker';
+import { LoadersCssModule } from 'angular2-loaders-css';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +19,8 @@ import { MyDatePickerModule } from 'mydatepicker';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
-    MyDatePickerModule
+    MyDatePickerModule,
+    LoadersCssModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

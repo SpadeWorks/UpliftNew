@@ -1,4 +1,5 @@
-<div *ngIf="contentType == 'sheq_ct'; else elseBlock">
+
+<div *ngIf="isSheq; else elseBlock">
   <app-sheq></app-sheq>
 </div>
 <ng-template #elseBlock>

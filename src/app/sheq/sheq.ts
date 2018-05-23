@@ -64,5 +64,13 @@ export class Sheq {
     LastDeliveryDate: string;
     InvoiceValue: string;
     ContentTypeId: string;
-    
+    ApproverComments: string;
+    PlantNumber: string;
+    PlantName: string;
+    PlantContactName: string;
+    BBEExpiry: string;
+    Quantity: string;
+    QuantityUnit: string;
+    RemedyNumber: string;
+    DeliveryNumber: string;
 }
