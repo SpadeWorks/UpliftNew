@@ -1,0 +1,645 @@
+<?xml version="1.0"?>
+<pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2018/01/ProvisioningSchema">
+  <pnp:Preferences Generator="OfficeDevPnP.Core, Version=2.25.1804.1, Culture=neutral, PublicKeyToken=5e633289e95c321a" />
+  <pnp:Templates ID="CONTAINER-TEMPLATE-970B9AD4589B40C0BDCD69FD0F110704">
+    <pnp:ProvisioningTemplate ID="TEMPLATE-970B9AD4589B40C0BDCD69FD0F110704" Version="1" BaseSiteTemplate="BLANKINTERNET#0" Scope="RootSite">
+      <pnp:WebSettings RequestAccessEmail="" NoCrawl="false" WelcomePage="Pages/default.aspx" SiteLogo="" AlternateCSS="" MasterPageUrl="{masterpagecatalog}/seattle.master" CustomMasterPageUrl="{masterpagecatalog}/Unilever/UnileverDEW.master" />
+      <pnp:RegionalSettings AdjustHijriDays="0" AlternateCalendarType="None" CalendarType="Gregorian" Collation="25" FirstDayOfWeek="Sunday" FirstWeekOfYear="0" LocaleId="1033" ShowWeeks="false" Time24="false" TimeZone="13" WorkDayEndHour="5:00PM" WorkDays="62" WorkDayStartHour="8:00AM" />
+      <pnp:PropertyBagEntries>
+        <pnp:PropertyBagEntry Key="SiteCollectionGroupId7ea6ac18-29da-4de0-a918-b5a07aaaf399" Value="2102dbb9-4f02-4020-8396-94addcb8a345" Overwrite="false" />
+        <pnp:PropertyBagEntry Key="allowslistpolicy" Value="False" Overwrite="false" />
+      </pnp:PropertyBagEntries>
+      <pnp:Security>
+        <pnp:AdditionalAdministrators>
+          <pnp:User Name="i:0#.f|membership|lakshmi.avina@unileverpp.com" />
+          <pnp:User Name="i:0#.f|membership|angela.chakraborty@unileverpp.com" />
+          <pnp:User Name="c:0t.c|tenant|38e36814-2293-47eb-9335-bc4bde2b1094" />
+          <pnp:User Name="i:0#.f|membership|lakshmi.avina@unileverdev.onmicrosoft.com" />
+          <pnp:User Name="i:0#.f|membership|sandeep.parandekar@unileverpp.com" />
+          <pnp:User Name="i:0#.f|membership|prajakta.patil@unileverpp.com" />
+          <pnp:User Name="i:0#.f|membership|prajakta.patil@unileverdev.onmicrosoft.com" />
+          <pnp:User Name="i:0#.f|membership|rajagopal.rao@unileverdev.onmicrosoft.com" />
+          <pnp:User Name="i:0#.f|membership|rajagopal.rao@unileverpp.com" />
+          <pnp:User Name="c:0t.c|tenant|6123967f-d9f4-418c-beaa-3a8d4e82a9a7" />
+        </pnp:AdditionalAdministrators>
+        <pnp:Permissions>
+          <pnp:RoleDefinitions>
+            <pnp:RoleDefinition Name="Uplift_Users" Description="Read, write access on list but don't have access on system pages.">
+              <pnp:Permissions>
+                <pnp:Permission>EmptyMask</pnp:Permission>
+                <pnp:Permission>ViewListItems</pnp:Permission>
+                <pnp:Permission>AddListItems</pnp:Permission>
+                <pnp:Permission>EditListItems</pnp:Permission>
+                <pnp:Permission>OpenItems</pnp:Permission>
+                <pnp:Permission>ManagePersonalViews</pnp:Permission>
+                <pnp:Permission>Open</pnp:Permission>
+                <pnp:Permission>ViewPages</pnp:Permission>
+              </pnp:Permissions>
+            </pnp:RoleDefinition>
+          </pnp:RoleDefinitions>
+        </pnp:Permissions>
+      </pnp:Security>
+      <pnp:Navigation AddNewPagesToNavigation="true" CreateFriendlyUrlsForNewPages="true">
+        <pnp:GlobalNavigation NavigationType="Managed">
+          <pnp:ManagedNavigation TermStoreId="{sitecollectiontermstoreid}" TermSetId="{sitecollectiontermsetid:Site Navigation}" />
+        </pnp:GlobalNavigation>
+        <pnp:CurrentNavigation NavigationType="Managed">
+          <pnp:ManagedNavigation TermStoreId="{sitecollectiontermstoreid}" TermSetId="{sitecollectiontermsetid:Site Navigation}" />
+        </pnp:CurrentNavigation>
+      </pnp:Navigation>
+      <pnp:SiteFields>
+        <Field Type="Note" DisplayName="RM Classification_0" StaticName="ja7d1ef990a046bf8fd23a9597bc1656" Name="ja7d1ef990a046bf8fd23a9597bc1656" ID="{84e738c4-f85b-4bb7-b756-9a2e84b2c7ad}" ShowInViewForms="FALSE" Required="FALSE" Hidden="TRUE" CanToggleHidden="TRUE" SourceID="{821e149a-0a6c-41d9-9fab-3167e245df3e}" />
+        <Field Type="Note" DisplayName="AM_Country_0" StaticName="d408e0f8e5014cefb4a4264c50065e7c" Name="d408e0f8e5014cefb4a4264c50065e7c" ID="{b191e255-a036-4480-b3af-225a1446e823}" ShowInViewForms="FALSE" Required="FALSE" Hidden="TRUE" CanToggleHidden="TRUE" SourceID="{821e149a-0a6c-41d9-9fab-3167e245df3e}" />
+        <Field Type="Note" DisplayName="AM_Function_0" StaticName="c45c40dee4504408841b028c12c5e6c5" Name="c45c40dee4504408841b028c12c5e6c5" ID="{51c62e7a-7b12-4398-8986-c37c4be45461}" ShowInViewForms="FALSE" Required="FALSE" Hidden="TRUE" CanToggleHidden="TRUE" SourceID="{821e149a-0a6c-41d9-9fab-3167e245df3e}" />
+        <Field Type="Note" DisplayName="AM_Cluster_0" StaticName="d073b0a92dba431d9574892a7b489aa2" Name="d073b0a92dba431d9574892a7b489aa2" ID="{a15e7c4a-7926-4f6e-9f73-8dcdc89ad479}" ShowInViewForms="FALSE" Required="FALSE" Hidden="TRUE" CanToggleHidden="TRUE" SourceID="{821e149a-0a6c-41d9-9fab-3167e245df3e}" />
+        <Field Type="Note" DisplayName="AM_Sub Function_0" StaticName="d7bfb69af491413e8a070537c0c7256b" Name="d7bfb69af491413e8a070537c0c7256b" ID="{ff60e9a8-65ed-4e7c-8b84-57375c0b40e1}" ShowInViewForms="FALSE" Required="FALSE" Hidden="TRUE" CanToggleHidden="TRUE" SourceID="{821e149a-0a6c-41d9-9fab-3167e245df3e}" />
+        <Field Type="Note" DisplayName="RM Category_0" StaticName="e93f2f9793334776a42506201a52447a" Name="e93f2f9793334776a42506201a52447a" ID="{05b71d2f-396b-4e5c-a5b5-ed50e0e553ba}" ShowInViewForms="FALSE" Required="FALSE" Hidden="TRUE" CanToggleHidden="TRUE" SourceID="{821e149a-0a6c-41d9-9fab-3167e245df3e}" />
+        <Field Type="Note" DisplayName="Country_0" StaticName="h84b87854beb497a89411c9557f9237c" Name="h84b87854beb497a89411c9557f9237c" ID="{f343e6f5-6efc-4d79-965f-7771e196ced2}" ShowInViewForms="FALSE" Required="FALSE" Hidden="TRUE" CanToggleHidden="TRUE" SourceID="{821e149a-0a6c-41d9-9fab-3167e245df3e}" />
+        <Field Type="Note" DisplayName="AM_RM_Category_0" StaticName="mdad384931c04fadb2d4bcacd2f45549" Name="mdad384931c04fadb2d4bcacd2f45549" ID="{13b42803-2971-433d-a1ef-100832cb4c7d}" ShowInViewForms="FALSE" Required="FALSE" Hidden="TRUE" CanToggleHidden="TRUE" SourceID="{821e149a-0a6c-41d9-9fab-3167e245df3e}" />
+        <Field Type="Note" DisplayName="Cluster_0" StaticName="ad6c7b28ae4e4c1894dd6e4dd043554b" Name="ad6c7b28ae4e4c1894dd6e4dd043554b" ID="{1028c59c-1f8c-4343-a52c-0d7f0fadcfb1}" ShowInViewForms="FALSE" Required="FALSE" Hidden="TRUE" CanToggleHidden="TRUE" SourceID="{821e149a-0a6c-41d9-9fab-3167e245df3e}" />
+        <Field Type="Text" Name="QuantityPallet4" DisplayName="Quantity Pallet 4" ID="{a5d21e01-33f6-44bd-b524-ff4d3ec624c1}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="QuantityPallet4" AllowDeletion="TRUE" />
+        
+        <Field Type="Text" Name="SecondaryVariant" DisplayName="Secondary Variant" ID="{003f6208-750c-4310-9852-0942da4d38c3}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="SecondaryVariant" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="QuantityUnits4" DisplayName="Quantity Units 4" ID="{f618f20d-fe58-4d1c-8d31-557d095b7674}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="QuantityUnits4" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="QuantityCases2" DisplayName="Quantity Cases 2" ID="{00d43f11-ba2f-4bc2-8406-ecd8a6f6388c}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="QuantityCases2" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="RemedyNumber1" DisplayName="Remedy Number" ID="{5f6af617-d441-4c11-bdcf-190e5022ece5}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="RemedyNumber1" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="BatchDetails4" DisplayName="Batch Details 4" ID="{02291d1d-a39d-4edf-ab3d-9991f69f7410}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="BatchDetails4" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="SiteName" DisplayName="SiteName" ID="{f7b34a20-5b80-43af-bb5f-0ca39714ed42}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="SiteName" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="QuantityShrink3" DisplayName="Quantity Shrink 3" ID="{6bce2721-9f8b-4557-a97d-ad6a03251364}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="QuantityShrink3" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="Variant" DisplayName="Variant" ID="{90884b22-e5fb-499d-8912-7b4b9c2ee0d1}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="Variant" AllowDeletion="TRUE" />
+        <Field Type="Choice" DisplayName="Approval Status" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" Format="Dropdown" FillInChoice="FALSE" Group="UpLift Columns" ID="{af233025-55bd-49b8-9f68-748f53aa5c91}" SourceID="{5e47431d-532a-4eae-b1b1-7817e957dec0}" StaticName="ApprovalStatus" Name="ApprovalStatus" CustomFormatter="">
+          <CHOICES>
+            <CHOICE>Yes</CHOICE>
+            <CHOICE>No</CHOICE>
+          </CHOICES>
+        </Field>
+        <Field Type="Number" Name="QuantityUnits" StaticName="QuantityUnits" DisplayName="Quantity Units" ID="{6d41562a-9219-49cf-b1a7-7c8fdefece26}" Required="FALSE" Group="UpLift Columns" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}">
+        </Field>
+        <Field Type="Note" DisplayName="ApproverComments" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" NumLines="6" RichText="FALSE" Sortable="FALSE" Group="UpLift Columns" ID="{b71cf42a-3f9b-47df-824f-f3aba8e38fc3}" SourceID="{5e47431d-532a-4eae-b1b1-7817e957dec0}" StaticName="ApproverComments" Name="ApproverComments">
+        </Field>
+        <Field Type="Text" Name="NatureOfComplaint" DisplayName="Nature Of Complaint" ID="{ff6a7e2b-8a4d-445e-8a3b-21fe94c1b9d4}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="NatureOfComplaint" />
+        <Field Type="Text" Name="_x0033_PLRef" DisplayName="3PLRef" ID="{a1f8872c-4375-43e1-a922-3943f66a5eaf}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="_x005f_x0033_PLRef" />
+        <Field Type="Text" DisplayName="ComplaintID" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" Group="UpLift Columns" ID="{f348472d-314e-4ed5-aba1-fc6856bf2445}" SourceID="{5e47431d-532a-4eae-b1b1-7817e957dec0}" StaticName="ComplaintID" Name="ComplaintID">
+        </Field>
+        <Field Type="Text" Name="ProductDescription5" DisplayName="Product Description 5" ID="{24611e2e-23c5-475c-aa19-9a0fac1f2c99}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="ProductDescription5" AllowDeletion="TRUE" />
+        <Field Type="Number" Name="QuantityCase" StaticName="QuantityCase" DisplayName="Quantity Case" ID="{63140a2f-afb8-4402-97f7-38525b830dfd}" Required="FALSE" Group="UpLift Columns" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}">
+        </Field>
+        <Field Type="Text" Name="ProductDescription1" DisplayName="Product Description 1" ID="{004a2031-adc8-4f6d-9be1-80ef96720b3d}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="ProductDescription1" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="Transporter" DisplayName="Transporter" ID="{0c616a31-c2e3-4597-b750-8592a0dd51da}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="Transporter" />
+        <Field Type="Text" Name="ProductionSite" DisplayName="Production Site" ID="{eea7cc32-f847-4e27-a6a6-081a6409993a}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="ProductionSite" />
+        <Field Type="Choice" Name="ComplaintStatus" Required="FALSE" StaticName="ComplaintStatus" DisplayName="Complaint Status" ID="{37777e33-7840-4b35-9995-ca7d7da3cb4b}" Group="UpLift Columns" Format="Dropdown" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}">
+          <CHOICES>
+            <CHOICE>Drafted</CHOICE>
+            <CHOICE>Submitted</CHOICE>
+            <CHOICE>Assigned</CHOICE>
+            <CHOICE>WIP</CHOICE>
+            <CHOICE>Pending</CHOICE>
+            <CHOICE>Resolved</CHOICE>
+            <CHOICE>Rejected</CHOICE>
+          </CHOICES>
+        </Field>
+        <Field Type="DateTime" DisplayName="LastDeliveryDate" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" Format="DateOnly" Group="UpLift Columns" FriendlyDisplayFormat="Disabled" ID="{12701834-acbb-4ab4-9840-d3941964048c}" SourceID="{5e47431d-532a-4eae-b1b1-7817e957dec0}" StaticName="LastDeliveryDate" Name="LastDeliveryDate">
+        </Field>
+        <Field Type="Text" DisplayName="Level 1" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" Group="UpLift Columns" ID="{04d32336-bc2f-4e02-af4e-d26f2d1b1da6}" SourceID="{5e47431d-532a-4eae-b1b1-7817e957dec0}" StaticName="Level1" Name="Level1" CustomFormatter="">
+        </Field>
+        <Field Type="Text" Name="PackSize" DisplayName="Pack Size" ID="{9efb0037-24a6-45cd-bc31-7cc28e3a0603}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="PackSize" AllowDeletion="TRUE" />
+        <Field Type="Text" DisplayName="InvoiceValue" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" Group="UpLift Columns" ID="{bd1aa53a-9453-4ff5-8f63-462f39a0d0ff}" SourceID="{5e47431d-532a-4eae-b1b1-7817e957dec0}" StaticName="InvoiceValue" Name="InvoiceValue">
+        </Field>
+        
+        
+        <Field Type="Text" DisplayName="InvoiceNumber" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" Group="UpLift Columns" ID="{40017840-b75e-4909-8d31-f25a0801b943}" SourceID="{5e47431d-532a-4eae-b1b1-7817e957dec0}" StaticName="InvoiceNumber" Name="InvoiceNumber">
+        </Field>
+        
+        
+        <Field Type="Text" Name="Batch" DisplayName="Batch" ID="{6533c452-5add-4b78-877e-630a80facd8a}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="Batch" />
+        <Field Type="Text" Name="PlantContactDesignation" DisplayName="Plant Contact Designation" ID="{cf50e754-19c9-4fce-9ec3-93f984d9c304}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="PlantContactDesignation" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="QuantityCases3" DisplayName="Quantity Cases 3" ID="{c4651755-36f8-4a72-9df9-0fd4dc8f9603}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="QuantityCases3" AllowDeletion="TRUE" />
+        <Field Type="DateTime" Name="DateOfIncident" StaticName="DateOfIncident" DisplayName="Date Of Incident" ID="{3175d255-57ab-47b5-a9bb-17940c70237b}" Required="FALSE" Group="UpLift Columns" Format="DateOnly" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" AllowDeletion="TRUE">
+        </Field>
+        <Field Type="Note" DisplayName="Explanation" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" NumLines="6" RichText="FALSE" Sortable="FALSE" Group="UpLift Columns" ID="{ce26b556-cb8c-449c-9f0b-3c7c2f0cd079}" SourceID="{5e47431d-532a-4eae-b1b1-7817e957dec0}" StaticName="Explanation" Name="Explanation">
+        </Field>
+        <Field Type="Text" Name="QuantityUnits3" DisplayName="Quantity Units 3" ID="{99dcda58-304d-4c4e-b4d2-4d4cae36fb01}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="QuantityUnits3" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="ProductDescription2" DisplayName="Product Description 2" ID="{7f125559-1232-4ac3-bb7a-4e789c0d99b9}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="ProductDescription2" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="CustomerContactDesignation" DisplayName="Customer Contact Designation" ID="{074f125a-e8de-4b69-8794-b838023f1bb9}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="CustomerContactDesignation" AllowDeletion="TRUE" />
+        <Field Type="Note" Name="ComplaintDetails" StaticName="ComplaintDetails" DisplayName="Complaint Details" ID="{97c5195a-b2a3-4d18-8348-95b59158f6c5}" Required="FALSE" Group="UpLift Columns" AppendOnly="FALSE" RichText="FALSE" RestrictedMode="TRUE" RichTextMode="Compatible" IsolateStyles="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" AllowDeletion="TRUE">
+        </Field>
+        <Field Type="Text" Name="QuantityPallet1" DisplayName="Quantity Pallet 1" ID="{f8c3255a-40e7-430a-8423-3c9b1a4d34c2}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="QuantityPallet1" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="QuantityUnits1" DisplayName="Quantity Units 1" ID="{c16bed60-f65c-45ba-bcd0-b59a066b0659}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="QuantityUnits1" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="QuantityShrink4" DisplayName="Quantity Shrink 4" ID="{1d998361-f9a0-4481-b05d-34576a78acf1}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="QuantityShrink4" AllowDeletion="TRUE" />
+       
+        <Field Type="Text" Name="SubCategoryVariant" DisplayName="Sub Category Variant" ID="{b93da464-6fa1-47a9-aca7-df97147461eb}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="SubCategoryVariant" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="CustomerContact" DisplayName="Customer Contact" ID="{aaf35b66-cc8c-4659-80ca-5113044b3624}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="CustomerContact" AllowDeletion="TRUE" />
+        
+
+        <Field Type="Text" DisplayName="RemedyNumber" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" Group="UpLift Columns" ID="{9fd7d26d-e5d3-4ae3-baed-58398c32e897}" SourceID="{5e47431d-532a-4eae-b1b1-7817e957dec0}" StaticName="RemedyNumber" Name="RemedyNumber">
+        </Field>
+        
+																																																																							  <Field Type="User" DisplayName="ApproverName" List="UserInfo" Required="FALSE" EnforceUniqueValues="FALSE" ShowField="ImnName" UserSelectionMode="PeopleOnly" UserSelectionScope="0" Group="UpLift Columns" ID="{29505272-c584-4308-929f-242d92865a03}" SourceID="{5e47431d-532a-4eae-b1b1-7817e957dec0}" StaticName="ApproverName" Name="ApproverName" />
+        <Field Type="Text" DisplayName="Pack Code" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" Group="UpLift Columns" ID="{ec19f675-dbf9-4a21-83fe-6321d9622cb7}" SourceID="{5e47431d-532a-4eae-b1b1-7817e957dec0}" StaticName="PackCode" Name="PackCode" CustomFormatter="">
+        </Field>
+        <Field Type="Text" Name="QuantityCases1" DisplayName="Quantity Cases 1" ID="{8817f179-16c7-4e30-bb87-197e589f0cc5}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="QuantityCases1" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="QuantityPallet2" DisplayName="Quantity Pallet 2" ID="{311e8d7c-f778-4cea-94dd-d0ef2e5f870e}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="QuantityPallet2" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="Brand" DisplayName="Brand" ID="{1cd0437f-b2be-405e-a397-3fc69c59418d}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="Brand" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="DeliveryNumber" DisplayName="Delivery Number" ID="{c732ab81-2e74-47dd-9b1d-f2d62c8bb076}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="DeliveryNumber" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="ProductDescription4" DisplayName="Product Description 4" ID="{44ca4883-8383-4c39-9bcb-b1562345414f}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="ProductDescription4" AllowDeletion="TRUE" />
+        <Field Type="Number" Name="QuantityPallet" StaticName="QuantityPallet" DisplayName="Quantity Pallet" ID="{bd609d88-fa81-422d-855c-d87e5167769a}" Required="FALSE" Group="UpLift Columns" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}">
+        </Field>
+        <Field Type="Text" Name="QuantityUnits5" DisplayName="Quantity Units 5" ID="{37d9de88-65e5-4d90-a2f0-3221a14781b6}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="QuantityUnits5" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="UnitOfMesure" DisplayName="Unit Of Mesure" ID="{b69f2089-a710-4cc5-914d-b85482b4cae9}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="UnitOfMesure" AllowDeletion="TRUE" />
+        <Field Type="Text" DisplayName="PlantName" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" Group="UpLift Columns" ID="{e079938b-d6c4-4103-9be9-098ed6efebb4}" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="PlantName" Name="PlantName" AllowDeletion="TRUE">
+        </Field>
+        <Field Type="Text" Name="PackCode4" DisplayName="Pack Code 4" ID="{c851518e-196c-4073-b67b-a4b6d7720d7d}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="PackCode4" AllowDeletion="TRUE" />
+        <Field Type="Choice" DisplayName="QuantityUnit" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" Format="Dropdown" FillInChoice="FALSE" Group="UpLift Columns" ID="{39a2e48f-0162-4332-b2f3-f7ec505be4e9}" SourceID="{5e47431d-532a-4eae-b1b1-7817e957dec0}" StaticName="QuantityUnit" Name="QuantityUnit">
+          <CHOICES>
+            <CHOICE>Units</CHOICE>
+            <CHOICE>Shrink</CHOICE>
+            <CHOICE>Case</CHOICE>
+            <CHOICE>Pallet</CHOICE>
+          </CHOICES>
+        </Field>
+        <Field Type="Note" Name="RootCause" StaticName="RootCause" DisplayName="Root Cause" ID="{c4816092-5263-42ea-8b7c-6299a2a12d07}" Required="FALSE" Group="UpLift Columns" AppendOnly="FALSE" RichText="FALSE" RestrictedMode="TRUE" RichTextMode="Compatible" IsolateStyles="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" AllowDeletion="TRUE" CustomFormatter="" EnforceUniqueValues="FALSE" Indexed="FALSE" NumLines="6" UnlimitedLengthInDocumentLibrary="FALSE">
+        </Field>
+        <Field Type="Text" Name="BatchDetails2" DisplayName="Batch Details 2" ID="{ddb59d96-e118-4013-8dda-32ad1ce26e5d}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="BatchDetails2" AllowDeletion="TRUE" />
+        <Field Type="UserMulti" Mult="TRUE" UserSelectionMode="PeopleAndGroups" Name="PersonResponsible" StaticName="PersonResponsible" DisplayName="Person Responsible" ID="{8636f496-c886-45be-94c7-8027957af4f0}" Required="FALSE" Group="UpLift Columns" Format="" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" AllowDeletion="TRUE">
+        </Field>
+        <Field Type="Text" Name="PlantContactName" DisplayName="Plant Contact Name" ID="{7af72743-7efc-4fee-b85f-d30062c70637}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="PlantContactName" AllowDeletion="TRUE" />      
+        <Field Type="Text" Name="QuantityShrink1" DisplayName="Quantity Shrink 1" ID="{515e7e98-1537-4fe5-8d3b-88aa2e30b12a}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="QuantityShrink1" AllowDeletion="TRUE" />
+        <Field Type="Note" DisplayName="Explaination" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" NumLines="6" RichText="FALSE" Sortable="FALSE" Group="UpLift Columns" ID="{98ec499d-6ed2-4fde-a6d1-b861fbccffb0}" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="Explaination" Name="Explaination" AllowDeletion="TRUE">
+        </Field>
+        
+        <Field Type="Text" Name="CustomerName" DisplayName="Customer Name" ID="{ad677a9f-c7ca-4163-9423-8949bea10767}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="CustomerName" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="Code" DisplayName="Code" ID="{7361e9b2-4ac5-46e1-8091-1974804b28d3}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="Code" />
+        <Field Type="Text" DisplayName="Customer Contact Name" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" Group="UpLift Columns" ID="{819db6b5-c087-48ad-b210-55556508d282}" SourceID="{5e47431d-532a-4eae-b1b1-7817e957dec0}" StaticName="CustomerContactName" Name="CustomerContactName" CustomFormatter="">
+        </Field>
+        
+        <Field Type="Text" Name="DepartmentText" DisplayName="Department Text" ID="{4c797fba-9550-4a81-9631-35a7b1fe9cad}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="DepartmentText" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="PackCode1" DisplayName="Pack Code 1" ID="{a36d5cbe-eed3-49ef-9f7a-5ed9ab0a6fbb}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="PackCode1" AllowDeletion="TRUE" />
+        
+        <Field Type="Text" DisplayName="Level 3" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" Group="UpLift Columns" ID="{893a42c6-4927-447e-8ca1-09972b3fb40c}" SourceID="{5e47431d-532a-4eae-b1b1-7817e957dec0}" StaticName="Level3" Name="Level3" CustomFormatter="">
+        </Field>
+        <Field Name="Quantity" FromBaseType="FALSE" Type="Text" DisplayName="Quantity" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" Group="UpLift Columns" ID="{dc7458c6-732d-4b6f-94f0-2fc1069ff78d}" StaticName="Quantity" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}">
+        </Field>
+        <Field Type="Text" Name="QuantityCases4" DisplayName="Quantity Cases 4" ID="{3d617fc6-ea0f-424d-9771-3516a74b8900}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="QuantityCases4" AllowDeletion="TRUE" />
+        <Field Type="Note" Name="Plant" StaticName="Plant" DisplayName="Plant" ID="{edab4bc7-4aab-4dad-88a6-fa0e056bc68f}" Required="FALSE" Group="UpLift Columns" AppendOnly="FALSE" RichText="TRUE" RestrictedMode="TRUE" RichTextMode="FullHtml" IsolateStyles="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" AllowDeletion="TRUE">
+        </Field>
+        
+        
+        <Field Type="Text" Name="PackCode5" DisplayName="Pack Code 5" ID="{2f6028c9-fc8a-4ccd-aa44-a6f3294a8101}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="PackCode5" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="BatchDetails1" DisplayName="Batch Details 1" ID="{89ebfdc9-380a-439a-81e8-7b2870ac76d6}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="BatchDetails1" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="BatchDetails5" DisplayName="Batch Details 5" ID="{5473a1cb-edbc-4b39-aaff-87a2353d3934}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="BatchDetails5" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="CustomerNumber" DisplayName="Customer Number" ID="{7b9ff8d2-f513-4886-a96d-81a5662d441c}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="CustomerNumber" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="BBEExpiry" DisplayName="BBE Expiry" ID="{203e7ed5-ba4f-4325-97dd-655161edfa18}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="BBEExpiry" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="QuantityShrink2" DisplayName="Quantity Shrink 2" ID="{d7c114d6-a2f1-447d-a6c5-13a63a08bc3c}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="QuantityShrink2" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="ProductDescription3" DisplayName="Product Description 3" ID="{1b0c80d6-c5c7-40e6-ac11-5e335a68a613}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="ProductDescription3" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="QuantityUnits2" DisplayName="Quantity Units 2" ID="{085314d7-9be8-4c4f-8253-0fa3b0b63ec6}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="QuantityUnits2" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="QuantityPallet3" DisplayName="Quantity Pallet 3" ID="{112612d9-c398-467e-92b2-e67b6945236e}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="QuantityPallet3" AllowDeletion="TRUE" />
+        <Field Type="Note" Name="ProductDescription" StaticName="ProductDescription" DisplayName="Product Description" ID="{77f558dc-2137-4570-b978-82f86fe9d746}" Required="FALSE" Group="UpLift Columns" AppendOnly="FALSE" RichText="FALSE" RestrictedMode="TRUE" RichTextMode="Compatible" IsolateStyles="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" AllowDeletion="TRUE">
+        </Field>
+        <Field Type="Text" Name="PackCode2" DisplayName="Pack Code 2" ID="{af4ad7dc-48d9-40b6-9a0c-7fe07317406c}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="PackCode2" AllowDeletion="TRUE" />
+		<Field Type="User" DisplayName="ScaApprover" List="UserInfo" Required="FALSE" EnforceUniqueValues="FALSE" ShowField="ImnName" UserSelectionMode="PeopleOnly" UserSelectionScope="0" Group="UpLift Columns" ID="{1f840edd-9313-4c84-9eb9-ab4328e14076}" SourceID="{5e47431d-532a-4eae-b1b1-7817e957dec0}" StaticName="ScaApprover" Name="ScaApprover" />
+        <Field Type="Text" Name="ReasonCode" DisplayName="Reason Code" ID="{317889df-34c7-4466-90f8-093d06e42136}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="ReasonCode" AllowDeletion="TRUE" />
+        <Field Type="Number" Name="QuantityShrink" StaticName="QuantityShrink" DisplayName="Quantity Shrink" ID="{4f1a62e3-f03a-41db-b6af-1c8e3abd4eb1}" Required="FALSE" Group="UpLift Columns" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}">
+        </Field>
+        <Field Type="DateTime" DisplayName="SubmittedOn" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" Format="DateOnly" Group="UpLift Columns" FriendlyDisplayFormat="Disabled" ID="{d54c82e4-d252-44de-abd7-cc6ac1507c85}" SourceID="{5e47431d-532a-4eae-b1b1-7817e957dec0}" StaticName="SubmittedOn" Name="SubmittedOn">
+        </Field>
+        <Field Type="Text" Name="PlantContactNumber" DisplayName="Plant Contact Number" ID="{f644ece6-b0c1-4dbe-aab6-a77113dacabd}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="PlantContactNumber" AllowDeletion="TRUE" />
+        <Field Type="Text" DisplayName="Level 4" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" Group="UpLift Columns" ID="{9bcdede7-375b-4b35-8f9e-db7645cdd3c9}" SourceID="{5e47431d-532a-4eae-b1b1-7817e957dec0}" StaticName="Level4" Name="Level4" CustomFormatter="">
+        </Field>
+        <Field Type="Text" Name="QuantityCases5" DisplayName="Quantity Cases 5" ID="{17a779e8-8f3b-4c71-9ebf-c76ccc9c8da6}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="QuantityCases5" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="PackCode3" DisplayName="Pack Code 3" ID="{0a1408e9-735a-43db-a4dc-7376087d0b6e}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="PackCode3" AllowDeletion="TRUE" />
+        <Field Type="Text" DisplayName="Level 2" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" Group="UpLift Columns" ID="{a484f2ec-a97c-4714-944f-f0aa15794449}" SourceID="{5e47431d-532a-4eae-b1b1-7817e957dec0}" StaticName="Level2" Name="Level2" CustomFormatter="">
+        </Field>
+        <Field Type="Text" Name="QuantityShrink5" DisplayName="Quantity Shrink 5" ID="{6fa1d1ed-342f-4657-acab-9f70b24d8799}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="QuantityShrink5" AllowDeletion="TRUE" />
+        
+        
+        <Field Type="Note" Name="ActionTaken" StaticName="ActionTaken" DisplayName="Action Taken" ID="{dfdebaf3-5936-468a-96c1-2b21889cfdd6}" Required="FALSE" Group="UpLift Columns" AppendOnly="FALSE" RichText="FALSE" RestrictedMode="TRUE" RichTextMode="Compatible" IsolateStyles="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" AllowDeletion="TRUE">
+        </Field>
+        <Field Type="Text" Name="Registration" DisplayName="Registration" ID="{96f34df6-9a19-413c-9ffd-6839607f8634}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="Registration" />
+        <Field Type="Text" Name="QuantityPallet5" DisplayName="Quantity Pallet 5" ID="{e2e352f6-69b9-4b45-b2ef-c52f78681452}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="QuantityPallet5" AllowDeletion="TRUE" />                                                                                                                                                                                                                                                                                                                                    
+        <Field Type="Text" Name="CategoryText" DisplayName="Category Text" ID="{74ec87f8-576c-47f5-b7f5-5658dcb9413c}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="CategoryText" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="DeliveryNo" DisplayName="Delivery No" ID="{538ad0f8-b957-46a6-a6b7-f9da17d45103}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="DeliveryNo" />
+        <Field Type="Text" Name="BatchDetails3" DisplayName="Batch Details 3" ID="{8d919af9-3f0f-4fee-a79c-a4d3f069bfd1}" Group="UpLift Columns" Required="FALSE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="BatchDetails3" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="Factory" DisplayName="Factory" ID="{7d680cfa-64a9-49d9-b826-628d48cef276}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="Factory" AllowDeletion="TRUE" />
+        <Field Type="Text" Name="PlantNumber" DisplayName="Plant Number" ID="{62d0b3fd-e3af-4c51-9cf5-86dfea4f6871}" Group="UpLift Columns" Required="TRUE" SourceID="{9c67991c-0904-4151-83ae-748982777d0d}" StaticName="PlantNumber" AllowDeletion="TRUE" />
+      </pnp:SiteFields>
+      <pnp:ContentTypes>
+        <pnp:ContentType ID="0x0100068521BBC64B0440A68AC0BB0F9EC3C6" Name="LossTreeLevel2_CT" Description="Create a new list item." Group="Uplift Content Type" NewFormUrl="" EditFormUrl="" DisplayFormUrl="">
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="c042a256-787d-4a6f-8a8a-cf6ab767f12d" Name="ContentType" />
+            <pnp:FieldRef ID="fa564e0f-0c70-4ab9-b863-0177e6ddd247" Name="Title" Required="true" />
+          </pnp:FieldRefs>
+        </pnp:ContentType>
+        <pnp:ContentType ID="0x010006FC84E7CD28204FB501EA0D7F61EED8" Name="PackCodeMasterCT" Description="Create a new list item." Group="Uplift Content Type" NewFormUrl="" EditFormUrl="" DisplayFormUrl="">
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="c042a256-787d-4a6f-8a8a-cf6ab767f12d" Name="ContentType" />
+            <pnp:FieldRef ID="fa564e0f-0c70-4ab9-b863-0177e6ddd247" Name="Title" />
+            <pnp:FieldRef ID="edab4bc7-4aab-4dad-88a6-fa0e056bc68f" Name="Plant" />
+            <pnp:FieldRef ID="4c797fba-9550-4a81-9631-35a7b1fe9cad" Name="DepartmentText" />
+            <pnp:FieldRef ID="7d680cfa-64a9-49d9-b826-628d48cef276" Name="Factory" />
+            <pnp:FieldRef ID="1cd0437f-b2be-405e-a397-3fc69c59418d" Name="Brand" />
+            <pnp:FieldRef ID="74ec87f8-576c-47f5-b7f5-5658dcb9413c" Name="CategoryText" />
+            <pnp:FieldRef ID="003f6208-750c-4310-9852-0942da4d38c3" Name="SecondaryVariant" />
+            <pnp:FieldRef ID="90884b22-e5fb-499d-8912-7b4b9c2ee0d1" Name="Variant" />
+            <pnp:FieldRef ID="b93da464-6fa1-47a9-aca7-df97147461eb" Name="SubCategoryVariant" />
+            <pnp:FieldRef ID="9efb0037-24a6-45cd-bc31-7cc28e3a0603" Name="PackSize" />
+            <pnp:FieldRef ID="b69f2089-a710-4cc5-914d-b85482b4cae9" Name="UnitOfMesure" />
+            <pnp:FieldRef ID="77f558dc-2137-4570-b978-82f86fe9d746" Name="ProductDescription" />
+            <pnp:FieldRef ID="ec19f675-dbf9-4a21-83fe-6321d9622cb7" Name="PackCode" />
+          </pnp:FieldRefs>
+        </pnp:ContentType>
+        <pnp:ContentType ID="0x01001EFEEF26E077F24AA8F23268FA464487" Name="PlantMaster_CT" Description="Create a new list item." Group="Uplift Content Type" NewFormUrl="" EditFormUrl="" DisplayFormUrl="">
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="c042a256-787d-4a6f-8a8a-cf6ab767f12d" Name="ContentType" />
+            <pnp:FieldRef ID="fa564e0f-0c70-4ab9-b863-0177e6ddd247" Name="Title" Required="true" />
+            <pnp:FieldRef ID="cf50e754-19c9-4fce-9ec3-93f984d9c304" Name="PlantContactDesignation" Required="true" />
+            <pnp:FieldRef ID="f644ece6-b0c1-4dbe-aab6-a77113dacabd" Name="PlantContactNumber" Required="true" />
+            <pnp:FieldRef ID="62d0b3fd-e3af-4c51-9cf5-86dfea4f6871" Name="PlantNumber" Required="true" />
+            <pnp:FieldRef ID="e079938b-d6c4-4103-9be9-098ed6efebb4" Name="PlantName" />
+          </pnp:FieldRefs>
+        </pnp:ContentType>
+        <pnp:ContentType ID="0x010026337E05AD1EE6408E9D8F650E613F0D" Name="LossTreeLevel4_CT" Description="Create a new list item." Group="Uplift Content Type" NewFormUrl="" EditFormUrl="" DisplayFormUrl="">
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="c042a256-787d-4a6f-8a8a-cf6ab767f12d" Name="ContentType" />
+            <pnp:FieldRef ID="fa564e0f-0c70-4ab9-b863-0177e6ddd247" Name="Title" Required="true" />
+            <pnp:FieldRef ID="ce26b556-cb8c-449c-9f0b-3c7c2f0cd079" Name="Explanation" />
+          </pnp:FieldRefs>
+        </pnp:ContentType>
+        <pnp:ContentType ID="0x01002C4986311446EE4BB4B145D4F4538584" Name="LossTreeLevel3_CT" Description="Create a new list item." Group="Uplift Content Type" NewFormUrl="" EditFormUrl="" DisplayFormUrl="">
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="c042a256-787d-4a6f-8a8a-cf6ab767f12d" Name="ContentType" />
+            <pnp:FieldRef ID="fa564e0f-0c70-4ab9-b863-0177e6ddd247" Name="Title" Required="true" />
+          </pnp:FieldRefs>
+        </pnp:ContentType>
+       
+        <pnp:ContentType ID="0x0100376BE29451A1A848B7458189992EFFE6" Name="SHEQ_CT" Description="Create a new list item." Group="Uplift Content Type" NewFormUrl="" EditFormUrl="" DisplayFormUrl="">
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="c042a256-787d-4a6f-8a8a-cf6ab767f12d" Name="ContentType" />
+            <pnp:FieldRef ID="fa564e0f-0c70-4ab9-b863-0177e6ddd247" Name="Title" />
+            <pnp:FieldRef ID="3175d255-57ab-47b5-a9bb-17940c70237b" Name="DateOfIncident" />
+            <pnp:FieldRef ID="f7b34a20-5b80-43af-bb5f-0ca39714ed42" Name="SiteName" />
+            <pnp:FieldRef ID="8636f496-c886-45be-94c7-8027957af4f0" Name="PersonResponsible" />
+            <pnp:FieldRef ID="ad677a9f-c7ca-4163-9423-8949bea10767" Name="CustomerName" />
+            <pnp:FieldRef ID="7b9ff8d2-f513-4886-a96d-81a5662d441c" Name="CustomerNumber" />
+            <pnp:FieldRef ID="074f125a-e8de-4b69-8794-b838023f1bb9" Name="CustomerContactDesignation" />
+            <pnp:FieldRef ID="a36d5cbe-eed3-49ef-9f7a-5ed9ab0a6fbb" Name="PackCode1" />
+            <pnp:FieldRef ID="af4ad7dc-48d9-40b6-9a0c-7fe07317406c" Name="PackCode2" />
+            <pnp:FieldRef ID="0a1408e9-735a-43db-a4dc-7376087d0b6e" Name="PackCode3" />
+            <pnp:FieldRef ID="c851518e-196c-4073-b67b-a4b6d7720d7d" Name="PackCode4" />
+            <pnp:FieldRef ID="2f6028c9-fc8a-4ccd-aa44-a6f3294a8101" Name="PackCode5" />
+            <pnp:FieldRef ID="004a2031-adc8-4f6d-9be1-80ef96720b3d" Name="ProductDescription1" />
+            <pnp:FieldRef ID="7f125559-1232-4ac3-bb7a-4e789c0d99b9" Name="ProductDescription2" />
+            <pnp:FieldRef ID="1b0c80d6-c5c7-40e6-ac11-5e335a68a613" Name="ProductDescription3" />
+            <pnp:FieldRef ID="44ca4883-8383-4c39-9bcb-b1562345414f" Name="ProductDescription4" />
+            <pnp:FieldRef ID="24611e2e-23c5-475c-aa19-9a0fac1f2c99" Name="ProductDescription5" />
+            <pnp:FieldRef ID="89ebfdc9-380a-439a-81e8-7b2870ac76d6" Name="BatchDetails1" />
+            <pnp:FieldRef ID="ddb59d96-e118-4013-8dda-32ad1ce26e5d" Name="BatchDetails2" />
+            <pnp:FieldRef ID="8d919af9-3f0f-4fee-a79c-a4d3f069bfd1" Name="BatchDetails3" />
+            <pnp:FieldRef ID="02291d1d-a39d-4edf-ab3d-9991f69f7410" Name="BatchDetails4" />
+            <pnp:FieldRef ID="5473a1cb-edbc-4b39-aaff-87a2353d3934" Name="BatchDetails5" />
+            <pnp:FieldRef ID="8817f179-16c7-4e30-bb87-197e589f0cc5" Name="QuantityCases1" />
+            <pnp:FieldRef ID="00d43f11-ba2f-4bc2-8406-ecd8a6f6388c" Name="QuantityCases2" />
+            <pnp:FieldRef ID="c4651755-36f8-4a72-9df9-0fd4dc8f9603" Name="QuantityCases3" />
+            <pnp:FieldRef ID="3d617fc6-ea0f-424d-9771-3516a74b8900" Name="QuantityCases4" />
+            <pnp:FieldRef ID="17a779e8-8f3b-4c71-9ebf-c76ccc9c8da6" Name="QuantityCases5" />
+            <pnp:FieldRef ID="c16bed60-f65c-45ba-bcd0-b59a066b0659" Name="QuantityUnits1" />
+            <pnp:FieldRef ID="085314d7-9be8-4c4f-8253-0fa3b0b63ec6" Name="QuantityUnits2" />
+            <pnp:FieldRef ID="99dcda58-304d-4c4e-b4d2-4d4cae36fb01" Name="QuantityUnits3" />
+            <pnp:FieldRef ID="f618f20d-fe58-4d1c-8d31-557d095b7674" Name="QuantityUnits4" />
+            <pnp:FieldRef ID="37d9de88-65e5-4d90-a2f0-3221a14781b6" Name="QuantityUnits5" />
+            <pnp:FieldRef ID="515e7e98-1537-4fe5-8d3b-88aa2e30b12a" Name="QuantityShrink1" />
+            <pnp:FieldRef ID="d7c114d6-a2f1-447d-a6c5-13a63a08bc3c" Name="QuantityShrink2" />
+            <pnp:FieldRef ID="6bce2721-9f8b-4557-a97d-ad6a03251364" Name="QuantityShrink3" />
+            <pnp:FieldRef ID="1d998361-f9a0-4481-b05d-34576a78acf1" Name="QuantityShrink4" />
+            <pnp:FieldRef ID="6fa1d1ed-342f-4657-acab-9f70b24d8799" Name="QuantityShrink5" />
+            <pnp:FieldRef ID="f8c3255a-40e7-430a-8423-3c9b1a4d34c2" Name="QuantityPallet1" />
+            <pnp:FieldRef ID="311e8d7c-f778-4cea-94dd-d0ef2e5f870e" Name="QuantityPallet2" />
+            <pnp:FieldRef ID="112612d9-c398-467e-92b2-e67b6945236e" Name="QuantityPallet3" />
+            <pnp:FieldRef ID="a5d21e01-33f6-44bd-b524-ff4d3ec624c1" Name="QuantityPallet4" />
+            <pnp:FieldRef ID="e2e352f6-69b9-4b45-b2ef-c52f78681452" Name="QuantityPallet5" />
+            <pnp:FieldRef ID="c4816092-5263-42ea-8b7c-6299a2a12d07" Name="RootCause" />
+            <pnp:FieldRef ID="dfdebaf3-5936-468a-96c1-2b21889cfdd6" Name="ActionTaken" />
+            <pnp:FieldRef ID="317889df-34c7-4466-90f8-093d06e42136" Name="ReasonCode" />
+            <pnp:FieldRef ID="aaf35b66-cc8c-4659-80ca-5113044b3624" Name="CustomerContact" />
+            <pnp:FieldRef ID="97c5195a-b2a3-4d18-8348-95b59158f6c5" Name="ComplaintDetails" />
+            <pnp:FieldRef ID="37777e33-7840-4b35-9995-ca7d7da3cb4b" Name="ComplaintStatus" />
+            <pnp:FieldRef ID="819db6b5-c087-48ad-b210-55556508d282" Name="CustomerContactName" />
+            <pnp:FieldRef ID="ce26b556-cb8c-449c-9f0b-3c7c2f0cd079" Name="Explanation" />
+            <pnp:FieldRef ID="9fd7d26d-e5d3-4ae3-baed-58398c32e897" Name="RemedyNumber" />
+            <pnp:FieldRef ID="40017840-b75e-4909-8d31-f25a0801b943" Name="InvoiceNumber" />
+            <pnp:FieldRef ID="bd1aa53a-9453-4ff5-8f63-462f39a0d0ff" Name="InvoiceValue" />
+            <pnp:FieldRef ID="12701834-acbb-4ab4-9840-d3941964048c" Name="LastDeliveryDate" />
+            <pnp:FieldRef ID="af233025-55bd-49b8-9f68-748f53aa5c91" Name="ApprovalStatus" />
+            <pnp:FieldRef ID="b71cf42a-3f9b-47df-824f-f3aba8e38fc3" Name="ApproverComments" />
+            <pnp:FieldRef ID="29505272-c584-4308-929f-242d92865a03" Name="ApproverName" />
+            <pnp:FieldRef ID="1f840edd-9313-4c84-9eb9-ab4328e14076" Name="ScaApprover" />
+            <pnp:FieldRef ID="d54c82e4-d252-44de-abd7-cc6ac1507c85" Name="SubmittedOn" />
+            <pnp:FieldRef ID="f348472d-314e-4ed5-aba1-fc6856bf2445" Name="ComplaintID" />
+          </pnp:FieldRefs>
+        </pnp:ContentType>
+        <pnp:ContentType ID="0x010057BD7D3BC804624383B8ED8A51ACDF67" Name="CustomerMaster_CT" Description="Create a new list item." Group="Uplift Content Type" NewFormUrl="" EditFormUrl="" DisplayFormUrl="">
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="c042a256-787d-4a6f-8a8a-cf6ab767f12d" Name="ContentType" />
+            <pnp:FieldRef ID="fa564e0f-0c70-4ab9-b863-0177e6ddd247" Name="Title" />
+            <pnp:FieldRef ID="aaf35b66-cc8c-4659-80ca-5113044b3624" Name="CustomerContact" />
+            <pnp:FieldRef ID="074f125a-e8de-4b69-8794-b838023f1bb9" Name="CustomerContactDesignation" />
+            <pnp:FieldRef ID="ad677a9f-c7ca-4163-9423-8949bea10767" Name="CustomerName" />
+            <pnp:FieldRef ID="7b9ff8d2-f513-4886-a96d-81a5662d441c" Name="CustomerNumber" />
+          </pnp:FieldRefs>
+        </pnp:ContentType>
+        <pnp:ContentType ID="0x0100637BC71205987B4384581487CB70DB6B" Name="SiteMaster_CT" Description="Create a new list item." Group="Uplift Content Type" NewFormUrl="" EditFormUrl="" DisplayFormUrl="">
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="c042a256-787d-4a6f-8a8a-cf6ab767f12d" Name="ContentType" />
+            <pnp:FieldRef ID="fa564e0f-0c70-4ab9-b863-0177e6ddd247" Name="Title" Required="true" />
+            <pnp:FieldRef ID="f7b34a20-5b80-43af-bb5f-0ca39714ed42" Name="SiteName" Required="true" />
+            <pnp:FieldRef ID="8636f496-c886-45be-94c7-8027957af4f0" Name="PersonResponsible" />
+          </pnp:FieldRefs>
+        </pnp:ContentType>
+        <pnp:ContentType ID="0x0100FD4838C96DB49E48BCCBFEA748374DA0" Name="NCA_CT" Description="Create a new list item." Group="Uplift Content Type" NewFormUrl="" EditFormUrl="" DisplayFormUrl="">
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="c042a256-787d-4a6f-8a8a-cf6ab767f12d" Name="ContentType" />
+            <pnp:FieldRef ID="fa564e0f-0c70-4ab9-b863-0177e6ddd247" Name="Title" />
+            <pnp:FieldRef ID="3175d255-57ab-47b5-a9bb-17940c70237b" Name="DateOfIncident" />
+            <pnp:FieldRef ID="f7b34a20-5b80-43af-bb5f-0ca39714ed42" Name="SiteName" />
+            <pnp:FieldRef ID="8636f496-c886-45be-94c7-8027957af4f0" Name="PersonResponsible" />
+            <pnp:FieldRef ID="62d0b3fd-e3af-4c51-9cf5-86dfea4f6871" Name="PlantNumber" />
+            <pnp:FieldRef ID="e079938b-d6c4-4103-9be9-098ed6efebb4" Name="PlantName" />
+            <pnp:FieldRef ID="77f558dc-2137-4570-b978-82f86fe9d746" Name="ProductDescription" />
+            <pnp:FieldRef ID="97c5195a-b2a3-4d18-8348-95b59158f6c5" Name="ComplaintDetails" />
+            <pnp:FieldRef ID="ad677a9f-c7ca-4163-9423-8949bea10767" Name="CustomerName" />
+            <pnp:FieldRef ID="7b9ff8d2-f513-4886-a96d-81a5662d441c" Name="CustomerNumber" />
+            <pnp:FieldRef ID="a36d5cbe-eed3-49ef-9f7a-5ed9ab0a6fbb" Name="PackCode1" />
+            <pnp:FieldRef ID="004a2031-adc8-4f6d-9be1-80ef96720b3d" Name="ProductDescription1" />
+            <pnp:FieldRef ID="203e7ed5-ba4f-4325-97dd-655161edfa18" Name="BBEExpiry" />
+            <pnp:FieldRef ID="dc7458c6-732d-4b6f-94f0-2fc1069ff78d" Name="Quantity" />
+            <pnp:FieldRef ID="5f6af617-d441-4c11-bdcf-190e5022ece5" Name="RemedyNumber1" />
+            <pnp:FieldRef ID="c732ab81-2e74-47dd-9b1d-f2d62c8bb076" Name="DeliveryNumber" />
+            <pnp:FieldRef ID="c4816092-5263-42ea-8b7c-6299a2a12d07" Name="RootCause" />
+            <pnp:FieldRef ID="dfdebaf3-5936-468a-96c1-2b21889cfdd6" Name="ActionTaken" />
+            <pnp:FieldRef ID="317889df-34c7-4466-90f8-093d06e42136" Name="ReasonCode" />
+            <pnp:FieldRef ID="98ec499d-6ed2-4fde-a6d1-b861fbccffb0" Name="Explaination" />
+            <pnp:FieldRef ID="39a2e48f-0162-4332-b2f3-f7ec505be4e9" Name="QuantityUnit" />
+            <pnp:FieldRef ID="7af72743-7efc-4fee-b85f-d30062c70637" Name="PlantContactName" />
+            <pnp:FieldRef ID="1f840edd-9313-4c84-9eb9-ab4328e14076" Name="ScaApprover" />
+            <pnp:FieldRef ID="f348472d-314e-4ed5-aba1-fc6856bf2445" Name="ComplaintID" />
+          </pnp:FieldRefs>
+        </pnp:ContentType>
+      </pnp:ContentTypes>
+      <pnp:Lists>
+        <pnp:ListInstance Title="CustomerMaster" Description="" DocumentTemplate="" TemplateType="100" Url="Lists/CustomerMaster" MinorVersionLimit="0" MaxVersionLimit="0" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" ContentTypesEnabled="true" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/CustomerMaster/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/CustomerMaster/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/CustomerMaster/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=44" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+            <pnp:ContentTypeBinding ContentTypeID="0x010057BD7D3BC804624383B8ED8A51ACDF67" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{510DD5CE-E487-4807-B0CD-719F982764FF}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="/teams/dev_upliftquality/Lists/CustomerMaster/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=44">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="ID" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />
+                <FieldRef Name="CustomerContact" />
+                <FieldRef Name="CustomerContactDesignation" />
+                <FieldRef Name="CustomerName" />
+                <FieldRef Name="CustomerNumber" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <Aggregations Value="Off" />
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+          </pnp:Views>
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="aaf35b66-cc8c-4659-80ca-5113044b3624" Name="CustomerContact" DisplayName="Customer Contact" />
+            <pnp:FieldRef ID="074f125a-e8de-4b69-8794-b838023f1bb9" Name="CustomerContactDesignation" DisplayName="Customer Contact Designation" />
+            <pnp:FieldRef ID="ad677a9f-c7ca-4163-9423-8949bea10767" Name="CustomerName" DisplayName="Customer Name" />
+            <pnp:FieldRef ID="7b9ff8d2-f513-4886-a96d-81a5662d441c" Name="CustomerNumber" Required="true" DisplayName="Customer Number" />
+          </pnp:FieldRefs>
+        </pnp:ListInstance>
+        <pnp:ListInstance Title="LossTreeLevel1Master" Description="" DocumentTemplate="" OnQuickLaunch="true" TemplateType="100" Url="Lists/LossTreeLevel1Master" MinorVersionLimit="0" MaxVersionLimit="0" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/LossTreeLevel1Master/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/LossTreeLevel1Master/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/LossTreeLevel1Master/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=44" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{4930EAEC-F887-44A6-84A5-6CA29155334B}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="/teams/dev_upliftquality/Lists/LossTreeLevel1Master/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=44">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="ID" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+          </pnp:Views>
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="ccc1037f-f65e-434a-868e-8c98af31fe29" Name="_ComplianceFlags" DisplayName="Label setting" />
+            <pnp:FieldRef ID="d4b6480a-4bed-4094-9a52-30181ea38f1d" Name="_ComplianceTag" DisplayName="Labels" />
+            <pnp:FieldRef ID="92be610e-ddbb-49f4-b3b1-5c2bc768df8f" Name="_ComplianceTagWrittenTime" DisplayName="Label Applied" />
+            <pnp:FieldRef ID="418d7676-2d6f-42cf-a16a-e43d2971252a" Name="_ComplianceTagUserId" DisplayName="Label applied by" />
+            <pnp:FieldRef ID="8382d247-72a9-44b1-9794-7b177edc89f3" Name="_IsRecord" DisplayName="Item is a Record" />
+            <pnp:FieldRef ID="3a6b296c-3f50-445c-a13f-9c679ea9dda3" Name="ComplianceAssetId" DisplayName="Compliance Asset Id" />
+          </pnp:FieldRefs>
+        </pnp:ListInstance>
+        <pnp:ListInstance Title="LossTreeLevel2Master" Description="" DocumentTemplate="" OnQuickLaunch="true" TemplateType="100" Url="Lists/LossTreeLevel2Master" MinorVersionLimit="0" MaxVersionLimit="0" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" ContentTypesEnabled="true" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/LossTreeLevel2Master/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/LossTreeLevel2Master/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/LossTreeLevel2Master/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=44" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0100068521BBC64B0440A68AC0BB0F9EC3C6" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{9077AC52-4077-4D9F-90D3-B46792E0ACDF}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="/teams/dev_upliftquality/Lists/LossTreeLevel2Master/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=44">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="ID" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <Aggregations Value="Off" />
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+          </pnp:Views>
+        </pnp:ListInstance>
+        <pnp:ListInstance Title="LossTreeLevel3Master" Description="" DocumentTemplate="" OnQuickLaunch="true" TemplateType="100" Url="Lists/LossTreeLevel3Master" MinorVersionLimit="0" MaxVersionLimit="0" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" ContentTypesEnabled="true" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/LossTreeLevel3Master/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/LossTreeLevel3Master/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/LossTreeLevel3Master/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=44" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+            <pnp:ContentTypeBinding ContentTypeID="0x01002C4986311446EE4BB4B145D4F4538584" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{F23B6FD7-381A-4E14-A8C3-8892D7EAD867}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="/teams/dev_upliftquality/Lists/LossTreeLevel3Master/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=44">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="ID" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <Aggregations Value="Off" />
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+          </pnp:Views>
+        </pnp:ListInstance>
+        <pnp:ListInstance Title="LossTreeLevel4Master" Description="" DocumentTemplate="" OnQuickLaunch="true" TemplateType="100" Url="Lists/LossTreeLevel4Master" MinorVersionLimit="0" MaxVersionLimit="0" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" ContentTypesEnabled="true" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/LossTreeLevel4Master/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/LossTreeLevel4Master/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/LossTreeLevel4Master/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=44" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+            <pnp:ContentTypeBinding ContentTypeID="0x010026337E05AD1EE6408E9D8F650E613F0D" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{0FE167E8-326B-4D19-B448-457A221CD8A9}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="/teams/dev_upliftquality/Lists/LossTreeLevel4Master/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=44">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="ID" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />
+                <FieldRef Name="Explanation" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <Aggregations Value="Off" />
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+          </pnp:Views>
+          <pnp:FieldRefs>
+                <pnp:FieldRef ID="ce26b556-cb8c-449c-9f0b-3c7c2f0cd079" Name="Explanation" DisplayName="Explanation" />
+          </pnp:FieldRefs>
+        </pnp:ListInstance>
+        <pnp:ListInstance Title="PackCodeMaster" Description="" DocumentTemplate="" OnQuickLaunch="true" TemplateType="100" Url="Lists/PackCodeMaster" MinorVersionLimit="0" MaxVersionLimit="0" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" ContentTypesEnabled="true" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/PackCodeMaster/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/PackCodeMaster/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/PackCodeMaster/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=44" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+            <pnp:ContentTypeBinding ContentTypeID="0x010006FC84E7CD28204FB501EA0D7F61EED8" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{FEFBD306-4F38-4D2C-9339-ADE60E1CE659}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="/teams/dev_upliftquality/Lists/PackCodeMaster/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=44">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="ID" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />
+                <FieldRef Name="PackCode" />
+                <FieldRef Name="ProductDescription" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <Aggregations Value="Off" />
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+          </pnp:Views>
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="edab4bc7-4aab-4dad-88a6-fa0e056bc68f" Name="Plant" DisplayName="Plant" />
+            <pnp:FieldRef ID="4c797fba-9550-4a81-9631-35a7b1fe9cad" Name="DepartmentText" DisplayName="Department Text" />
+            <pnp:FieldRef ID="7d680cfa-64a9-49d9-b826-628d48cef276" Name="Factory" DisplayName="Factory" />
+            <pnp:FieldRef ID="1cd0437f-b2be-405e-a397-3fc69c59418d" Name="Brand" DisplayName="Brand" />
+            <pnp:FieldRef ID="74ec87f8-576c-47f5-b7f5-5658dcb9413c" Name="CategoryText" DisplayName="Category Text" />
+            <pnp:FieldRef ID="003f6208-750c-4310-9852-0942da4d38c3" Name="SecondaryVariant" DisplayName="Secondary Variant" />
+            <pnp:FieldRef ID="90884b22-e5fb-499d-8912-7b4b9c2ee0d1" Name="Variant" DisplayName="Variant" />
+            <pnp:FieldRef ID="b93da464-6fa1-47a9-aca7-df97147461eb" Name="SubCategoryVariant" DisplayName="Sub Category Variant" />
+            <pnp:FieldRef ID="9efb0037-24a6-45cd-bc31-7cc28e3a0603" Name="PackSize" DisplayName="Pack Size" />
+            <pnp:FieldRef ID="b69f2089-a710-4cc5-914d-b85482b4cae9" Name="UnitOfMesure" DisplayName="Unit Of Mesure" />
+            <pnp:FieldRef ID="77f558dc-2137-4570-b978-82f86fe9d746" Name="ProductDescription" DisplayName="Product Description" />
+            <pnp:FieldRef ID="ec19f675-dbf9-4a21-83fe-6321d9622cb7" Name="PackCode" DisplayName="Pack Code" />
+          </pnp:FieldRefs>
+        </pnp:ListInstance>
+        <pnp:ListInstance Title="PlantMaster" Description="" DocumentTemplate="" TemplateType="100" Url="Lists/PlantMaster" MinorVersionLimit="0" MaxVersionLimit="0" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" ContentTypesEnabled="true" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/PlantMaster/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/PlantMaster/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/PlantMaster/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=44" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+            <pnp:ContentTypeBinding ContentTypeID="0x01001EFEEF26E077F24AA8F23268FA464487" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{40ADD6C6-63E4-482C-8AFC-0DA2A10FD347}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="/teams/dev_upliftquality/Lists/PlantMaster/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=44">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="ID" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />
+                <FieldRef Name="PlantNumber" />
+                <FieldRef Name="PlantName" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <Aggregations Value="Off" />
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+          </pnp:Views>
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="cf50e754-19c9-4fce-9ec3-93f984d9c304" Name="PlantContactDesignation" DisplayName="Plant Contact Designation" />
+            <pnp:FieldRef ID="f644ece6-b0c1-4dbe-aab6-a77113dacabd" Name="PlantContactNumber" DisplayName="Plant Contact Number" />
+            <pnp:FieldRef ID="62d0b3fd-e3af-4c51-9cf5-86dfea4f6871" Name="PlantNumber" DisplayName="Plant Number" />
+            <pnp:FieldRef ID="e079938b-d6c4-4103-9be9-098ed6efebb4" Name="PlantName" DisplayName="PlantName" />
+          </pnp:FieldRefs>
+        </pnp:ListInstance>
+        <pnp:ListInstance Title="ReasonCodeMaster" Description="" DocumentTemplate="" OnQuickLaunch="true" TemplateType="100" Url="Lists/ReasonCodeMaster" MinorVersionLimit="0" MaxVersionLimit="0" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/ReasonCodeMaster/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/ReasonCodeMaster/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/ReasonCodeMaster/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=44" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{C38802DA-8E63-48B8-84E0-0D33B59E61F5}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="/teams/dev_upliftquality/Lists/ReasonCodeMaster/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=44">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="ID" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+          </pnp:Views>
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="ccc1037f-f65e-434a-868e-8c98af31fe29" Name="_ComplianceFlags" DisplayName="Label setting" />
+            <pnp:FieldRef ID="d4b6480a-4bed-4094-9a52-30181ea38f1d" Name="_ComplianceTag" DisplayName="Labels" />
+            <pnp:FieldRef ID="92be610e-ddbb-49f4-b3b1-5c2bc768df8f" Name="_ComplianceTagWrittenTime" DisplayName="Label Applied" />
+            <pnp:FieldRef ID="418d7676-2d6f-42cf-a16a-e43d2971252a" Name="_ComplianceTagUserId" DisplayName="Label applied by" />
+            <pnp:FieldRef ID="8382d247-72a9-44b1-9794-7b177edc89f3" Name="_IsRecord" DisplayName="Item is a Record" />
+            <pnp:FieldRef ID="3a6b296c-3f50-445c-a13f-9c679ea9dda3" Name="ComplianceAssetId" DisplayName="Compliance Asset Id" />
+          </pnp:FieldRefs>
+        </pnp:ListInstance>
+        <pnp:ListInstance Title="SiteMaster" Description="" DocumentTemplate="" OnQuickLaunch="true" TemplateType="100" Url="Lists/SiteMaster" MinorVersionLimit="0" MaxVersionLimit="0" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" ContentTypesEnabled="true" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/SiteMaster/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/SiteMaster/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/SiteMaster/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=44" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0100637BC71205987B4384581487CB70DB6B" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{12DA0435-F662-4881-BC3C-3C550ABB237D}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="/teams/dev_upliftquality/Lists/SiteMaster/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=44">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="ID" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />
+                <FieldRef Name="PersonResponsible" />
+                <FieldRef Name="SiteName" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <Aggregations Value="Off" />
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+          </pnp:Views>
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="f7b34a20-5b80-43af-bb5f-0ca39714ed42" Name="SiteName" DisplayName="SiteName" />
+            <pnp:FieldRef ID="8636f496-c886-45be-94c7-8027957af4f0" Name="PersonResponsible" DisplayName="Person Responsible" />
+          </pnp:FieldRefs>
+        </pnp:ListInstance>
+      </pnp:Lists>
+    </pnp:ProvisioningTemplate>
+  </pnp:Templates>
+</pnp:Provisioning>
