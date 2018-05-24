@@ -523,7 +523,8 @@ export class SheqComponent implements OnInit {
     return new Promise((resolve, reject) => {
       var obj = {
         ID: id,
-        ComplaintID: ComplaintID
+        ComplaintID: ComplaintID,
+        Title: ComplaintID
       }
       this._DataService.addOrUpdateItem(obj).then((data: any) => {
         resolve(data);
@@ -634,9 +635,9 @@ export class SheqComponent implements OnInit {
 
     if (!this._utils.getUrlParameters("ID")) {
       alert(`Data submitted successfully. ${data.complaintID} is your complaint ID for future reference.`);
-      window.location.href = window.location.href.replace('?', `?ID=${data.id}&`);
+      window.location.href = window.location.href = (<any>window)._spPageContextInfo.siteAbsoluteUrl; //window.location.href.replace('?', `?ID=${data.id}&`);
     } else {
-      window.location.href = window.location.href;
+      window.location.href = (<any>window)._spPageContextInfo.siteAbsoluteUrl
     }
     this.formLoading = false;
     this.sheqForm.controls.buttons.enable();

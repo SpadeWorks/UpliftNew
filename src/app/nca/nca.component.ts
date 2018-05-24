@@ -479,6 +479,22 @@ export class NcaComponent implements OnInit {
     window.location.href = source;
   }
 
+  updateComplaintID(id: number, ComplaintID: string) {
+    return new Promise((resolve, reject) => {
+      var obj = {
+        ID: id,
+        ComplaintID: ComplaintID,
+        Title: ComplaintID
+      }
+      this._DataService.addOrUpdateItem(obj).then((data: any) => {
+        resolve(data);
+      }, err => {
+        console.log(err);
+        alert("Error occurred while submitting the form please resubmit.");
+      });
+    });
+  }
+
   updateData() {
     return new Promise((resolve, reject) => {
       var self = this;
@@ -528,15 +544,19 @@ export class NcaComponent implements OnInit {
       console.log(nca);
       self._DataService.addOrUpdateItem(nca).then((data: any) => {
         var currentItemID = self.itemID || data.data.ID;
-        complaintID = self._DataService.generateComplaintID(currentItemID, 5, "nca");
+        complaintID = self._DataService.generateComplaintID(currentItemID, 5, "NCA");
         if (self.newAttachments.length) {
           self._DataService.addAttachment(currentItemID, self.newAttachments).then(response => {
-            resolve({ id: currentItemID, complaintID: complaintID });
+            this.updateComplaintID(currentItemID, complaintID).then(d => {
+              resolve({ id: currentItemID, complaintID: complaintID });
+            });
           }, error => {
             reject(error);
           });
         } else {
-          resolve({ id: currentItemID, complaintID: complaintID });
+          this.updateComplaintID(currentItemID, complaintID).then(d => {
+            resolve({ id: currentItemID, complaintID: complaintID });
+          });
         }
       }, error => {
         console.log(error);
@@ -551,9 +571,9 @@ export class NcaComponent implements OnInit {
     this.formLoading = true;
     if (!this._utils.getUrlParameters("ID")) {
       alert(`Data submitted successfully. ${data.complaintID} is your complaint ID for future reference.`);
-      window.location.href = window.location.href.replace('?', `?ID=${data.id}&`);
+      window.location.href = (<any>window)._spPageContextInfo.siteAbsoluteUrl; //window.location.href.replace('?', `?ID=${data.id}&`);
     } else {
-      window.location.href = window.location.href;
+      window.location.href = (<any>window)._spPageContextInfo.siteAbsoluteUrl
     }
   }
 
@@ -576,7 +596,7 @@ export class NcaComponent implements OnInit {
     } else {
       this._DataService.getCurrentUserType([]).then((userType: string[]) => {
         this.userType = userType;
-        this.updateData().then(data => {  
+        this.updateData().then(data => {
           this.handleSuccess(data);
         }, err => {
           this.handleError(err);
