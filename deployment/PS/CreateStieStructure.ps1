@@ -3,7 +3,7 @@ $logFilePath = $RootLocation + "\log.txt"
 $ErrorActionPreference = "Stop"
 Try
 {	
-	$schemaPath = $RootLocation + "\xml\PnP-Provisioning-File.xml"
+	$schemaPath = $RootLocation + "\XML\PnP-Provisioning-File.xml"
 	Set-PnPTraceLog -On -LogFile $logFilePath -Level Debug
 	Connect-PnPOnline -Url $SiteURL
 	Apply-PnPProvisioningTemplate -Path $schemaPath
