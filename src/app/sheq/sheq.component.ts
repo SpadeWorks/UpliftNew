@@ -74,23 +74,23 @@ export class SheqComponent implements OnInit {
 
     this.sheqForm = this.fb.group({
       userControls: this.fb.group({
-        dateOfIncident: ['', [Validators.required]],
+        dateOfIncident: ['', Validators.required],
         customerNumber: ['', Validators.required],
-        customerName: '',
-        contactPerson: '',
-        contactPersonDesignation: '',
-        contactNumber: '',
-        complaintDetails: '',
-        level1: '',
-        level2: '',
-        level3: '',
-        level4: '',
-        explanation: '',
+        customerName: ['', Validators.required],
+        contactPerson: ['', Validators.required],
+        contactPersonDesignation: ['', Validators.required],
+        contactNumber: ['', Validators.required],
+        complaintDetails: ['', Validators.required],
+        level1: ['', Validators.required],
+        level2: ['', Validators.required],
+        level3: ['', Validators.required],
+        level4: ['', Validators.required],
+        explanation: ['', Validators.required],
         products: this.fb.array([this.buildProduct()]),
-        attachments: ''
+        attachments: '',
       }),
       scaControls: this.fb.group({
-        productionSite: ['', Validators.required],
+        productionSite: '',
         personResponsible: '',
       }),
       approverControls: this.fb.group({
@@ -98,12 +98,12 @@ export class SheqComponent implements OnInit {
         invoiceNumber: '',
         invoiceValue: '',
         lastDeliveryDate: '',
-        comments: ''
+        comments: '',
       }),
       responsiblePersonControls: this.fb.group({
         rootCause: '',
         actionTaken: '',
-        reasonCode: ['', Validators.required],
+        reasonCode: '',
       }),
       complaintStatus: '',
       buttons: this.fb.group({
@@ -182,6 +182,10 @@ export class SheqComponent implements OnInit {
                         controls.responsiblePersonControls.enable();
                         controls.buttons.enable();
                         controls.complaintStatus.enable();
+                        $.map((<any>controls.responsiblePersonControls).controls, control =>{
+                          control.setValidators(Validators.required)
+                          control.updateValueAndValidity();
+                        });
                         this.responsiblePersongsControlVisible = true;
                       }
                     }
@@ -190,6 +194,10 @@ export class SheqComponent implements OnInit {
                       if (complaint.ComplaintStatus != Constants.Globals.SUBMITTED) {
                         controls.approverControls.enable();
                         controls.buttons.enable();
+                        $.map((<any>controls.approverControls).controls, control =>{
+                          control.setValidators(Validators.required)
+                          control.updateValueAndValidity();
+                        });
                         this.approverControlsVisible = true;
                       }
                     }
@@ -200,6 +208,9 @@ export class SheqComponent implements OnInit {
                       controls.complaintStatus.enable();
                       controls.buttons.enable();
                       if (complaint.ComplaintStatus != '') {
+                        let productionSiteControl = this.sheqForm.get('scaControls.productionSite');
+                        productionSiteControl.setValidators(Validators.required);
+                        productionSiteControl.updateValueAndValidity();
                         this.scaControlsVisible = true;
                       }
                     }
@@ -333,7 +344,6 @@ export class SheqComponent implements OnInit {
       });
     });
   }
-
   onProductionSiteChange(siteName) {
     return new Promise((resolve, reject) => {
       this._DataService.getPersonReponsible(siteName).then((data: any) => {

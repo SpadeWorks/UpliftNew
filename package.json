@@ -31,6 +31,7 @@
     "rxjs": "^6.1.0",
     "sp-pnp-js": "^3.0.7",
     "ts-promise": "^1.0.0",
+    "whatwg-fetch": "^2.0.4",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

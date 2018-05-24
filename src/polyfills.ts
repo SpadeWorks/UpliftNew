@@ -19,6 +19,8 @@
  */
 
 /** IE9, IE10 and IE11 requires all of the following polyfills. **/
+import '../node_modules/es6-promise/dist/es6-promise.js';
+import '../node_modules/whatwg-fetch/fetch.js';
 import 'core-js/es6/symbol';
 import 'core-js/es6/object';
 import 'core-js/es6/function';

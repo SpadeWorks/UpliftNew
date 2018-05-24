@@ -80,31 +80,30 @@ export class NcaComponent implements OnInit {
       userControls: this.fb.group({
         dateOfIncident: ['', [Validators.required]],
         customerNumber: ['', Validators.required],
-        plantNumber: '',
-        plantName: '',
-        plantContactName: '',
-        customerName: '',
-        contactPerson: '',
-        contactPersonDesignation: '',
-        contactNumber: '',
-        complaintDetails: '',
-        level1: '',
-        level2: '',
-        level3: '',
-        level4: '',
-        explanation: '',
+        plantNumber: ['', Validators.required],
+        plantName: ['', Validators.required],
+        plantContactName: ['', Validators.required],
+        customerName: ['', Validators.required],
+        // contactPerson: ['', Validators.required],
+        // contactPersonDesignation: ['', Validators.required],
+        // contactNumber: ['', Validators.required],
+        complaintDetails: ['', Validators.required],
+        level1: ['', Validators.required],
+        level2: ['', Validators.required],
+        level3: ['', Validators.required],
+        level4: ['', Validators.required],
+        explanation: ['', Validators.required],
         attachments: '',
-        packCode1: '',
-        productDescription1: '',
-        expiryDate: '',
-        quantity: '',
-        quantityUnit: '',
-        remedyNumber: '',
-        deliveryNumber: ''
-
+        packCode1: ['', Validators.required],
+        productDescription1: ['', Validators.required],
+        expiryDate: ['', Validators.required],
+        quantity: ['', Validators.required],
+        quantityUnit: ['', Validators.required],
+        remedyNumber: ['', Validators.required],
+        deliveryNumber: ['', Validators.required],
       }),
       scaControls: this.fb.group({
-        productionSite: ['', Validators.required],
+        productionSite: '',
         personResponsible: '',
       }),
       approverControls: this.fb.group({
@@ -117,7 +116,7 @@ export class NcaComponent implements OnInit {
       responsiblePersonControls: this.fb.group({
         rootCause: '',
         actionTaken: '',
-        reasonCode: ['', Validators.required],
+        reasonCode: ''
       }),
       complaintStatus: '',
       buttons: this.fb.group({
@@ -185,21 +184,29 @@ export class NcaComponent implements OnInit {
 
                     }
                     if (userType.indexOf(Constants.Globals.UPLIFT_RESPONSIBLE_PERSON) > -1) {
-                      this.ncaForm.disable();
-                      controls.responsiblePersonControls.enable();
-                      controls.buttons.enable();
-                      controls.complaintStatus.enable();
+
                       if (complaint.ComplaintStatus != Constants.Globals.SUBMITTED) {
+                        controls.responsiblePersonControls.enable();
+                        controls.buttons.enable();
+                        controls.complaintStatus.enable();
+                        $.map((<any>controls.responsiblePersonControls).controls, control => {
+                          control.setValidators(Validators.required)
+                          control.updateValueAndValidity();
+                        });
                         this.responsiblePersongsControlVisible = true;
                       }
                     }
 
                     if (userType.indexOf(Constants.Globals.UPLIFT_SCA) > -1) {
-                      controls.userControls.enable();
-                      controls.scaControls.enable();
-                      controls.complaintStatus.enable();
-                      controls.buttons.enable();
+
                       if (complaint.ComplaintStatus == Constants.Globals.SUBMITTED) {
+                        controls.userControls.enable();
+                        controls.scaControls.enable();
+                        controls.complaintStatus.enable();
+                        controls.buttons.enable();
+                        let productionSiteControl = this.ncaForm.get('scaControls.productionSite');
+                        productionSiteControl.setValidators(Validators.required);
+                        productionSiteControl.updateValueAndValidity();
                         this.scaControlsVisible = true;
                       }
                     }

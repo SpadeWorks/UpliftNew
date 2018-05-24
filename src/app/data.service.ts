@@ -16,7 +16,6 @@ export class DataService {
   constructor(private _Utils: Utils) {
     // declare var SP: any;
     pnp.setup({
-
       sp: {
         headers: {
           "Accept": "application/json;odata=verbose",
