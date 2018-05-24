@@ -25,8 +25,9 @@ export class AppComponent implements OnInit {
       sheq: '+ Add SHEQ Complaint',
       nca: '+ Add NCA Complaint'
     });
-    if (this.contentTypeID == Constants.Globals.sheqContentTypeID ||
-      this.contentType == Constants.Globals.sheqContentType) {
+    if (this.contentTypeID && 
+          this.contentTypeID.toLowerCase().indexOf(Constants.Globals.sheqContentTypeID.toLowerCase()) > -1 ||
+          this.contentType && this.contentType.toLowerCase() == Constants.Globals.sheqContentType.toLowerCase()) {
         this.isSheq = true;
         this.createButtons.controls.sheq.disable();
     } else{

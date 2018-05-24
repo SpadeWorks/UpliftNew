@@ -11,13 +11,13 @@
         <div class="row complaintStatus">
           <div class="col-xs-12 col-md-4 col-sm-4 form-group" *ngIf="complaintStatusVisible">
             <span>Current Complaint Status: </span>
-            <span [ngClass]="{'StateResolvd': complaintStatus == 'Resolved',
-                              'StateDrafted': complaintStatus == 'Drafted',
-                              'StateSubmitted': complaintStatus == 'Submitted',
-                              'StateAssigned': complaintStatus == 'Assigned',
-                              'StateWIP': complaintStatus == 'WIP',
-                              'StatePending': complaintStatus == 'Pending',
-                              'StateRejected': complaintStatus == 'Rejected'}" formGroupName="complaintStatus">Resolved</span>
+            <span [ngClass]="{'StateResolvd': currentComplaintStatus == 'Resolved',
+                              'StateDrafted': currentComplaintStatus == 'Drafted',
+                              'StateSubmitted': currentComplaintStatus == 'Submitted',
+                              'StateAssigned': currentComplaintStatus == 'Assigned',
+                              'StateWIP': currentComplaintStatus == 'WIP',
+                              'StatePending': currentComplaintStatus == 'Pending',
+                              'StateRejected': currentComplaintStatus == 'Rejected'}">{{currentComplaintStatus}}</span>
           </div>
         </div>
         <div class="row">

@@ -407,8 +407,8 @@ input[type="button"].grayBtn {
 
 input[type="button"].disableBtn,
 input[type="button"]:disabled {
-    background: #a8a7a7;
-    color: #fff;
+    background: #a8a7a7 !important;
+    color: #fff !important;
 }
 
 select[disabled] {

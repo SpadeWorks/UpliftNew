@@ -39,6 +39,7 @@ export class SheqComponent implements OnInit {
     { value: 'Resolved', label: 'Resolved' },
     { value: 'Rejected', label: 'Rejected' },
   ];
+  currentComplaintStatus = Constants.Globals.SUBMITTED;
   personResponsibleOptions = [];
   level1Disabled = true;
   level2Disabled = true;
@@ -176,21 +177,19 @@ export class SheqComponent implements OnInit {
 
                     }
                     if (userType.indexOf(Constants.Globals.UPLIFT_RESPONSIBLE_PERSON) > -1) {
-                      this.sheqForm.disable();
-                      controls.responsiblePersonControls.enable();
-                      controls.buttons.enable();
-                      controls.complaintStatus.enable();
                       if (complaint.ComplaintStatus != Constants.Globals.SUBMITTED &&
                         complaint.ApprovalStatus == Constants.Globals.YES) {
+                        controls.responsiblePersonControls.enable();
+                        controls.buttons.enable();
+                        controls.complaintStatus.enable();
                         this.responsiblePersongsControlVisible = true;
                       }
                     }
 
                     if (userType.indexOf(Constants.Globals.UPLIFT_APPROVER) > -1) {
-                      this.sheqForm.disable();
-                      controls.approverControls.enable();
-                      controls.buttons.enable();
                       if (complaint.ComplaintStatus != Constants.Globals.SUBMITTED) {
+                        controls.approverControls.enable();
+                        controls.buttons.enable();
                         this.approverControlsVisible = true;
                       }
                     }
@@ -199,9 +198,6 @@ export class SheqComponent implements OnInit {
                       controls.userControls.enable();
                       controls.scaControls.enable();
                       controls.complaintStatus.enable();
-                      if (userType.indexOf(Constants.Globals.UPLIFT_RESPONSIBLE_PERSON) > -1) {
-                        controls.responsiblePersonControls.enable();
-                      }
                       controls.buttons.enable();
                       if (complaint.ComplaintStatus != '') {
                         this.scaControlsVisible = true;
@@ -213,6 +209,8 @@ export class SheqComponent implements OnInit {
               })
             })
           })
+
+          this.currentComplaintStatus = complaint.ComplaintStatus;
           lastDeliveryDate = complaint.LastDeliveryDate ? new Date(complaint.LastDeliveryDate) : new Date();
           dateOfIncident = complaint.DateOfIncident ? new Date(complaint.LastDeliveryDate) : new Date();
           this.sheqForm.patchValue({
@@ -588,6 +586,9 @@ export class SheqComponent implements OnInit {
       }
       if (this.userType.indexOf(Constants.Globals.UPLIFT_APPROVER) > -1) {
         sheq.ApprovalStatus = this.getControlValue("approverControls.approvalStatus");
+        if (sheq.ApprovalStatus && sheq.ApprovalStatus.toLowerCase() == Constants.Globals.NO.toLowerCase()) {
+          sheq.ComplaintStatus = Constants.Globals.REJECTED;
+        }
         sheq.InvoiceNumber = this.getControlValue("approverControls.invoiceNumber");
         sheq.InvoiceValue = this.getControlValue("approverControls.invoiceValue");
         sheq.ApproverComments = this.getControlValue("approverControls.comments");
@@ -599,11 +600,9 @@ export class SheqComponent implements OnInit {
         sheq.ReasonCode = this.getControlValue("responsiblePersonControls.reasonCode");
       }
 
-      if (sheq.ApprovalStatus.toLowerCase() == Constants.Globals.NO) {
-        sheq.ComplaintStatus = Constants.Globals.REJECTED;
-      } else {
-        sheq.ComplaintStatus = this.getControlValue("complaintStatus") || Constants.Globals.SUBMITTED;
-      }
+      sheq.ComplaintStatus = sheq.ComplaintStatus ||
+        this.getControlValue("complaintStatus") || Constants.Globals.SUBMITTED;
+
 
       sheq.SubmittedOn = new Date().toISOString();
       sheq.ContentTypeId = Constants.Globals.sheqContentTypeID;
@@ -632,19 +631,20 @@ export class SheqComponent implements OnInit {
   }
 
   handleSuccess(data) {
-    this.sheqForm.controls.buttons.enable();
-    this.formLoading = true;
+
     if (!this._utils.getUrlParameters("ID")) {
       alert(`Data submitted successfully. ${data.complaintID} is your complaint ID for future reference.`);
       window.location.href = window.location.href.replace('?', `?ID=${data.id}&`);
     } else {
       window.location.href = window.location.href;
     }
+    this.formLoading = false;
+    this.sheqForm.controls.buttons.enable();
   }
 
   handleError(data) {
     this.sheqForm.controls.buttons.enable();
-    this.formLoading = true;
+    this.formLoading = false;
     alert(`Following error occured while submitting the form : \n err`);
   }
 
@@ -661,7 +661,7 @@ export class SheqComponent implements OnInit {
     } else {
       this._DataService.getCurrentUserType([]).then((userType: string[]) => {
         this.userType = userType;
-        this.updateData().then(data => {  
+        this.updateData().then(data => {
           this.handleSuccess(data);
         }, err => {
           this.handleError(err);
