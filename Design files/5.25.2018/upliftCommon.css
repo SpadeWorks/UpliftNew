@@ -305,14 +305,13 @@ SHEQ Form
     appearance: none;
     color: #6d6d6d;
     font-family: 'robotoregular';
-    z-index: 1;
 }
 
 .ulSelectOutter::after {
     content: "\f107";
     display: inline-block;
-    font: normal normal normal 19px/1 FontAwesome;
-    color: #040404;
+    font: normal normal normal 17px/1 FontAwesome;
+    color: #ccc;
     right: 7px;
     position: absolute;
     top: 8px;
@@ -406,11 +405,6 @@ input[type="button"].brownBtn {
     color: #fff;
 }
 
-input[type="button"].lavendarBtn {
-    background: #722257;
-    color: #fff;
-}
-
 input[type="button"].grayBtn {
     background: #005eb8;
     color: #fff;
@@ -418,8 +412,8 @@ input[type="button"].grayBtn {
 
 input[type="button"].disableBtn,
 input[type="button"]:disabled {
-    background: #a8a7a7 !important;
-    color: #fff !important;
+    background: #a8a7a7;
+    color: #fff;
 }
 
 select[disabled] {
@@ -527,8 +521,4 @@ button {
 
 .mydp .icon-mydpcalendar:before {
     color: #007dbb;
-}
-
-.help-block {
-    color: #e31e2d !important;
 }

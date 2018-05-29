@@ -1,0 +1,104 @@
+<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<link rel="icon" href="favicon.ico">
+		<title>UpLift home page</title>
+		
+		<!--<script type="text/javascript" src="../Style Library/uplift/JS/jquery-2.2.0.min.js"></script>
+		<script type="text/javascript" src="../Style Library/uplift/JS/Dashboard.js"></script>
+		
+		<link href="../Style Library/uplift/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="../Style Library/uplift/css/font-awesome.min.css" rel="stylesheet" />
+		<link href="../Style Library/uplift/css/upliftCommon.css" rel="stylesheet" />
+		<link href="../Style Library/uplift/css/upliftCommonMedia.css" rel="stylesheet" />-->
+</head>
+<script type="text/javascript">
+	$.getScript(_spPageContextInfo.siteAbsoluteUrl + "/Style%20Library/uplift/JS/jquery-2.2.0.min.js");
+	$.getScript(_spPageContextInfo.siteAbsoluteUrl + "/Style%20Library/uplift/JS/Dashboard.js");
+	$('<link rel="stylesheet" type="text/css" href="'+ _spPageContextInfo.siteAbsoluteUrl+"/Style%20Library/uplift/CSS/bootstrap.min.css" +'" >').appendTo("head");
+	$('<link rel="stylesheet" type="text/css" href="'+ _spPageContextInfo.siteAbsoluteUrl+"/Style%20Library/uplift/CSS/font-awesome.min.css" +'" >').appendTo("head");
+	$('<link rel="stylesheet" type="text/css" href="'+ _spPageContextInfo.siteAbsoluteUrl+"/Style%20Library/uplift/CSS/upliftCommon.css" +'" >').appendTo("head");
+	$('<link rel="stylesheet" type="text/css" href="'+ _spPageContextInfo.siteAbsoluteUrl+"/Style%20Library/uplift/CSS/upliftCommonMedia.css" +'" >').appendTo("head");
+</script>
+<body>
+<div class="">
+
+	<div class="sheqFormTop row">
+		<div class="col-xs-12 col-md-6 col-sm-6 text-left">
+			<span class="upliftTitle">Uplift</span>
+			<div class="upliftBreadcrum">
+				<span class="upliftBreadcrumTxt activeBreadCrum">
+					User Dashboard
+				</span>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-6 col-sm-6 text-right">
+			<input type="button" value="+ Add NCA Complaint" class="ulBtn brownBtn" id="btnNca" />
+			<input type="button" value="+ Add SHEQ Complaint" class="ulBtn brownBtn" id="btnSheq" />
+		</div>
+	</div>
+	
+	<div class="dashBtns row"></div>
+	
+	<div class="dashRadioSearch row">
+		<div class="col-sm-6 col-md-6 col-xs-12">
+			<div class="csRadiobox checkbox-primary">
+				<input id="radio1" value="NCA Complaints" name="ComplaintRadio" type="radio" checked>
+				<label for="radio1">NCA Complaints</label>
+			</div>
+			<div class="csRadiobox checkbox-primary">
+				<input id="radio2" value="SHEQ Complaints" name="ComplaintRadio" type="radio">
+				<label for="radio2">SHEQ Complaints</label>
+			</div>
+		</div>
+		<div class="col-sm-5 col-sm-offset-1 col-md-3 col-md-offset-3 col-xs-12">
+			<div class="dashSearchComp">
+				<input type="text" class="dashSearchBox" placeholder="Search with id, complaints, status...." />
+			</div>
+		</div>
+	</div>
+	
+	<div class="statusBlockWrap row">
+		<div class="col-sm-4 col-md-2 col-xs-6">	
+			<div class="statusBlock allCompColor">
+				<span class="statusCount" id="idAllComplaints">0</span>
+				<span class="statusName">All complaints</span>
+			</div>
+		</div>
+		<div class="col-sm-4 col-md-2 col-xs-6">	
+			<div class="statusBlock assiCompColor">
+				<span class="statusCount" id="idAssignComplaints">0</span>
+				<span class="statusName">Assign Complaints</span>
+			</div>
+		</div>
+		<div class="col-sm-4 col-md-2 col-xs-6">	
+			<div class="statusBlock wipCompColor">
+				<span class="statusCount" id="idWIPComplaints">0</span>
+				<span class="statusName">WIP Complaints</span>
+			</div>
+		</div>
+		<div class="col-sm-4 col-md-2 col-xs-6">	
+			<div class="statusBlock pendCompColor">
+				<span class="statusCount" id="idPendingComplaints">0</span>
+				<span class="statusName">Pending complaints</span>
+			</div>
+		</div>
+		<div class="col-sm-4 col-md-2 col-xs-6">	
+			<div class="statusBlock resolvCompColor">
+				<span class="statusCount" id="idResolvedComplaints">0</span>
+				<span class="statusName">Resolved complaints</span>
+			</div>
+		</div>
+		<div class="col-sm-4 col-md-2 col-xs-6">	
+			<div class="statusBlock rejectCompColor">
+				<span class="statusCount" id="idRejectedComplaints">0</span>
+				<span class="statusName">Rejected complaints</span>
+			</div>
+		</div>
+	</div>
+</div>
+</body>

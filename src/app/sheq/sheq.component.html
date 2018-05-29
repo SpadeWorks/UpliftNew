@@ -9,7 +9,7 @@
     <div class="col-xs-12 col-md-10 col-sm-10 SheqFormFieldsWrap">
       <div data-type="complaint-form" formGroupName="userControls">
         <div class="row complaintStatus">
-          <div class="col-xs-12 col-md-4 col-sm-4 form-group" *ngIf="complaintStatusVisible">
+          <div class="col-xs-12 col-md-12 col-sm-12 form-group" *ngIf="complaintStatusVisible">
             <span>Current Complaint Status: </span>
             <span [ngClass]="{'StateResolvd': currentComplaintStatus == 'Resolved',
                               'StateDrafted': currentComplaintStatus == 'Drafted',
@@ -24,7 +24,7 @@
           <div class="col-xs-12 col-md-4 col-sm-4 form-group">
             <label class="form-label">Date of Incident*</label>
             <my-date-picker name="mydate" [options]="myDatePickerOptions" formControlName="dateOfIncident"></my-date-picker>
-            <span class="help-block" *ngIf="(sheqForm.get('userControls.dateOfIncident').touched || sheqForm.get('userControls.dateOfIncident').dirty) && 
+            <span class="help-block" *ngIf="(sheqForm.get('userControls.dateOfIncident').touched || sheqForm.get('userControls.dateOfIncident').dirty) &&
                   sheqForm.get('userControls.dateOfIncident').errors">
               <span *ngIf="sheqForm.get('userControls.dateOfIncident').errors.required">
                 This field is required.
@@ -37,7 +37,7 @@
             <label class="form-label">Customer Number*</label>
             <input type="text" class="form-control ulTxtBox" formControlName="customerNumber" (blur)="onCusomerNumberChange($event)"
             />
-            <span class="help-block" *ngIf="(sheqForm.get('userControls.customerNumber').touched || sheqForm.get('userControls.customerNumber').dirty) && 
+            <span class="help-block" *ngIf="(sheqForm.get('userControls.customerNumber').touched || sheqForm.get('userControls.customerNumber').dirty) &&
                   sheqForm.get('userControls.customerNumber').errors">
               <span *ngIf="sheqForm.get('userControls.customerNumber').errors.required">
                 This field is required.
@@ -47,8 +47,8 @@
           <div class="col-xs-12 col-md-4 col-sm-4 form-group">
             <label class="form-label">Customer Name*</label>
             <input type="text" class="form-control ulTxtBox" formControlName="customerName" />
-            <span class="help-block" *ngIf="(sheqForm.get('userControls.customerName').touched || 
-                  sheqForm.get('userControls.customerName').dirty) && 
+            <span class="help-block" *ngIf="(sheqForm.get('userControls.customerName').touched ||
+                  sheqForm.get('userControls.customerName').dirty) &&
                   sheqForm.get('userControls.customerName').errors">
               <span *ngIf="sheqForm.get('userControls.customerName').errors.required">
                 This field is required.
@@ -60,7 +60,7 @@
           <div class="col-xs-12 col-md-4 col-sm-4 form-group">
             <label class="form-label">Contact Person*</label>
             <input type="text" class="form-control ulTxtBox" formControlName="contactPerson" />
-            <span class="help-block" *ngIf="(sheqForm.get('userControls.contactPerson').touched || sheqForm.get('userControls.contactPerson').dirty) && 
+            <span class="help-block" *ngIf="(sheqForm.get('userControls.contactPerson').touched || sheqForm.get('userControls.contactPerson').dirty) &&
                   sheqForm.get('userControls.contactPerson').errors">
               <span *ngIf="sheqForm.get('userControls.contactPerson').errors.required">
                 This field is required.
@@ -70,8 +70,8 @@
           <div class="col-xs-12 col-md-4 col-sm-4 form-group">
             <label class="form-label">Contact Person Designation*</label>
             <input type="text" class="form-control ulTxtBox" formControlName="contactPersonDesignation" />
-            <span class="help-block" *ngIf="(sheqForm.get('userControls.contactPersonDesignation').touched || 
-                  sheqForm.get('userControls.contactPersonDesignation').dirty) && 
+            <span class="help-block" *ngIf="(sheqForm.get('userControls.contactPersonDesignation').touched ||
+                  sheqForm.get('userControls.contactPersonDesignation').dirty) &&
                   sheqForm.get('userControls.contactPersonDesignation').errors">
               <span *ngIf="sheqForm.get('userControls.contactPersonDesignation').errors.required">
                 This field is required.
@@ -81,8 +81,8 @@
           <div class="col-xs-12 col-md-4 col-sm-4 form-group">
             <label class="form-label">Contact Number*</label>
             <input type="phone" class="form-control ulTxtBox" formControlName="contactNumber" />
-            <span class="help-block" *ngIf="(sheqForm.get('userControls.contactNumber').touched || 
-                  sheqForm.get('userControls.contactNumber').dirty) && 
+            <span class="help-block" *ngIf="(sheqForm.get('userControls.contactNumber').touched ||
+                  sheqForm.get('userControls.contactNumber').dirty) &&
                   sheqForm.get('userControls.contactNumber').errors">
               <span *ngIf="sheqForm.get('userControls.contactNumber').errors.required">
                 This field is required.
@@ -94,8 +94,8 @@
           <div class="col-xs-12 col-md-6 col-sm-6 form-group">
             <label class="form-label">Complaint Details*</label>
             <textarea class="form-control ulTxtBox" formControlName="complaintDetails"></textarea>
-            <span class="help-block" *ngIf="(sheqForm.get('userControls.complaintDetails').touched || 
-                  sheqForm.get('userControls.complaintDetails').dirty) && 
+            <span class="help-block" *ngIf="(sheqForm.get('userControls.complaintDetails').touched ||
+                  sheqForm.get('userControls.complaintDetails').dirty) &&
                   sheqForm.get('userControls.complaintDetails').errors">
               <span *ngIf="sheqForm.get('userControls.complaintDetails').errors.required">
                 This field is required.
@@ -168,8 +168,8 @@
                 <option *ngFor="let option of level1Options" value="{{option.value}}">{{option.label }}</option>
               </select>
             </div>
-            <span class="help-block" *ngIf="(sheqForm.get('userControls.level1').touched || 
-                  sheqForm.get('userControls.level1').dirty) && 
+            <span class="help-block" *ngIf="(sheqForm.get('userControls.level1').touched ||
+                  sheqForm.get('userControls.level1').dirty) &&
                   sheqForm.get('userControls.level1').errors">
               <span *ngIf="sheqForm.get('userControls.level1').errors.required">
                 This field is required.
@@ -183,8 +183,8 @@
                 <option *ngFor="let option of level2Options" value="{{option.value}}">{{ option.label }}</option>
               </select>
             </div>
-            <span class="help-block" *ngIf="(sheqForm.get('userControls.level2').touched || 
-                  sheqForm.get('userControls.level2').dirty) && 
+            <span class="help-block" *ngIf="(sheqForm.get('userControls.level2').touched ||
+                  sheqForm.get('userControls.level2').dirty) &&
                   sheqForm.get('userControls.level2').errors">
               <span *ngIf="sheqForm.get('userControls.level2').errors.required">
                 This field is required.
@@ -201,7 +201,7 @@
               </select>
             </div>
             <span class="help-block" *ngIf="(sheqForm.get('userControls.level3').touched ||
-            sheqForm.get('userControls.level3').dirty) && 
+            sheqForm.get('userControls.level3').dirty) &&
             sheqForm.get('userControls.level3').errors">
               <span *ngIf="sheqForm.get('userControls.level3').errors.required">
                 This field is required.
@@ -215,8 +215,8 @@
                 <option *ngFor="let option of level4Options" value="{{option.value}}">{{ option.label }}</option>
               </select>
             </div>
-            <span class="help-block" *ngIf="(sheqForm.get('userControls.level4').touched || 
-                  sheqForm.get('userControls.level4').dirty) && 
+            <span class="help-block" *ngIf="(sheqForm.get('userControls.level4').touched ||
+                  sheqForm.get('userControls.level4').dirty) &&
                   sheqForm.get('userControls.level4').errors">
               <span *ngIf="sheqForm.get('userControls.level4').errors.required">
                 This field is required.
@@ -228,8 +228,8 @@
           <div class="col-xs-12 col-md-8 col-sm-8 form-group">
             <label class="form-label">Explanation*</label>
             <textarea class="form-control ulTxtBox" formControlName="explanation"></textarea>
-            <span class="help-block" *ngIf="(sheqForm.get('userControls.explanation').touched || 
-                  sheqForm.get('userControls.explanation').dirty) && 
+            <span class="help-block" *ngIf="(sheqForm.get('userControls.explanation').touched ||
+                  sheqForm.get('userControls.explanation').dirty) &&
                   sheqForm.get('userControls.explanation').errors">
               <span *ngIf="sheqForm.get('userControls.explanation').errors.required">
                 This field is required.
@@ -267,8 +267,8 @@
           <label class="form-label">Production Site*</label>
           <input type="text" class="form-control ulTxtBox" formControlName="productionSite" (blur)="onProductionSiteChange($event.target.value)"
           />
-          <span class="help-block" *ngIf="(sheqForm.get('scaControls.productionSite').touched || 
-                  sheqForm.get('scaControls.productionSite').dirty) && 
+          <span class="help-block" *ngIf="(sheqForm.get('scaControls.productionSite').touched ||
+                  sheqForm.get('scaControls.productionSite').dirty) &&
                   sheqForm.get('scaControls.productionSite').errors">
             <span *ngIf="sheqForm.get('scaControls.productionSite').errors.required">
               This field is required.
@@ -292,8 +292,8 @@
             <div class="col-xs-12 col-md-6 col-sm-6">
               <label class="form-label">Invoice Number*</label>
               <input type="text" class="form-control ulTxtBox" formControlName="invoiceNumber" />
-              <span class="help-block" *ngIf="(sheqForm.get('approverControls.invoiceNumber').touched || 
-                  sheqForm.get('approverControls.invoiceNumber').dirty) && 
+              <span class="help-block" *ngIf="(sheqForm.get('approverControls.invoiceNumber').touched ||
+                  sheqForm.get('approverControls.invoiceNumber').dirty) &&
                   sheqForm.get('approverControls.invoiceNumber').errors">
                 <span *ngIf="sheqForm.get('approverControls.invoiceNumber').errors.required">
                   This field is required.
@@ -303,8 +303,8 @@
             <div class="col-xs-12 col-md-6 col-sm-6">
               <label class="form-label">Invoice Value*</label>
               <input type="text" class="form-control ulTxtBox" formControlName="invoiceValue" />
-              <span class="help-block" *ngIf="(sheqForm.get('approverControls.invoiceValue').touched || 
-                  sheqForm.get('approverControls.invoiceValue').dirty) && 
+              <span class="help-block" *ngIf="(sheqForm.get('approverControls.invoiceValue').touched ||
+                  sheqForm.get('approverControls.invoiceValue').dirty) &&
                   sheqForm.get('approverControls.invoiceValue').errors">
                 <span *ngIf="sheqForm.get('approverControls.invoiceValue').errors.required">
                   This field is required.
@@ -316,8 +316,8 @@
             <div class="col-xs-12 col-md-6 col-sm-6">
               <label class="form-label">Last Delivery Date*</label>
               <my-date-picker name="mydate" [options]="myDatePickerOptions" formControlName="lastDeliveryDate"></my-date-picker>
-              <span class="help-block" *ngIf="(sheqForm.get('approverControls.lastDeliveryDate').touched || 
-                  sheqForm.get('approverControls.lastDeliveryDate').dirty) && 
+              <span class="help-block" *ngIf="(sheqForm.get('approverControls.lastDeliveryDate').touched ||
+                  sheqForm.get('approverControls.lastDeliveryDate').dirty) &&
                   sheqForm.get('approverControls.lastDeliveryDate').errors">
                 <span *ngIf="sheqForm.get('approverControls.lastDeliveryDate').errors.required">
                   This field is required.
@@ -330,8 +330,8 @@
                 <select class="ulSelect" formControlName="approvalStatus">
                   <option *ngFor="let option of approvalStatusOptions" value="{{option.value}}">{{ option.label }}</option>
                 </select>
-                <span class="help-block" *ngIf="(sheqForm.get('approverControls.approvalStatus').touched || 
-                  sheqForm.get('approverControls.approvalStatus').dirty) && 
+                <span class="help-block" *ngIf="(sheqForm.get('approverControls.approvalStatus').touched ||
+                  sheqForm.get('approverControls.approvalStatus').dirty) &&
                   sheqForm.get('approverControls.approvalStatus').errors">
                   <span *ngIf="sheqForm.get('approverControls.approvalStatus').errors.required">
                     This field is required.
@@ -344,8 +344,8 @@
             <div class="col-xs-12 col-md-12 col-sm-12">
               <label class="form-label">Comments*</label>
               <textarea class="form-control ulTxtBox" formControlName="comments"></textarea>
-              <span class="help-block" *ngIf="(sheqForm.get('approverControls.comments').touched || 
-                  sheqForm.get('approverControls.comments').dirty) && 
+              <span class="help-block" *ngIf="(sheqForm.get('approverControls.comments').touched ||
+                  sheqForm.get('approverControls.comments').dirty) &&
                   sheqForm.get('approverControls.comments').errors">
                 <span *ngIf="sheqForm.get('approverControls.comments').errors.required">
                   This field is required.
@@ -363,8 +363,8 @@
               <select class="ulSelect" formControlName="reasonCode">
                 <option *ngFor="let reasonCode of reasonCodes" value="{{reasonCode.value}}">{{ reasonCode.label }}</option>
               </select>
-              <span class="help-block" *ngIf="(sheqForm.get('responsiblePersonControls.reasonCode').touched || 
-                  sheqForm.get('responsiblePersonControls.reasonCode').dirty) && 
+              <span class="help-block" *ngIf="(sheqForm.get('responsiblePersonControls.reasonCode').touched ||
+                  sheqForm.get('responsiblePersonControls.reasonCode').dirty) &&
                   sheqForm.get('responsiblePersonControls.reasonCode').errors">
                 <span *ngIf="sheqForm.get('responsiblePersonControls.reasonCode').errors.required">
                   This field is required.
@@ -377,8 +377,8 @@
           <div class="col-xs-12 col-md-8 col-sm-8 form-group">
             <label class="form-label">Root Cause*</label>
             <textarea class="form-control ulTxtBox" formControlName="rootCause"></textarea>
-            <span class="help-block" *ngIf="(sheqForm.get('responsiblePersonControls.rootCause').touched || 
-                  sheqForm.get('responsiblePersonControls.rootCause').dirty) && 
+            <span class="help-block" *ngIf="(sheqForm.get('responsiblePersonControls.rootCause').touched ||
+                  sheqForm.get('responsiblePersonControls.rootCause').dirty) &&
                   sheqForm.get('responsiblePersonControls.rootCause').errors">
               <span *ngIf="sheqForm.get('responsiblePersonControls.rootCause').errors.required">
                 This field is required.
@@ -390,8 +390,8 @@
           <div class="col-xs-12 col-md-8 col-sm-8 form-group">
             <label class="form-label">Action Taken*</label>
             <textarea class="form-control ulTxtBox" formControlName="actionTaken"></textarea>
-            <span class="help-block" *ngIf="(sheqForm.get('responsiblePersonControls.actionTaken').touched || 
-                  sheqForm.get('responsiblePersonControls.actionTaken').dirty) && 
+            <span class="help-block" *ngIf="(sheqForm.get('responsiblePersonControls.actionTaken').touched ||
+                  sheqForm.get('responsiblePersonControls.actionTaken').dirty) &&
                   sheqForm.get('responsiblePersonControls.actionTaken').errors">
               <span *ngIf="sheqForm.get('responsiblePersonControls.actionTaken').errors.required">
                 This field is required.

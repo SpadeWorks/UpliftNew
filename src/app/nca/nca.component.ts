@@ -60,6 +60,7 @@ export class NcaComponent implements OnInit {
   approverControlsVisible = false;
   responsiblePersongsControlVisible = false;
   complaintStatusVisible = false;
+  currentComplaintStatus = Constants.Globals.SUBMITTED;
   formLoading = true;
   get products(): FormArray {
     return <FormArray>this.ncaForm.get('userControls.products');
@@ -216,6 +217,7 @@ export class NcaComponent implements OnInit {
               })
             })
           })
+          this.currentComplaintStatus = complaint.ComplaintStatus;
           lastDeliveryDate = complaint.LastDeliveryDate ? new Date(complaint.LastDeliveryDate) : new Date();
           dateOfIncident = complaint.DateOfIncident ? new Date(complaint.DateOfIncident) : new Date();
           expiryDate = complaint.BBEExpiry ? new Date(complaint.BBEExpiry) : new Date(),
@@ -532,8 +534,10 @@ export class NcaComponent implements OnInit {
         nca.Level3LookupId = +this.getControlValue("userControls.level3");
         nca.Level4LookupId = +this.getControlValue("userControls.level4");
         nca.Explanation = this.getControlValue("userControls.explanation");
+
       }
       if (this.userType.indexOf(Constants.Globals.UPLIFT_SCA) > -1) {
+        nca.ApprovalStatus = Constants.Globals.NOT_STARTED;
         nca.SiteName = this.getControlValue("scaControls.productionSite");
         responsiblePersons = this.getControlValue("scaControls.personResponsible");
         if (responsiblePersons) {

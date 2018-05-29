@@ -140,7 +140,7 @@ export class Complaints {
     static Approver_Comments = "ApproverComments";
     static PLANT_CONTACT_NAME = "PlantContactName";
     static QUANTITY_UNIT = "QuantityUnit";
-} 
+}
 
 export class Globals{
     static USER = "user";
@@ -155,13 +155,12 @@ export class Globals{
     static REJECTED = "Rejected";
     static ASSIGNED = "Assigned";
     static WIP = "WIP";
-
     static YES = "Yes";
-    
+    static NOT_STARTED = "Not Started";
     static sheqContentTypeID = "0x0100376BE29451A1A848B7458189992EFFE6";
     static ncaContentTypeID = "0x0100FD4838C96DB49E48BCCBFEA748374DA0";
     static sheqContentType = "SHEQ_CT";
     static ncaContentType = "NCA_CT";
     static NO = "No";
-     
+
 }

@@ -571,6 +571,7 @@ export class SheqComponent implements OnInit {
         sheq.Level3LookupId = +this.getControlValue("userControls.level3");
         sheq.Level4LookupId = +this.getControlValue("userControls.level4");
         sheq.Explanation = this.getControlValue("userControls.explanation");
+
         for (var index = 1; index <= 5; index++) {
           control = self.products.controls[index - 1];
           control = control ? control.controls : null;
@@ -588,6 +589,7 @@ export class SheqComponent implements OnInit {
         }
       }
       if (this.userType.indexOf(Constants.Globals.UPLIFT_SCA) > -1) {
+        sheq.ApprovalStatus = Constants.Globals.NOT_STARTED;
         sheq.SiteName = this.getControlValue("scaControls.productionSite");
         responsiblePersons = this.getControlValue("scaControls.personResponsible");
         if (responsiblePersons) {

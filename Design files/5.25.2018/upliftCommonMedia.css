@@ -1,0 +1,79 @@
+
+/* Small devices */
+@media (max-width: 479px) { 
+	
+}
+
+@media (max-width: 639px) { 
+	.sheqFormTop input[type="button"] {
+		margin: 0 0 5px 0;
+		width:inherit;	
+	}
+}
+/* Medium devices */
+@media (max-width: 767px) { 
+	.listViewHomePage thead {
+		display:none;
+	}
+	.listViewHomePage td {
+		width: 45%;
+		border: none;
+		border-bottom: 1px solid #eee;
+		position: relative;
+		padding-left: 50%;
+		white-space: normal;
+		text-align: left;
+		display:block;
+	}
+	.listViewHomePage td:before {
+		content: attr(data-title);
+	}
+	.listViewHomePage td:before {
+		position: absolute;
+		top: 6px;
+		left: 6px;
+		width: 45%;
+		padding-right: 10px;
+		white-space: nowrap;
+		text-align: left;
+		font-weight: bold;
+	}
+}
+
+/* Desktop devices */
+@media (max-width: 991px) { 
+
+}
+@media (min-width: 1080px) { 
+	.u-wm-topnav-box, .u-wm-main-box {
+	    width: 1240px !important;
+	    margin:0 auto;
+	}
+
+}
+
+
+
+/* Extra large devices */
+@media (max-width: 1200px) { 
+
+}
+
+/****************  Ipad  portrait (768 * 1024) **************/
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+	.sheqFormTop input[type="button"].ulBtn {
+		width: 49%;
+	    margin:0 1% 0 0;	
+	}
+}
+
+
+/****************  Ipad  Landscape (1024 * 768) **************/
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+	.statusBlock {
+		padding:5px 8px;
+		font-size:13px;	
+	}
+
+}
