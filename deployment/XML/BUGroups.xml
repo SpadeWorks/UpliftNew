@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Groups>
-	<Group Name="Uplift_SCA" Type="" Description="" Owner="" User="" Permission="Read Write not delete access"></Group>
-	<Group Name="UPlift_Approvers" Type="" Description="" Owner="" User="" Permission="Read Write not delete access"></Group>
+	<Group Name="Uplift_Users" Type="" Description="" Owner="" User="" Permission="Read Write not delete access"></Group>
+	<Group Name="Uplift_Responsible_Persons" Type="" Description="" Owner="" User="" Permission="Read Write not delete access"></Group>
 </Groups>

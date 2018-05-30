@@ -19,15 +19,16 @@ export class AppComponent implements OnInit {
   contentType: string = this._utils.getUrlParameters('ContentyType');
   isSheq: boolean;
   createButtons: FormGroup;
+  siteUrl: string = (<any>window)._spPageContextInfo.siteAbsoluteUrl;
   ngOnInit() {
 
     this.createButtons = this.fb.group({
       sheq: '+ Add SHEQ Complaint',
       nca: '+ Add NCA Complaint'
     });
-    if (this.contentTypeID && 
+    if (this.contentTypeID &&
           this.contentTypeID.toLowerCase().indexOf(Constants.Globals.sheqContentTypeID.toLowerCase()) > -1 ||
-          this.contentType && this.contentType.toLowerCase() == Constants.Globals.sheqContentType.toLowerCase()) {
+          this.contentType && this.contentType.toLowerCase() === Constants.Globals.sheqContentType.toLowerCase()) {
         this.isSheq = true;
         this.createButtons.controls.sheq.disable();
     } else{
@@ -37,16 +38,16 @@ export class AppComponent implements OnInit {
   }
 
   addNCA(){
-    window.location.href = (<any>window)._spPageContextInfo.siteAbsoluteUrl + 
-                            "/Pages/Complaint.aspx?" +
-                            "Source=/teams/dev_upliftquality" + 
-                            "&ContentTypeId=" + Constants.Globals.ncaContentTypeID;
+    window.location.href = this.siteUrl +
+                            '/Pages/Complaint.aspx?' +
+                            'Source=/teams/dev_upliftquality' +
+                            '&ContentTypeId=' + Constants.Globals.ncaContentTypeID;
   }
 
   addSheq(){
-    window.location.href = (<any>window)._spPageContextInfo.siteAbsoluteUrl + 
-                            "/Pages/Complaint.aspx?" +
-                            "Source=/teams/dev_upliftquality" + 
-                            "&ContentTypeId=" + Constants.Globals.sheqContentTypeID;
+    window.location.href = this.siteUrl +
+                            '/Pages/Complaint.aspx?' +
+                            'Source=/teams/dev_upliftquality' +
+                            '&ContentTypeId=' + Constants.Globals.sheqContentTypeID;
   }
 }

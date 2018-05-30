@@ -1,6 +1,6 @@
-﻿Param ( [string]$SiteURL , [string]$CredStoreName, [string]$RootLocation)
-#$SiteURL = "https://unileverdev.sharepoint.com/teams/devint_upliftquality";
-#$RootLocation = "D:\Akash\Uplift - Unilever\Invoice Blocking Unblocking (1)\Invoice Blocking Unblocking\InvoiceBlockingUnblocking.SharePointOnline.Components\Main\Build Deployment\";
+﻿#Param ( [string]$SiteURL , [string]$CredStoreName, [string]$RootLocation)
+$SiteURL = "https://unileverdev.sharepoint.com/teams/devint_upliftquality";
+$RootLocation = "D:\Akash\Uplift - Unilever\Development\Uplift3\uplift\deployment";
 
 $logFilePath = $RootLocation + "\log.txt"
 $ErrorActionPreference = "Stop"

@@ -9,6 +9,7 @@ export class Product {
 
       constructor(packCode, productDescription, batchDetails, quantityUnit, quantityShrink, quantityCases, quantityPallet){
             this.PackCode = packCode;
+            this.ProductDescription = productDescription;
             this.BatchDetails = batchDetails;
             this.QuantityUnit = quantityUnit;
             this.QuantityShrink = quantityShrink;

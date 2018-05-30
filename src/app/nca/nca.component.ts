@@ -5,7 +5,7 @@ import { Nca } from './nca';
 import { Complaint } from '../common/Complaint';
 import * as $ from 'jquery';
 import * as Constants from '../constants';
-import Promise from "ts-promise";
+import Promise from 'ts-promise';
 import {
   FormBuilder, FormGroup, FormControl,
   FormArray, Validators, FormControlName, AbstractControl
@@ -55,13 +55,15 @@ export class NcaComponent implements OnInit {
   userType = [];
   isResonCodeDisabled = true;
   ncaForm: FormGroup;
-  showStatus: boolean = false;
+  showStatus = false;
   scaControlsVisible = false;
   approverControlsVisible = false;
   responsiblePersongsControlVisible = false;
   complaintStatusVisible = false;
   currentComplaintStatus = Constants.Globals.SUBMITTED;
   formLoading = true;
+  loadingMessage = '';
+  serverTimeZoneOffset;
   get products(): FormArray {
     return <FormArray>this.ncaForm.get('userControls.products');
   }
@@ -71,11 +73,25 @@ export class NcaComponent implements OnInit {
     showTodayBtn: false
   };
 
+  today = new Date();
+
+  public dateOfIncidentOptions: IMyDpOptions = {
+    dateFormat: Constants.Globals.DATE_FORMAT,
+    showTodayBtn: false,
+    disableSince: {
+      'year': this.today.getFullYear(),
+      'month': this.today.getMonth(),
+      'day': this.today.getDate()
+    }
+  };
+
   ngOnInit() {
-    var product;
-    var lastDeliveryDate;
-    var dateOfIncident;
-    var expiryDate;
+    let product;
+    let lastDeliveryDate;
+    let dateOfIncident;
+    let expiryDate;
+
+    document.title = 'NCA Form';
 
     this.ncaForm = this.fb.group({
       userControls: this.fb.group({
@@ -135,7 +151,7 @@ export class NcaComponent implements OnInit {
     });
 
 
-    this.itemID = +this._utils.getUrlParameters("ID");
+    this.itemID = +this._utils.getUrlParameters('ID');
     if (this.itemID) {
       this.ncaForm.disable();
       this._DataService.getComplaintByID(this.itemID).then((complaint: Nca) => {
@@ -421,7 +437,7 @@ export class NcaComponent implements OnInit {
       if (data.length) {
         this.ncaForm.patchValue({
           userControls: {
-            customerName: data[0]["CustomerName"],
+            customerName: data[0]['CustomerName'],
           }
         });
       }
@@ -453,7 +469,7 @@ export class NcaComponent implements OnInit {
       this.newAttachments.push(newFile);
       this.attachments.push(newFile);
     } else {
-      alert(`File with Name: "${newFile.name}" alredy attached.`);
+      alert(`File with Name: '${newFile.name}' alredy attached.`);
     }
   }
 
@@ -468,7 +484,7 @@ export class NcaComponent implements OnInit {
 
     if (this.itemID) {
       this._DataService.deleteAttachemnt(this.itemID, removedFile.name).then(data => {
-        console.log("File deleted");
+        console.log('File deleted');
       }, error => {
         console.log(`Error occured in file deletion : ${error}`);
       });
@@ -484,7 +500,7 @@ export class NcaComponent implements OnInit {
   }
 
   onCancel() {
-    let source = this._utils.getUrlParameters("Source");
+    let source = this._utils.getUrlParameters('Source');
     window.location.href = source;
   }
 
@@ -499,8 +515,29 @@ export class NcaComponent implements OnInit {
         resolve(data);
       }, err => {
         console.log(err);
-        alert("Error occurred while submitting the form please resubmit.");
+        alert('Error occurred while submitting the form please resubmit.');
       });
+    });
+  }
+
+  getTimeZoneAndServerDateTime() {
+    return new Promise((resolve, reject) => {
+      if (this.serverTimeZoneOffset) {
+        resolve(this.serverTimeZoneOffset);
+      }
+      var context = SP.ClientContext.get_current();
+      var web = context.get_web();
+      var timeZone = web.get_regionalSettings().get_timeZone();
+      context.load(timeZone);
+      context.executeQueryAsync(
+        function onSucceeded() {
+          var info = timeZone.get_information();
+          resolve(offset);
+          var offset = (info.get_bias() + info.get_daylightBias()) / 60.0;
+          // var serverDateTimeNow = new Date(new Date().getTime() - offset * 3600 * 1000).toISOString();
+          // console.log("serverDateTimeNow: " + serverDateTimeNow);
+        }
+      );
     });
   }
 
@@ -514,48 +551,48 @@ export class NcaComponent implements OnInit {
       nca.ID = self.itemID || 0;
 
       if (this.userType.indexOf(Constants.Globals.UPLIFT_USER) > -1) {
-        nca.DateOfIncident = this.getISODate(this.getControlValue("userControls.dateOfIncident")) || new Date().toISOString();
-        nca.PlantNumber = this.getControlValue("userControls.plantNumber");
-        nca.PlantName = this.getControlValue("userControls.plantName");
-        nca.PlantContactName = this.getControlValue("userControls.plantContactName");
-        nca.CustomerNumber = this.getControlValue("userControls.customerNumber");
-        nca.CustomerName = this.getControlValue("userControls.customerName");
-        nca.ComplaintDetails = this.getControlValue("userControls.complaintDetails");
-        nca.PackCode1 = this.getControlValue("userControls.packCode1");
-        nca.ProductDescription1 = this.getControlValue("userControls.productDescription1");
-        nca.BBEExpiry = this.getISODate(this.getControlValue("userControls.expiryDate")) || new Date().toISOString();
-        nca.Quantity = this.getControlValue("userControls.quantity").toString();
-        nca.QuantityUnit = this.getControlValue("userControls.quantityUnit");
-        nca.RemedyNumber = this.getControlValue("userControls.remedyNumber");
-        nca.DeliveryNumber = this.getControlValue("userControls.deliveryNumber");
-        nca.QuantityUnit = this.getControlValue("userControls.quantityUnit");
-        nca.Level1LookupId = +this.getControlValue("userControls.level1");
-        nca.Level2LookupId = +this.getControlValue("userControls.level2");
-        nca.Level3LookupId = +this.getControlValue("userControls.level3");
-        nca.Level4LookupId = +this.getControlValue("userControls.level4");
-        nca.Explanation = this.getControlValue("userControls.explanation");
+        nca.DateOfIncident = this.getISODate(this.getControlValue('userControls.dateOfIncident')) || new Date().toISOString();
+        nca.PlantNumber = this.getControlValue('userControls.plantNumber');
+        nca.PlantName = this.getControlValue('userControls.plantName');
+        nca.PlantContactName = this.getControlValue('userControls.plantContactName');
+        nca.CustomerNumber = this.getControlValue('userControls.customerNumber');
+        nca.CustomerName = this.getControlValue('userControls.customerName');
+        nca.ComplaintDetails = this.getControlValue('userControls.complaintDetails');
+        nca.PackCode1 = this.getControlValue('userControls.packCode1');
+        nca.ProductDescription1 = this.getControlValue('userControls.productDescription1');
+        nca.BBEExpiry = this.getISODate(this.getControlValue('userControls.expiryDate')) || new Date().toISOString();
+        nca.Quantity = this.getControlValue('userControls.quantity').toString();
+        nca.QuantityUnit = this.getControlValue('userControls.quantityUnit');
+        nca.RemedyNumber = this.getControlValue('userControls.remedyNumber');
+        nca.DeliveryNumber = this.getControlValue('userControls.deliveryNumber');
+        nca.QuantityUnit = this.getControlValue('userControls.quantityUnit');
+        nca.Level1LookupId = +this.getControlValue('userControls.level1');
+        nca.Level2LookupId = +this.getControlValue('userControls.level2');
+        nca.Level3LookupId = +this.getControlValue('userControls.level3');
+        nca.Level4LookupId = +this.getControlValue('userControls.level4');
+        nca.Explanation = this.getControlValue('userControls.explanation');
 
       }
       if (this.userType.indexOf(Constants.Globals.UPLIFT_SCA) > -1) {
         nca.ApprovalStatus = Constants.Globals.NOT_STARTED;
-        nca.SiteName = this.getControlValue("scaControls.productionSite");
-        responsiblePersons = this.getControlValue("scaControls.personResponsible");
+        nca.SiteName = this.getControlValue('scaControls.productionSite');
+        responsiblePersons = this.getControlValue('scaControls.personResponsible');
         if (responsiblePersons) {
           responsiblePersons = $.map(responsiblePersons, r => +r);
           nca.PersonResponsibleId = { results: responsiblePersons };
         }
       }
       if (this.userType.indexOf(Constants.Globals.UPLIFT_RESPONSIBLE_PERSON) > -1) {
-        nca.RootCause = this.getControlValue("responsiblePersonControls.rootCause");
-        nca.ActionTaken = this.getControlValue("responsiblePersonControls.actionTaken");
-        nca.ReasonCode = this.getControlValue("responsiblePersonControls.reasonCode");
+        nca.RootCause = this.getControlValue('responsiblePersonControls.rootCause');
+        nca.ActionTaken = this.getControlValue('responsiblePersonControls.actionTaken');
+        nca.ReasonCode = this.getControlValue('responsiblePersonControls.reasonCode');
       }
-      nca.ComplaintStatus = this.getControlValue("complaintStatus") || "Submitted";
+      nca.ComplaintStatus = this.getControlValue('complaintStatus') || 'Submitted';
       nca.ContentTypeId = Constants.Globals.ncaContentTypeID;
       console.log(nca);
       self._DataService.addOrUpdateItem(nca).then((data: any) => {
-        var currentItemID = self.itemID || data.data.ID;
-        complaintID = self._DataService.generateComplaintID(currentItemID, 5, "NCA");
+        const currentItemID = self.itemID || data.data.ID;
+        complaintID = self._DataService.generateComplaintID(currentItemID, 5, 'NCA');
         if (self.newAttachments.length) {
           self._DataService.addAttachment(currentItemID, self.newAttachments).then(response => {
             this.updateComplaintID(currentItemID, complaintID).then(d => {
@@ -571,20 +608,20 @@ export class NcaComponent implements OnInit {
         }
       }, error => {
         console.log(error);
-        alert("Error occurred while submitting the form please resubmit.");
+        alert('Error occurred while submitting the form please resubmit.');
         self.ncaForm.controls.buttons.enable();
       });
-    })
+    });
   }
 
   handleSuccess(data) {
     this.ncaForm.controls.buttons.enable();
     this.formLoading = true;
-    if (!this._utils.getUrlParameters("ID")) {
+    if (!this._utils.getUrlParameters('ID')) {
       alert(`Data submitted successfully. ${data.complaintID} is your complaint ID for future reference.`);
-      window.location.href = (<any>window)._spPageContextInfo.siteAbsoluteUrl; //window.location.href.replace('?', `?ID=${data.id}&`);
+      window.location.href = (<any>window)._spPageContextInfo.siteAbsoluteUrl; // window.location.href.replace('?', `?ID=${data.id}&`);
     } else {
-      window.location.href = (<any>window)._spPageContextInfo.siteAbsoluteUrl
+      window.location.href = (<any>window)._spPageContextInfo.siteAbsoluteUrl;
     }
   }
 
@@ -595,14 +632,15 @@ export class NcaComponent implements OnInit {
   }
 
   onSubmit() {
-    var self = this;
+    const self = this;
     this.ncaForm.controls.buttons.disable();
     this.formLoading = true;
+    this.loadingMessage = 'Saving...';
     if (this.userType.length > 0) {
       this.updateData().then(data => {
         this.handleSuccess(data);
       }, err => {
-        this.handleError(err)
+        this.handleError(err);
       });
     } else {
       this._DataService.getCurrentUserType([]).then((userType: string[]) => {
@@ -611,7 +649,7 @@ export class NcaComponent implements OnInit {
           this.handleSuccess(data);
         }, err => {
           this.handleError(err);
-        })
+        });
       });
     }
   }

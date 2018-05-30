@@ -31,6 +31,7 @@ textarea,
     font-family: 'robotoregular';
 }
 
+
 /**********
 Unilever Overite classes
 ***********/
@@ -41,6 +42,7 @@ Unilever Overite classes
 .u-wm-main .row {
     max-width: 100%;
 }
+
 
 /***********
 Dashbaord Page
@@ -217,13 +219,14 @@ Dashbaord Page
     font-size: 13px;
 }
 
+
 /************
 SHEQ Form
 **************/
 
 .upliftTitle {
     color: #1F60AD;
-    font-weight: bold;
+    font-family: 'robotobold';
 }
 
 .dateIncidentField {
@@ -359,7 +362,6 @@ label[for*="packCode"] b {
 }
 
 .sheqFormTop {
-    border-top: 1px solid #DADADA;
     border-bottom: 1px solid #DADADA;
     padding: 15px 0;
 }
@@ -380,6 +382,10 @@ label[for*="packCode"] b {
 
 .sheqFormTop>div:nth-child(2) {
     padding-top: 10px;
+}
+
+.sheqFormTop>div:nth-child(2)>input:nth-child(2) {
+    margin-right: 0;
 }
 
 .ulTxtBox {

@@ -56,6 +56,7 @@ export class SheqComponent implements OnInit {
   responsiblePersongsControlVisible = false;
   complaintStatusVisible = false;
   formLoading = true;
+  loadingMessage = "";
 
 
   get products(): FormArray {
@@ -67,10 +68,24 @@ export class SheqComponent implements OnInit {
     showTodayBtn: false
   };
 
+  today = new Date();
+
+  public dateOfIncidentOptions: IMyDpOptions = {
+    dateFormat: Constants.Globals.DATE_FORMAT,
+    showTodayBtn: false,
+    disableSince: {
+      'year': this.today.getFullYear(),
+      'month': this.today.getMonth(),
+      'day': this.today.getDate()
+    }
+  };
+
   ngOnInit() {
     var product;
     var lastDeliveryDate;
     var dateOfIncident;
+
+    document.title = 'SHEQ Form';
 
     this.sheqForm = this.fb.group({
       userControls: this.fb.group({
@@ -665,6 +680,7 @@ export class SheqComponent implements OnInit {
     var self = this;
     this.sheqForm.controls.buttons.disable();
     this.formLoading = true;
+    this.loadingMessage = "Saving...";
     if (this.userType.length > 0) {
       this.updateData().then(data => {
         this.handleSuccess(data);
