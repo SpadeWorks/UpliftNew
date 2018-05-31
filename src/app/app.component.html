@@ -1,9 +1,13 @@
 <div class="sheqFormTop row" [formGroup]="createButtons">
     <div class="col-xs-12 col-md-6 col-sm-6 text-left">
-        <span class="upliftTitle"><a [href]="siteUrl">Uplift</a></span>
+        <span class="upliftTitle">
+      Uplift
+    </span>
         <div class="upliftBreadcrum">
-            <span class="upliftBreadcrumTxt activeBreadCrum" *ngIf="isSheq; else ncaBlock">
-        SHEQ Complaint
+            <span class="upliftBreadcrumTxt">
+                <a [href]="siteUrl">Dashboard</a>
+              </span>
+            <span class="upliftBreadcrumTxt activeBreadCrum" *ngIf="isSheq; else ncaBlock">SHEQ Complaint
       </span>
             <ng-template #ncaBlock>
                 <span class="upliftBreadcrumTxt activeBreadCrum">

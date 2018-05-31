@@ -5,7 +5,7 @@
 <form [formGroup]="sheqForm">
     <div class="SheqFormWrap">
         <div class="col-xs-12 col-md-2 col-sm-2">
-            <span class="addCompTxt">Add a new complaint</span>
+            <span class="addCompTxt">{{formTitle}}</span>
         </div>
         <div class="col-xs-12 col-md-10 col-sm-10 SheqFormFieldsWrap">
             <div data-type="complaint-form" formGroupName="userControls">
@@ -115,12 +115,12 @@
                                 <label class="form-label" attr.for="{{'packCodeID' + i}}">
                   <b>Pack Code {{i+1}}</b>
                 </label>
-                                <input type="text" class="form-control ulTxtBox" formControlName="packCode" id="{{'packCodeID' + i}}" />
+                                <input type="text" class="form-control ulTxtBox" formControlName="packCode" id="{{'packCodeID' + i}}" (blur)="onPackCodeChange($event.target.value, i)" />
                             </div>
                             <div class="col-xs-12 col-md-12 col-sm-12">
                                 <label class="form-label" attr.for="{{'productDescriptionID' +
                   i}}">Product Description</label>
-                                <textarea class="form-control ulTxtBox" formControlName="productDescription"></textarea>
+                                <textarea class="form-control ulTxtBox" formControlName="productDescription" id="{{'productDescriptionID' +i}}"></textarea>
                             </div>
                             <div class="col-xs-12 col-md-12 col-sm-12">
                                 <label class="form-label" attr.for="{{'batchDetailsID' + i}}">Batch Details
@@ -129,24 +129,24 @@
                             </div>
                             <div class="col-xs-12 col-md-6 col-sm-6">
                                 <label class="form-label" attr.for="{{'quantityUnitID' + i}}">Quantity - Unit</label>
-                                <input type="number" class="form-control ulTxtBox" formControlName="quantityUnit" id="{{'quantityUnitID' + i}}" />
+                                <input OnlyNumber="true" type="number" class="form-control ulTxtBox" formControlName="quantityUnit" id="{{'quantityUnitID' + i}}" />
                             </div>
                             <div class="col-xs-12 col-md-6 col-sm-6">
                                 <label class="form-label" attr.for="{{'quantityShrinkID' +
                   i}}">Quantity - Shrink</label>
-                                <input type="number" class="form-control ulTxtBox" formControlName="quantityShrink" id="{{'quantityShrinkID' +
+                                <input OnlyNumber="true" type="number" class="form-control ulTxtBox" formControlName="quantityShrink" id="{{'quantityShrinkID' +
                   i}}" />
                             </div>
                             <div class="col-xs-12 col-md-6 col-sm-6">
                                 <label class="form-label" attr.for="{{'quantityCasesID' +
                   i}}">Quantity - Cases</label>
-                                <input type="number" class="form-control ulTxtBox" formControlName="quantityCases" id="{{'quantityCasesID' +
+                                <input OnlyNumber="true" type="number" class="form-control ulTxtBox" formControlName="quantityCases" id="{{'quantityCasesID' +
                   i}}" />
                             </div>
                             <div class="col-xs-12 col-md-6 col-sm-6">
                                 <label class="form-label" attr.for="{{'quantityPalletID' +
                   i}}">Quantity - Pallet</label>
-                                <input type="number" class="form-control ulTxtBox" formControlName="quantityPallet" id="{{'quantityPalletID' +
+                                <input OnlyNumber="true" type="number" class="form-control ulTxtBox" formControlName="quantityPallet" id="{{'quantityPalletID' +
                   i}}" />
                             </div>
                         </div>

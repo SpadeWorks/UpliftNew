@@ -256,7 +256,11 @@ ${Constants.Complaints.PERSON_RESPONSIBLE}`)
                 ${Constants.PackCodeMaster.PRODUCT_DESCRIPTION}`)
         .filter(`${Constants.PackCodeMaster.PACK_CODE} eq '${packCode}'`)
         .get().then(product => {
-          resolve(product);
+          if(product && product.length){
+            resolve(product["0"].ProductDescription);
+          } else{
+            resolve('');
+          }
         }, error => {
           this._Utils.clientLog(error);
           reject(error);

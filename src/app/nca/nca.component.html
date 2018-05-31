@@ -114,7 +114,7 @@
                             <label class="form-label" for="packCode1">
                 <b>Pack Code *</b>
               </label>
-                            <input type="text" class="form-control ulTxtBox" formControlName="packCode1" id="packCode1" />
+                            <input type="text" class="form-control ulTxtBox" formControlName="packCode1" id="packCode1" (blur)="onPackCodeChange($event.target.value)" />
                             <span class="help-block" *ngIf="(ncaForm.get('userControls.packCode1').touched ||
                   ncaForm.get('userControls.packCode1').dirty) &&
                   ncaForm.get('userControls.packCode1').errors">
@@ -148,7 +148,7 @@
                         </div>
                         <div class="col-xs-12 col-md-6 col-sm-6">
                             <label class="form-label" for="quantity">Quantity *</label>
-                            <input type="number" class="form-control ulTxtBox" formControlName="quantity" id="quantity" />
+                            <input OnlyNumber="true" type="number" class="form-control ulTxtBox" formControlName="quantity" id="quantity" />
                             <span class="help-block" *ngIf="(ncaForm.get('userControls.quantity').touched ||
                   ncaForm.get('userControls.quantity').dirty) &&
                   ncaForm.get('userControls.quantity').errors">

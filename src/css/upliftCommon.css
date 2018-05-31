@@ -357,8 +357,33 @@ label[for*="packCode"] b {
 }
 
 .upliftBreadcrumTxt {
-    font-size: 30px;
+    font-size: 16px;
+}
+
+.upliftBreadcrumTxt a {
     color: #6d6d6d;
+}
+
+.upliftBreadcrumTxt::after {
+    content: "\f105";
+    font: bold normal normal 17px/1 FontAwesome;
+    color: #1F60AD;
+    margin: 0 16px;
+}
+
+.activeBreadCrum::after {
+    content: "";
+}
+
+.activeBreadCrum {
+    font-size: 30px;
+    color: #797979;
+    font-family: 'robotolight';
+}
+
+.upliftBreadcrumTxt a:hover {
+    color: #1F60AD;
+    text-decoration: none;
 }
 
 .sheqFormTop {

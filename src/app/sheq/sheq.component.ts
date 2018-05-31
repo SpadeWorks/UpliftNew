@@ -57,6 +57,7 @@ export class SheqComponent implements OnInit {
   complaintStatusVisible = false;
   formLoading = true;
   loadingMessage = "";
+  formTitle = "";
 
 
   get products(): FormArray {
@@ -75,8 +76,8 @@ export class SheqComponent implements OnInit {
     showTodayBtn: false,
     disableSince: {
       'year': this.today.getFullYear(),
-      'month': this.today.getMonth(),
-      'day': this.today.getDate()
+      'month': this.today.getMonth() + 1,
+      'day': this.today.getDate() + 1
     }
   };
 
@@ -138,6 +139,7 @@ export class SheqComponent implements OnInit {
 
     this.itemID = +this._utils.getUrlParameters("ID");
     if (this.itemID) {
+      this.formTitle = "View/ Edit complaint";
       this.sheqForm.disable();
       this._DataService.getComplaintByID(this.itemID).then((complaint: Sheq) => {
         if (complaint) {
@@ -197,7 +199,7 @@ export class SheqComponent implements OnInit {
                         controls.responsiblePersonControls.enable();
                         controls.buttons.enable();
                         controls.complaintStatus.enable();
-                        $.map((<any>controls.responsiblePersonControls).controls, control =>{
+                        $.map((<any>controls.responsiblePersonControls).controls, control => {
                           control.setValidators(Validators.required)
                           control.updateValueAndValidity();
                         });
@@ -209,7 +211,7 @@ export class SheqComponent implements OnInit {
                       if (complaint.ComplaintStatus != Constants.Globals.SUBMITTED) {
                         controls.approverControls.enable();
                         controls.buttons.enable();
-                        $.map((<any>controls.approverControls).controls, control =>{
+                        $.map((<any>controls.approverControls).controls, control => {
                           control.setValidators(Validators.required)
                           control.updateValueAndValidity();
                         });
@@ -351,6 +353,7 @@ export class SheqComponent implements OnInit {
       })
     } else {
       this.formLoading = false;
+      this.formTitle = "Add a new complaint";
     }
     this._DataService.getReasonCodes().then(codes => {
       $.each(codes, (index, code) => {
@@ -384,6 +387,12 @@ export class SheqComponent implements OnInit {
         }
       })
     })
+  }
+
+  onPackCodeChange(packCode, index) {
+    this._DataService.getProductInfo(packCode).then(description => {
+      $("#productDescriptionID" + index).val(description);
+    });
   }
 
   buildProduct(product?: Product): FormGroup {
@@ -573,7 +582,8 @@ export class SheqComponent implements OnInit {
       let control: any;
       var responsiblePersons = [];
       sheq.ID = self.itemID || 0;
-      if (this.userType.indexOf(Constants.Globals.UPLIFT_USER) > -1) {
+      if (this.userType.indexOf(Constants.Globals.UPLIFT_USER) > -1 ||
+        this.userType.indexOf(Constants.Globals.UPLIFT_SCA) > -1) {
         sheq.DateOfIncident = this.getISODate(this.getControlValue("userControls.dateOfIncident")) || new Date().toISOString();
         sheq.CustomerNumber = this.getControlValue("userControls.customerNumber");
         sheq.CustomerName = this.getControlValue("userControls.customerName");
@@ -586,6 +596,8 @@ export class SheqComponent implements OnInit {
         sheq.Level3LookupId = +this.getControlValue("userControls.level3");
         sheq.Level4LookupId = +this.getControlValue("userControls.level4");
         sheq.Explanation = this.getControlValue("userControls.explanation");
+        sheq.SubmittedOn = new Date().toISOString();
+        sheq.ContentTypeId = Constants.Globals.sheqContentTypeID;
 
         for (var index = 1; index <= 5; index++) {
           control = self.products.controls[index - 1];
@@ -631,10 +643,6 @@ export class SheqComponent implements OnInit {
       sheq.ComplaintStatus = sheq.ComplaintStatus ||
         this.getControlValue("complaintStatus") || Constants.Globals.SUBMITTED;
 
-
-      sheq.SubmittedOn = new Date().toISOString();
-      sheq.ContentTypeId = Constants.Globals.sheqContentTypeID;
-      console.log(sheq);
       self._DataService.addOrUpdateItem(sheq).then((data: any) => {
         var currentItemID = self.itemID || data.data.ID;
         complaintID = self._DataService.generateComplaintID(currentItemID, 5, "SHEQ");

@@ -9,12 +9,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DisableControlDirective } from './shared/disable-control.directive';
 import { MyDatePickerModule } from 'mydatepicker';
 import { LoadersCssModule } from 'angular2-loaders-css';
+import { OnlyNumberDirective } from './shared/only-number.directive';
 @NgModule({
   declarations: [
     AppComponent,
     NcaComponent,
     SheqComponent,
     DisableControlDirective,
+    OnlyNumberDirective,
   ],
   imports: [
     BrowserModule,
