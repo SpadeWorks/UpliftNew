@@ -148,7 +148,7 @@
                         </div>
                         <div class="col-xs-12 col-md-6 col-sm-6">
                             <label class="form-label" for="quantity">Quantity *</label>
-                            <input OnlyNumber="true" type="number" class="form-control ulTxtBox" formControlName="quantity" id="quantity" />
+                            <input OnlyNumber="true" type="number" min="0" class="form-control ulTxtBox" formControlName="quantity" id="quantity" />
                             <span class="help-block" *ngIf="(ncaForm.get('userControls.quantity').touched ||
                   ncaForm.get('userControls.quantity').dirty) &&
                   ncaForm.get('userControls.quantity').errors">

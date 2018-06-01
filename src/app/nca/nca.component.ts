@@ -581,8 +581,12 @@ export class NcaComponent implements OnInit {
         nca.Level3LookupId = +this.getControlValue('userControls.level3');
         nca.Level4LookupId = +this.getControlValue('userControls.level4');
         nca.Explanation = this.getControlValue('userControls.explanation');
-        nca.SubmittedOn = new Date().toISOString();
-        nca.ContentTypeId = Constants.Globals.ncaContentTypeID;
+
+        if(!this.itemID || this.itemID < 1){
+          nca.SubmittedOn = new Date().toISOString();
+          nca.ContentTypeId = Constants.Globals.ncaContentTypeID;
+        }
+        
       }
       if (this.userType.indexOf(Constants.Globals.UPLIFT_SCA) > -1) {
         nca.ApprovalStatus = Constants.Globals.NOT_STARTED;

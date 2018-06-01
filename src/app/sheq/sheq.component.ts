@@ -30,7 +30,7 @@ export class SheqComponent implements OnInit {
   level2Options = [{ value: '', label: 'Select' }];
   level3Options = [{ value: '', label: 'Select' }];
   level4Options = [{ value: '', label: 'Select' }];
-  approvalStatusOptions = [{ value: 'Yes', label: 'Yes' }, { value: 'No', label: 'No' }];
+  approvalStatusOptions = [{ value: 'Not Started', label: 'Not Started' }, { value: 'Yes', label: 'Yes' }, { value: 'No', label: 'No' }];
   complaintStatusOptions = [
     { value: 'Submitted', label: 'Submitted' },
     { value: 'Assigned', label: 'Assigned' },
@@ -240,7 +240,7 @@ export class SheqComponent implements OnInit {
 
           this.currentComplaintStatus = complaint.ComplaintStatus;
           lastDeliveryDate = complaint.LastDeliveryDate ? new Date(complaint.LastDeliveryDate) : new Date();
-          dateOfIncident = complaint.DateOfIncident ? new Date(complaint.LastDeliveryDate) : new Date();
+          dateOfIncident = complaint.DateOfIncident ? new Date(complaint.DateOfIncident) : new Date();
           this.sheqForm.patchValue({
             userControls: {
               dateOfIncident: {
@@ -574,6 +574,18 @@ export class SheqComponent implements OnInit {
     window.location.href = source;
   }
 
+  onApprovalChange(value) {
+    if (value === Constants.Globals.NO) {
+      this.sheqForm.patchValue({
+        complaintStatus: Constants.Globals.REJECTED
+      })
+    } else {
+      this.sheqForm.patchValue({
+        complaintStatus: Constants.Globals.ASSIGNED
+      })
+    }
+  }
+
   updateData() {
     return new Promise((resolve, reject) => {
       var self = this;
@@ -596,9 +608,10 @@ export class SheqComponent implements OnInit {
         sheq.Level3LookupId = +this.getControlValue("userControls.level3");
         sheq.Level4LookupId = +this.getControlValue("userControls.level4");
         sheq.Explanation = this.getControlValue("userControls.explanation");
-        sheq.SubmittedOn = new Date().toISOString();
-        sheq.ContentTypeId = Constants.Globals.sheqContentTypeID;
-
+        if (!this.itemID || this.itemID < 1) {
+          sheq.SubmittedOn = new Date().toISOString();
+          sheq.ContentTypeId = Constants.Globals.sheqContentTypeID;
+        }
         for (var index = 1; index <= 5; index++) {
           control = self.products.controls[index - 1];
           control = control ? control.controls : null;

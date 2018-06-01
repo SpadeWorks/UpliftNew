@@ -27,21 +27,22 @@
                         <my-date-picker name="mydate" [options]="dateOfIncidentOptions" formControlName="dateOfIncident"></my-date-picker>
                         <span class="help-block" *ngIf="(sheqForm.get('userControls.dateOfIncident').touched || sheqForm.get('userControls.dateOfIncident').dirty) &&
                   sheqForm.get('userControls.dateOfIncident').errors">
-              <span *ngIf="sheqForm.get('userControls.dateOfIncident').errors.required">
-                This field is required.
-              </span>
+                            <span *ngIf="sheqForm.get('userControls.dateOfIncident').errors.required">
+                                This field is required.
+                            </span>
                         </span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12 col-md-4 col-sm-4 form-group">
                         <label class="form-label">Customer Number*</label>
-                        <input type="text" class="form-control ulTxtBox" formControlName="customerNumber" (blur)="onCusomerNumberChange($event)" />
+                        <input type="text" class="form-control ulTxtBox" formControlName="customerNumber" (blur)="onCusomerNumberChange($event)"
+                        />
                         <span class="help-block" *ngIf="(sheqForm.get('userControls.customerNumber').touched || sheqForm.get('userControls.customerNumber').dirty) &&
                   sheqForm.get('userControls.customerNumber').errors">
-              <span *ngIf="sheqForm.get('userControls.customerNumber').errors.required">
-                This field is required.
-              </span>
+                            <span *ngIf="sheqForm.get('userControls.customerNumber').errors.required">
+                                This field is required.
+                            </span>
                         </span>
                     </div>
                     <div class="col-xs-12 col-md-4 col-sm-4 form-group">
@@ -50,9 +51,9 @@
                         <span class="help-block" *ngIf="(sheqForm.get('userControls.customerName').touched ||
                   sheqForm.get('userControls.customerName').dirty) &&
                   sheqForm.get('userControls.customerName').errors">
-              <span *ngIf="sheqForm.get('userControls.customerName').errors.required">
-                This field is required.
-              </span>
+                            <span *ngIf="sheqForm.get('userControls.customerName').errors.required">
+                                This field is required.
+                            </span>
                         </span>
                     </div>
                 </div>
@@ -62,9 +63,9 @@
                         <input type="text" class="form-control ulTxtBox" formControlName="contactPerson" />
                         <span class="help-block" *ngIf="(sheqForm.get('userControls.contactPerson').touched || sheqForm.get('userControls.contactPerson').dirty) &&
                   sheqForm.get('userControls.contactPerson').errors">
-              <span *ngIf="sheqForm.get('userControls.contactPerson').errors.required">
-                This field is required.
-              </span>
+                            <span *ngIf="sheqForm.get('userControls.contactPerson').errors.required">
+                                This field is required.
+                            </span>
                         </span>
                     </div>
                     <div class="col-xs-12 col-md-4 col-sm-4 form-group">
@@ -73,20 +74,20 @@
                         <span class="help-block" *ngIf="(sheqForm.get('userControls.contactPersonDesignation').touched ||
                   sheqForm.get('userControls.contactPersonDesignation').dirty) &&
                   sheqForm.get('userControls.contactPersonDesignation').errors">
-              <span *ngIf="sheqForm.get('userControls.contactPersonDesignation').errors.required">
-                This field is required.
-              </span>
+                            <span *ngIf="sheqForm.get('userControls.contactPersonDesignation').errors.required">
+                                This field is required.
+                            </span>
                         </span>
                     </div>
                     <div class="col-xs-12 col-md-4 col-sm-4 form-group">
                         <label class="form-label">Contact Number*</label>
-                        <input type="phone" class="form-control ulTxtBox" formControlName="contactNumber" />
+                        <input OnlyNumber="true" type="phone" class="form-control ulTxtBox" formControlName="contactNumber" />
                         <span class="help-block" *ngIf="(sheqForm.get('userControls.contactNumber').touched ||
                   sheqForm.get('userControls.contactNumber').dirty) &&
                   sheqForm.get('userControls.contactNumber').errors">
-              <span *ngIf="sheqForm.get('userControls.contactNumber').errors.required">
-                This field is required.
-              </span>
+                            <span *ngIf="sheqForm.get('userControls.contactNumber').errors.required">
+                                This field is required.
+                            </span>
                         </span>
                     </div>
                 </div>
@@ -97,9 +98,9 @@
                         <span class="help-block" *ngIf="(sheqForm.get('userControls.complaintDetails').touched ||
                   sheqForm.get('userControls.complaintDetails').dirty) &&
                   sheqForm.get('userControls.complaintDetails').errors">
-              <span *ngIf="sheqForm.get('userControls.complaintDetails').errors.required">
-                This field is required.
-              </span>
+                            <span *ngIf="sheqForm.get('userControls.complaintDetails').errors.required">
+                                This field is required.
+                            </span>
                         </span>
                     </div>
                 </div>
@@ -113,9 +114,10 @@
                             </div>
                             <div class="col-xs-12 col-md-12 col-sm-12">
                                 <label class="form-label" attr.for="{{'packCodeID' + i}}">
-                  <b>Pack Code {{i+1}}</b>
-                </label>
-                                <input type="text" class="form-control ulTxtBox" formControlName="packCode" id="{{'packCodeID' + i}}" (blur)="onPackCodeChange($event.target.value, i)" />
+                                    <b>Pack Code {{i+1}}</b>
+                                </label>
+                                <input type="text" class="form-control ulTxtBox" formControlName="packCode" id="{{'packCodeID' + i}}" (blur)="onPackCodeChange($event.target.value, i)"
+                                />
                             </div>
                             <div class="col-xs-12 col-md-12 col-sm-12">
                                 <label class="form-label" attr.for="{{'productDescriptionID' +
@@ -124,29 +126,30 @@
                             </div>
                             <div class="col-xs-12 col-md-12 col-sm-12">
                                 <label class="form-label" attr.for="{{'batchDetailsID' + i}}">Batch Details
-                </label>
+                                </label>
                                 <input type="text" class="form-control ulTxtBox" formControlName="batchDetails" id="{{'batchDetailsID' + i}}" />
                             </div>
                             <div class="col-xs-12 col-md-6 col-sm-6">
                                 <label class="form-label" attr.for="{{'quantityUnitID' + i}}">Quantity - Unit</label>
-                                <input OnlyNumber="true" type="number" class="form-control ulTxtBox" formControlName="quantityUnit" id="{{'quantityUnitID' + i}}" />
+                                <input OnlyNumber="true" min="0" type="number" class="form-control ulTxtBox" formControlName="quantityUnit" id="{{'quantityUnitID' + i}}"
+                                />
                             </div>
                             <div class="col-xs-12 col-md-6 col-sm-6">
                                 <label class="form-label" attr.for="{{'quantityShrinkID' +
                   i}}">Quantity - Shrink</label>
-                                <input OnlyNumber="true" type="number" class="form-control ulTxtBox" formControlName="quantityShrink" id="{{'quantityShrinkID' +
+                                <input OnlyNumber="true" min="0" type="number" class="form-control ulTxtBox" formControlName="quantityShrink" id="{{'quantityShrinkID' +
                   i}}" />
                             </div>
                             <div class="col-xs-12 col-md-6 col-sm-6">
                                 <label class="form-label" attr.for="{{'quantityCasesID' +
                   i}}">Quantity - Cases</label>
-                                <input OnlyNumber="true" type="number" class="form-control ulTxtBox" formControlName="quantityCases" id="{{'quantityCasesID' +
+                                <input OnlyNumber="true" min="0" type="number" class="form-control ulTxtBox" formControlName="quantityCases" id="{{'quantityCasesID' +
                   i}}" />
                             </div>
                             <div class="col-xs-12 col-md-6 col-sm-6">
                                 <label class="form-label" attr.for="{{'quantityPalletID' +
                   i}}">Quantity - Pallet</label>
-                                <input OnlyNumber="true" type="number" class="form-control ulTxtBox" formControlName="quantityPallet" id="{{'quantityPalletID' +
+                                <input OnlyNumber="true" min="0" type="number" class="form-control ulTxtBox" formControlName="quantityPallet" id="{{'quantityPalletID' +
                   i}}" />
                             </div>
                         </div>
@@ -165,30 +168,30 @@
                         <label class="form-label">Level 1*</label>
                         <div class="ulSelectOutter">
                             <select class="ulSelect" [disableControl]="level1Disabled" (change)="level1Change($event.target.value)" formControlName="level1">
-                <option *ngFor="let option of level1Options" value="{{option.value}}">{{option.label }}</option>
-              </select>
+                                <option *ngFor="let option of level1Options" value="{{option.value}}">{{option.label }}</option>
+                            </select>
                         </div>
                         <span class="help-block" *ngIf="(sheqForm.get('userControls.level1').touched ||
                   sheqForm.get('userControls.level1').dirty) &&
                   sheqForm.get('userControls.level1').errors">
-              <span *ngIf="sheqForm.get('userControls.level1').errors.required">
-                This field is required.
-              </span>
+                            <span *ngIf="sheqForm.get('userControls.level1').errors.required">
+                                This field is required.
+                            </span>
                         </span>
                     </div>
                     <div class="col-xs-12 col-md-4 col-sm-4 form-group">
                         <label class="form-label">Level 2*</label>
                         <div class="ulSelectOutter">
                             <select class="ulSelect" [disableControl]="level2Disabled" (change)="level2Change($event.target.value)" formControlName="level2">
-                <option *ngFor="let option of level2Options" value="{{option.value}}">{{ option.label }}</option>
-              </select>
+                                <option *ngFor="let option of level2Options" value="{{option.value}}">{{ option.label }}</option>
+                            </select>
                         </div>
                         <span class="help-block" *ngIf="(sheqForm.get('userControls.level2').touched ||
                   sheqForm.get('userControls.level2').dirty) &&
                   sheqForm.get('userControls.level2').errors">
-              <span *ngIf="sheqForm.get('userControls.level2').errors.required">
-                This field is required.
-              </span>
+                            <span *ngIf="sheqForm.get('userControls.level2').errors.required">
+                                This field is required.
+                            </span>
                         </span>
                     </div>
                 </div>
@@ -197,30 +200,30 @@
                         <label class="form-label">Level 3*</label>
                         <div class="ulSelectOutter">
                             <select class="ulSelect" [disableControl]="level3Disabled" (change)="level3Change($event.target.value)" formControlName="level3">
-                <option *ngFor="let option of level3Options" value="{{option.value}}">{{ option.label }}</option>
-              </select>
+                                <option *ngFor="let option of level3Options" value="{{option.value}}">{{ option.label }}</option>
+                            </select>
                         </div>
                         <span class="help-block" *ngIf="(sheqForm.get('userControls.level3').touched ||
             sheqForm.get('userControls.level3').dirty) &&
             sheqForm.get('userControls.level3').errors">
-              <span *ngIf="sheqForm.get('userControls.level3').errors.required">
-                This field is required.
-              </span>
+                            <span *ngIf="sheqForm.get('userControls.level3').errors.required">
+                                This field is required.
+                            </span>
                         </span>
                     </div>
                     <div class="col-xs-12 col-md-4 col-sm-4 form-group">
                         <label class="form-label">Level 4*</label>
                         <div class="ulSelectOutter">
                             <select class="ulSelect" [disableControl]="level4Disabled" (change)="level4Change($event.target.value)" formControlName="level4">
-                <option *ngFor="let option of level4Options" value="{{option.value}}">{{ option.label }}</option>
-              </select>
+                                <option *ngFor="let option of level4Options" value="{{option.value}}">{{ option.label }}</option>
+                            </select>
                         </div>
                         <span class="help-block" *ngIf="(sheqForm.get('userControls.level4').touched ||
                   sheqForm.get('userControls.level4').dirty) &&
                   sheqForm.get('userControls.level4').errors">
-              <span *ngIf="sheqForm.get('userControls.level4').errors.required">
-                This field is required.
-              </span>
+                            <span *ngIf="sheqForm.get('userControls.level4').errors.required">
+                                This field is required.
+                            </span>
                         </span>
                     </div>
                 </div>
@@ -231,9 +234,9 @@
                         <span class="help-block" *ngIf="(sheqForm.get('userControls.explanation').touched ||
                   sheqForm.get('userControls.explanation').dirty) &&
                   sheqForm.get('userControls.explanation').errors">
-              <span *ngIf="sheqForm.get('userControls.explanation').errors.required">
-                This field is required.
-              </span>
+                            <span *ngIf="sheqForm.get('userControls.explanation').errors.required">
+                                This field is required.
+                            </span>
                         </span>
                     </div>
                 </div>
@@ -242,9 +245,10 @@
                         <label class="form-label">File Upload</label>
                         <div class="fileUploadBlock">
                             <label for="file-upload" class="custom-file-upload">
-                Choose File
-              </label>
-                            <input id="file-upload" class="fileUpload hide" name="upload_cont_img" type="file" accept="*" formControlName="attachments" (change)="onFildAdded($event)" />
+                                Choose File
+                            </label>
+                            <input id="file-upload" class="fileUpload hide" name="upload_cont_img" type="file" accept="*" formControlName="attachments"
+                                (change)="onFildAdded($event)" />
                             <ul class="uploadedFileList">
                                 <li class="uploadedFileName" *ngFor="let attachment of
                         attachments">
@@ -264,21 +268,22 @@
             <div class="row" formGroupName="scaControls" *ngIf="scaControlsVisible">
                 <div class="col-xs-12 col-md-4 col-sm-4 form-group">
                     <label class="form-label">Production Site*</label>
-                    <input type="text" class="form-control ulTxtBox" formControlName="productionSite" (blur)="onProductionSiteChange($event.target.value)" />
+                    <input type="text" class="form-control ulTxtBox" formControlName="productionSite" (blur)="onProductionSiteChange($event.target.value)"
+                    />
                     <span class="help-block" *ngIf="(sheqForm.get('scaControls.productionSite').touched ||
                   sheqForm.get('scaControls.productionSite').dirty) &&
                   sheqForm.get('scaControls.productionSite').errors">
-            <span *ngIf="sheqForm.get('scaControls.productionSite').errors.required">
-              This field is required.
-            </span>
+                        <span *ngIf="sheqForm.get('scaControls.productionSite').errors.required">
+                            This field is required.
+                        </span>
                     </span>
                 </div>
                 <div class="col-xs-12 col-md-4 col-sm-4 form-group">
                     <label class="form-label">Person Responsible</label>
                     <div class="">
                         <select class="ulSelect" formControlName="personResponsible" multiple>
-              <option *ngFor="let option of personResponsibleOptions" value="{{option.value}}">{{ option.label }}</option>
-            </select>
+                            <option *ngFor="let option of personResponsibleOptions" value="{{option.value}}">{{ option.label }}</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -293,9 +298,9 @@
                             <span class="help-block" *ngIf="(sheqForm.get('approverControls.invoiceNumber').touched ||
                   sheqForm.get('approverControls.invoiceNumber').dirty) &&
                   sheqForm.get('approverControls.invoiceNumber').errors">
-                <span *ngIf="sheqForm.get('approverControls.invoiceNumber').errors.required">
-                  This field is required.
-                </span>
+                                <span *ngIf="sheqForm.get('approverControls.invoiceNumber').errors.required">
+                                    This field is required.
+                                </span>
                             </span>
                         </div>
                         <div class="col-xs-12 col-md-6 col-sm-6">
@@ -304,9 +309,9 @@
                             <span class="help-block" *ngIf="(sheqForm.get('approverControls.invoiceValue').touched ||
                   sheqForm.get('approverControls.invoiceValue').dirty) &&
                   sheqForm.get('approverControls.invoiceValue').errors">
-                <span *ngIf="sheqForm.get('approverControls.invoiceValue').errors.required">
-                  This field is required.
-                </span>
+                                <span *ngIf="sheqForm.get('approverControls.invoiceValue').errors.required">
+                                    This field is required.
+                                </span>
                             </span>
                         </div>
                     </div>
@@ -317,23 +322,23 @@
                             <span class="help-block" *ngIf="(sheqForm.get('approverControls.lastDeliveryDate').touched ||
                   sheqForm.get('approverControls.lastDeliveryDate').dirty) &&
                   sheqForm.get('approverControls.lastDeliveryDate').errors">
-                <span *ngIf="sheqForm.get('approverControls.lastDeliveryDate').errors.required">
-                  This field is required.
-                </span>
+                                <span *ngIf="sheqForm.get('approverControls.lastDeliveryDate').errors.required">
+                                    This field is required.
+                                </span>
                             </span>
                         </div>
                         <div class="col-xs-12 col-md-6 col-sm-6">
                             <label class="form-label">Approved*</label>
                             <div class="ulSelectOutter">
-                                <select class="ulSelect" formControlName="approvalStatus">
-                  <option *ngFor="let option of approvalStatusOptions" value="{{option.value}}">{{ option.label }}</option>
-                </select>
+                                <select class="ulSelect" formControlName="approvalStatus" (change)="onApprovalChange($event.target.value)">
+                                    <option *ngFor="let option of approvalStatusOptions" value="{{option.value}}" >{{ option.label }}</option>
+                                </select>
                                 <span class="help-block" *ngIf="(sheqForm.get('approverControls.approvalStatus').touched ||
                   sheqForm.get('approverControls.approvalStatus').dirty) &&
                   sheqForm.get('approverControls.approvalStatus').errors">
-                  <span *ngIf="sheqForm.get('approverControls.approvalStatus').errors.required">
-                    This field is required.
-                  </span>
+                                    <span *ngIf="sheqForm.get('approverControls.approvalStatus').errors.required">
+                                        This field is required.
+                                    </span>
                                 </span>
                             </div>
                         </div>
@@ -345,9 +350,9 @@
                             <span class="help-block" *ngIf="(sheqForm.get('approverControls.comments').touched ||
                   sheqForm.get('approverControls.comments').dirty) &&
                   sheqForm.get('approverControls.comments').errors">
-                <span *ngIf="sheqForm.get('approverControls.comments').errors.required">
-                  This field is required.
-                </span>
+                                <span *ngIf="sheqForm.get('approverControls.comments').errors.required">
+                                    This field is required.
+                                </span>
                             </span>
                         </div>
                     </div>
@@ -359,14 +364,14 @@
                         <label class="form-label">Reason Code*</label>
                         <div class="ulSelectOutter">
                             <select class="ulSelect" formControlName="reasonCode">
-                <option *ngFor="let reasonCode of reasonCodes" value="{{reasonCode.value}}">{{ reasonCode.label }}</option>
-              </select>
+                                <option *ngFor="let reasonCode of reasonCodes" value="{{reasonCode.value}}">{{ reasonCode.label }}</option>
+                            </select>
                             <span class="help-block" *ngIf="(sheqForm.get('responsiblePersonControls.reasonCode').touched ||
                   sheqForm.get('responsiblePersonControls.reasonCode').dirty) &&
                   sheqForm.get('responsiblePersonControls.reasonCode').errors">
-                <span *ngIf="sheqForm.get('responsiblePersonControls.reasonCode').errors.required">
-                  This field is required.
-                </span>
+                                <span *ngIf="sheqForm.get('responsiblePersonControls.reasonCode').errors.required">
+                                    This field is required.
+                                </span>
                             </span>
                         </div>
                     </div>
@@ -378,9 +383,9 @@
                         <span class="help-block" *ngIf="(sheqForm.get('responsiblePersonControls.rootCause').touched ||
                   sheqForm.get('responsiblePersonControls.rootCause').dirty) &&
                   sheqForm.get('responsiblePersonControls.rootCause').errors">
-              <span *ngIf="sheqForm.get('responsiblePersonControls.rootCause').errors.required">
-                This field is required.
-              </span>
+                            <span *ngIf="sheqForm.get('responsiblePersonControls.rootCause').errors.required">
+                                This field is required.
+                            </span>
                         </span>
                     </div>
                 </div>
@@ -391,9 +396,9 @@
                         <span class="help-block" *ngIf="(sheqForm.get('responsiblePersonControls.actionTaken').touched ||
                   sheqForm.get('responsiblePersonControls.actionTaken').dirty) &&
                   sheqForm.get('responsiblePersonControls.actionTaken').errors">
-              <span *ngIf="sheqForm.get('responsiblePersonControls.actionTaken').errors.required">
-                This field is required.
-              </span>
+                            <span *ngIf="sheqForm.get('responsiblePersonControls.actionTaken').errors.required">
+                                This field is required.
+                            </span>
                         </span>
                     </div>
                 </div>
@@ -403,15 +408,16 @@
                     <label class="form-label form-labelBig">Complaint Status</label>
                     <div class="ulSelectOutter">
                         <select class="ulSelect" formControlName="complaintStatus">
-              <option *ngFor="let option of complaintStatusOptions" value="{{option.value}}">{{ option.label }}</option>
-            </select>
+                            <option *ngFor="let option of complaintStatusOptions" value="{{option.value}}">{{ option.label }}</option>
+                        </select>
                     </div>
                 </div>
             </div>
             <div class="row" formGroupName="buttons">
                 <div class="col-xs-12 col-md-12 col-sm-12 form-group">
                     <input type="button" class="ulBtn ulCancelBtn" value="Cancel" formControlName="cancel" (click)="onCancel()" />
-                    <input type="button" class="ulBtn ulSubmitBtn" value="Submit" (click)="onSubmit()" formControlName="save" [disableControl]="!sheqForm.valid" />
+                    <input type="button" class="ulBtn ulSubmitBtn" value="Submit" (click)="onSubmit()" formControlName="save" [disableControl]="!sheqForm.valid"
+                    />
                 </div>
             </div>
         </div>
