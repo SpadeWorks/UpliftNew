@@ -2,4 +2,6 @@
 <Groups>
 	<Group Name="Uplift_Users" Type="" Description="" Owner="" User="" Permission="Read Write not delete access"></Group>
 	<Group Name="Uplift_Responsible_Persons" Type="" Description="" Owner="" User="" Permission="Read Write not delete access"></Group>
+	<Group Name="Uplift_SCA" Type="" Description="" Owner="" User="" Permission="Read Write not delete access"></Group>
+	<Group Name="Uplift_Approvers" Type="" Description="" Owner="" User="" Permission="Read Write not delete access"></Group>
 </Groups>

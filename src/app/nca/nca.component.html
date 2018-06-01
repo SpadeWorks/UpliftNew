@@ -37,7 +37,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12 col-md-4 col-sm-4 form-group">
-                        <label class="form-label">Plant Number *</label>
+                        <label class="form-label">Warehouse Plant Number *</label>
                         <input type="text" class="form-control ulTxtBox" formControlName="plantNumber" (blur)="onPlantNumberChange($event)" />
                         <span class="help-block" *ngIf="(ncaForm.get('userControls.plantNumber').touched ||
                   ncaForm.get('userControls.plantNumber').dirty) &&
@@ -48,7 +48,7 @@
                         </span>
                     </div>
                     <div class="col-xs-12 col-md-4 col-sm-4 form-group">
-                        <label class="form-label">Plant Name *</label>
+                        <label class="form-label">Warehouse Plant Name *</label>
                         <input type="text" class="form-control ulTxtBox" formControlName="plantName" />
                         <span class="help-block" *ngIf="(ncaForm.get('userControls.plantName').touched ||
                   ncaForm.get('userControls.plantName').dirty) &&

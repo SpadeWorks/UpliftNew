@@ -30,6 +30,7 @@ export class NcaComponent implements OnInit {
   level4Options = [{ value: '', label: 'Select' }];
   approvalStatusOptions = [{ value: 'Yes', label: 'Yes' }, { value: 'No', label: 'No' }];
   complaintStatusOptions = [
+    { value: '', label: 'Select' },
     { value: 'Submitted', label: 'Submitted' },
     { value: 'Assigned', label: 'Assigned' },
     { value: 'WIP', label: 'WIP' },
@@ -39,6 +40,7 @@ export class NcaComponent implements OnInit {
   ];
 
   quantityOptions = [
+    { value: '', label: 'Select' },
     { value: 'Units', label: 'Units' },
     { value: 'Shrink', label: 'Shrink' },
     { value: 'Case', label: 'Case' },
@@ -352,7 +354,9 @@ export class NcaComponent implements OnInit {
 
   onPackCodeChange(packCode) {
     this._DataService.getProductInfo(packCode).then(description => {
-      $("#productDescription1").val(description);
+      this.ncaForm.controls.userControls.patchValue({
+        productDescription1: description
+      });
     });
   }
 
@@ -586,7 +590,7 @@ export class NcaComponent implements OnInit {
           nca.SubmittedOn = new Date().toISOString();
           nca.ContentTypeId = Constants.Globals.ncaContentTypeID;
         }
-        
+
       }
       if (this.userType.indexOf(Constants.Globals.UPLIFT_SCA) > -1) {
         nca.ApprovalStatus = Constants.Globals.NOT_STARTED;
