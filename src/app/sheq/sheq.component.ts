@@ -58,6 +58,7 @@ export class SheqComponent implements OnInit {
   formLoading = true;
   loadingMessage = "";
   formTitle = "";
+  isApprover = false;
 
 
   get products(): FormArray {
@@ -208,6 +209,7 @@ export class SheqComponent implements OnInit {
                     }
 
                     if (userType.indexOf(Constants.Globals.UPLIFT_APPROVER) > -1) {
+                      this.isApprover = true;
                       if (complaint.ComplaintStatus != Constants.Globals.SUBMITTED) {
                         controls.approverControls.enable();
                         controls.buttons.enable();
@@ -216,19 +218,28 @@ export class SheqComponent implements OnInit {
                           control.updateValueAndValidity();
                         });
                         this.approverControlsVisible = true;
+
                       }
                     }
 
                     if (userType.indexOf(Constants.Globals.UPLIFT_SCA) > -1) {
-                      controls.userControls.enable();
-                      controls.scaControls.enable();
-                      controls.complaintStatus.enable();
-                      controls.buttons.enable();
                       if (complaint.ComplaintStatus != '') {
+                        controls.userControls.enable();
+                        controls.scaControls.enable();
+                        controls.complaintStatus.enable();
+                        controls.buttons.enable();
+
+                        // Give sca access on approval check.
+                        this.approverControlsVisible = true;
+                        controls.approverControls.enable();
+                        controls.approverControls.get("invoiceNumber").setValidators(Validators.required);
+                        controls.approverControls.get("invoiceValue").setValidators(Validators.required);
+                        controls.approverControls.get("lastDeliveryDate").setValidators(Validators.required);
                         let productionSiteControl = this.sheqForm.get('scaControls.productionSite');
                         productionSiteControl.setValidators(Validators.required);
                         productionSiteControl.updateValueAndValidity();
                         this.scaControlsVisible = true;
+                        this.hasRequiredField
                       }
                     }
                     this.formLoading = false;
@@ -391,7 +402,10 @@ export class SheqComponent implements OnInit {
 
   onPackCodeChange(packCode, index) {
     this._DataService.getProductInfo(packCode).then(description => {
-      $("#productDescriptionID" + index).val(description);
+      (<any>(<any>this.sheqForm.controls.userControls).controls['products'])
+        .at(index).patchValue({ productDescription: description });
+      // $("#productDescriptionID" + index).val(description);
+      // this.sheqForm.controls.userControls.value.products[index].productDescription = description;
     });
   }
 
@@ -578,13 +592,37 @@ export class SheqComponent implements OnInit {
     if (value === Constants.Globals.NO) {
       this.sheqForm.patchValue({
         complaintStatus: Constants.Globals.REJECTED
-      })
+      });
+      this.sheqForm.controls.complaintStatus.disable();
     } else {
+      if (this.userType.indexOf(Constants.Globals.UPLIFT_SCA) > -1 ||
+        this.userType.indexOf(Constants.Globals.UPLIFT_RESPONSIBLE_PERSON) > -1){
+          this.sheqForm.controls.complaintStatus.enable();
+        }
       this.sheqForm.patchValue({
         complaintStatus: Constants.Globals.ASSIGNED
       })
     }
   }
+
+  hasRequiredField = (abstractControl: AbstractControl): boolean => {
+    if (abstractControl.validator) {
+      const validator = abstractControl.validator({} as AbstractControl);
+      if (validator && validator.required) {
+        return true;
+      }
+    }
+    if (abstractControl['controls']) {
+      for (const controlName in abstractControl['controls']) {
+        if (abstractControl['controls'][controlName]) {
+          if (this.hasRequiredField(abstractControl['controls'][controlName])) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  };
 
   updateData() {
     return new Promise((resolve, reject) => {
@@ -637,7 +675,8 @@ export class SheqComponent implements OnInit {
           sheq.PersonResponsibleId = { results: responsiblePersons };
         }
       }
-      if (this.userType.indexOf(Constants.Globals.UPLIFT_APPROVER) > -1) {
+      if (this.userType.indexOf(Constants.Globals.UPLIFT_APPROVER) > -1 ||
+        this.userType.indexOf(Constants.Globals.UPLIFT_SCA) > -1) {
         sheq.ApprovalStatus = this.getControlValue("approverControls.approvalStatus");
         if (sheq.ApprovalStatus && sheq.ApprovalStatus.toLowerCase() == Constants.Globals.NO.toLowerCase()) {
           sheq.ComplaintStatus = Constants.Globals.REJECTED;
@@ -685,6 +724,7 @@ export class SheqComponent implements OnInit {
       alert(`Data submitted successfully. ${data.complaintID} is your complaint ID for future reference.`);
       window.location.href = window.location.href = (<any>window)._spPageContextInfo.siteAbsoluteUrl; //window.location.href.replace('?', `?ID=${data.id}&`);
     } else {
+      alert(`Changes to the complaint ID : ${data.complaintID} are saved successfully.`);
       window.location.href = (<any>window)._spPageContextInfo.siteAbsoluteUrl
     }
     this.formLoading = false;

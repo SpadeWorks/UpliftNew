@@ -563,3 +563,13 @@ button {
 .help-block {
     color: #e31e2d !important;
 }
+
+span.loader-message {
+    position: relative;
+    top: 50px;
+    right: 20px;
+}
+
+.ulSelect option {
+    font: 'robotoregular' !important;
+}

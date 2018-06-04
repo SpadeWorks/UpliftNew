@@ -36,8 +36,7 @@
                 <div class="row">
                     <div class="col-xs-12 col-md-4 col-sm-4 form-group">
                         <label class="form-label">Customer Number*</label>
-                        <input type="text" class="form-control ulTxtBox" formControlName="customerNumber" (blur)="onCusomerNumberChange($event)"
-                        />
+                        <input type="text" class="form-control ulTxtBox" formControlName="customerNumber" (blur)="onCusomerNumberChange($event)" />
                         <span class="help-block" *ngIf="(sheqForm.get('userControls.customerNumber').touched || sheqForm.get('userControls.customerNumber').dirty) &&
                   sheqForm.get('userControls.customerNumber').errors">
                             <span *ngIf="sheqForm.get('userControls.customerNumber').errors.required">
@@ -116,8 +115,7 @@
                                 <label class="form-label" attr.for="{{'packCodeID' + i}}">
                                     <b>Pack Code {{i+1}}</b>
                                 </label>
-                                <input type="text" class="form-control ulTxtBox" formControlName="packCode" id="{{'packCodeID' + i}}" (blur)="onPackCodeChange($event.target.value, i)"
-                                />
+                                <input type="text" class="form-control ulTxtBox" formControlName="packCode" id="{{'packCodeID' + i}}" (blur)="onPackCodeChange($event.target.value, i)" />
                             </div>
                             <div class="col-xs-12 col-md-12 col-sm-12">
                                 <label class="form-label" attr.for="{{'productDescriptionID' +
@@ -131,8 +129,7 @@
                             </div>
                             <div class="col-xs-12 col-md-6 col-sm-6">
                                 <label class="form-label" attr.for="{{'quantityUnitID' + i}}">Quantity - Unit</label>
-                                <input OnlyNumber="true" min="0" type="number" class="form-control ulTxtBox" formControlName="quantityUnit" id="{{'quantityUnitID' + i}}"
-                                />
+                                <input OnlyNumber="true" min="0" type="number" class="form-control ulTxtBox" formControlName="quantityUnit" id="{{'quantityUnitID' + i}}" />
                             </div>
                             <div class="col-xs-12 col-md-6 col-sm-6">
                                 <label class="form-label" attr.for="{{'quantityShrinkID' +
@@ -247,8 +244,7 @@
                             <label for="file-upload" class="custom-file-upload">
                                 Choose File
                             </label>
-                            <input id="file-upload" class="fileUpload hide" name="upload_cont_img" type="file" accept="*" formControlName="attachments"
-                                (change)="onFildAdded($event)" />
+                            <input id="file-upload" class="fileUpload hide" name="upload_cont_img" type="file" accept="*" formControlName="attachments" (change)="onFildAdded($event)" />
                             <ul class="uploadedFileList">
                                 <li class="uploadedFileName" *ngFor="let attachment of
                         attachments">
@@ -268,8 +264,7 @@
             <div class="row" formGroupName="scaControls" *ngIf="scaControlsVisible">
                 <div class="col-xs-12 col-md-4 col-sm-4 form-group">
                     <label class="form-label">Production Site*</label>
-                    <input type="text" class="form-control ulTxtBox" formControlName="productionSite" (blur)="onProductionSiteChange($event.target.value)"
-                    />
+                    <input type="text" class="form-control ulTxtBox" formControlName="productionSite" (blur)="onProductionSiteChange($event.target.value)" />
                     <span class="help-block" *ngIf="(sheqForm.get('scaControls.productionSite').touched ||
                   sheqForm.get('scaControls.productionSite').dirty) &&
                   sheqForm.get('scaControls.productionSite').errors">
@@ -328,7 +323,7 @@
                             </span>
                         </div>
                         <div class="col-xs-12 col-md-6 col-sm-6">
-                            <label class="form-label">Approved*</label>
+                            <label class="form-label">{{isApprover ? 'Approved*' : 'Approved'}}</label>
                             <div class="ulSelectOutter">
                                 <select class="ulSelect" formControlName="approvalStatus" (change)="onApprovalChange($event.target.value)">
                                     <option *ngFor="let option of approvalStatusOptions" value="{{option.value}}" >{{ option.label }}</option>
@@ -345,7 +340,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-sm-12">
-                            <label class="form-label">Comments*</label>
+                            <label class="form-label">{{isApprover ? 'Comments*' : 'Comments'}}</label>
                             <textarea class="form-control ulTxtBox" formControlName="comments"></textarea>
                             <span class="help-block" *ngIf="(sheqForm.get('approverControls.comments').touched ||
                   sheqForm.get('approverControls.comments').dirty) &&
@@ -416,8 +411,7 @@
             <div class="row" formGroupName="buttons">
                 <div class="col-xs-12 col-md-12 col-sm-12 form-group">
                     <input type="button" class="ulBtn ulCancelBtn" value="Cancel" formControlName="cancel" (click)="onCancel()" />
-                    <input type="button" class="ulBtn ulSubmitBtn" value="Submit" (click)="onSubmit()" formControlName="save" [disableControl]="!sheqForm.valid"
-                    />
+                    <input type="button" class="ulBtn ulSubmitBtn" value="Submit" (click)="onSubmit()" formControlName="save" [disableControl]="!sheqForm.valid" />
                 </div>
             </div>
         </div>

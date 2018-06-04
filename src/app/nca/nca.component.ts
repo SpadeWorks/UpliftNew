@@ -23,7 +23,7 @@ export class NcaComponent implements OnInit {
   baseSiteUrl = `${location.protocol}//${location.hostname}`;
   attachments = [];
   newAttachments = [];
-  reasonCodes = [{ value: '', label: 'Select' }];
+  // reasonCodes = [{ value: '', label: 'Select' }];
   level1Options = [{ value: '', label: 'Select' }];
   level2Options = [{ value: '', label: 'Select' }];
   level3Options = [{ value: '', label: 'Select' }];
@@ -35,8 +35,7 @@ export class NcaComponent implements OnInit {
     { value: 'Assigned', label: 'Assigned' },
     { value: 'WIP', label: 'WIP' },
     { value: 'Pending', label: 'Pending' },
-    { value: 'Resolved', label: 'Resolved' },
-    { value: 'Rejected', label: 'Rejected' },
+    { value: 'Resolved', label: 'Resolved' }
   ];
 
   quantityOptions = [
@@ -136,7 +135,7 @@ export class NcaComponent implements OnInit {
       responsiblePersonControls: this.fb.group({
         rootCause: '',
         actionTaken: '',
-        reasonCode: ''
+        // reasonCode: ''
       }),
       complaintStatus: '',
       buttons: this.fb.group({
@@ -219,8 +218,7 @@ export class NcaComponent implements OnInit {
                     }
 
                     if (userType.indexOf(Constants.Globals.UPLIFT_SCA) > -1) {
-
-                      if (complaint.ComplaintStatus == Constants.Globals.SUBMITTED) {
+                      if (complaint.ComplaintStatus !== '') {
                         controls.userControls.enable();
                         controls.scaControls.enable();
                         controls.complaintStatus.enable();
@@ -292,7 +290,7 @@ export class NcaComponent implements OnInit {
               responsiblePersonControls: {
                 rootCause: complaint.RootCause,
                 actionTaken: complaint.ActionTaken,
-                reasonCode: complaint.ReasonCode,
+                // reasonCode: complaint.ReasonCode,
               },
               complaintStatus: complaint.ComplaintStatus
             });
@@ -317,12 +315,12 @@ export class NcaComponent implements OnInit {
       this.formLoading = false;
       this.formTitle = "Add a new complaint";
     }
-    this._DataService.getReasonCodes().then(codes => {
-      $.each(codes, (index, code) => {
-        this.reasonCodes.push({ value: code.Title, label: code.Title });
-        this.isResonCodeDisabled = false;
-      });
-    });
+    // this._DataService.getReasonCodes().then(codes => {
+    //   $.each(codes, (index, code) => {
+    //     this.reasonCodes.push({ value: code.Title, label: code.Title });
+    //     this.isResonCodeDisabled = false;
+    //   });
+    // });
   }
 
   onProductionSiteChange(siteName) {
@@ -604,7 +602,7 @@ export class NcaComponent implements OnInit {
       if (this.userType.indexOf(Constants.Globals.UPLIFT_RESPONSIBLE_PERSON) > -1) {
         nca.RootCause = this.getControlValue('responsiblePersonControls.rootCause');
         nca.ActionTaken = this.getControlValue('responsiblePersonControls.actionTaken');
-        nca.ReasonCode = this.getControlValue('responsiblePersonControls.reasonCode');
+        // nca.ReasonCode = this.getControlValue('responsiblePersonControls.reasonCode');
       }
       nca.ComplaintStatus = this.getControlValue('complaintStatus') || 'Submitted';
       self._DataService.addOrUpdateItem(nca).then((data: any) => {
@@ -638,6 +636,7 @@ export class NcaComponent implements OnInit {
       alert(`Data submitted successfully. ${data.complaintID} is your complaint ID for future reference.`);
       window.location.href = (<any>window)._spPageContextInfo.siteAbsoluteUrl; // window.location.href.replace('?', `?ID=${data.id}&`);
     } else {
+      alert(`Changes to the complaint ID : ${data.complaintID} are saved successfully.`);
       window.location.href = (<any>window)._spPageContextInfo.siteAbsoluteUrl;
     }
   }
