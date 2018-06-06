@@ -32,8 +32,8 @@ export class Sheq {
     QuantityShrink1: string;
     QuantityShrink2: string;
     QuantityShrink3: string;
-    QuantityShrink4: string; 
-    QuantityShrink5: string; 
+    QuantityShrink4: string;
+    QuantityShrink5: string;
     QuantityCases1: string;
     QuantityCases2: string;
     QuantityCases3: string;
@@ -77,4 +77,5 @@ export class Sheq {
     ScaApprover?: string;
     SubmittedOn?: string;
     ApproverName?: any[];
+    UpliftNumber?: string;
 }

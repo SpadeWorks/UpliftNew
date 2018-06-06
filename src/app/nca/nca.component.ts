@@ -23,7 +23,7 @@ export class NcaComponent implements OnInit {
   baseSiteUrl = `${location.protocol}//${location.hostname}`;
   attachments = [];
   newAttachments = [];
-  // reasonCodes = [{ value: '', label: 'Select' }];
+  reasonCodes = [{ value: '', label: 'Select' }];
   level1Options = [{ value: '', label: 'Select' }];
   level2Options = [{ value: '', label: 'Select' }];
   level3Options = [{ value: '', label: 'Select' }];
@@ -120,6 +120,7 @@ export class NcaComponent implements OnInit {
         quantityUnit: ['', Validators.required],
         remedyNumber: ['', Validators.required],
         deliveryNumber: ['', Validators.required],
+        reasonCode: ''
       }),
       scaControls: this.fb.group({
         productionSite: '',
@@ -134,8 +135,7 @@ export class NcaComponent implements OnInit {
       }),
       responsiblePersonControls: this.fb.group({
         rootCause: '',
-        actionTaken: '',
-        // reasonCode: ''
+        actionTaken: ''
       }),
       complaintStatus: '',
       buttons: this.fb.group({
@@ -289,8 +289,7 @@ export class NcaComponent implements OnInit {
               },
               responsiblePersonControls: {
                 rootCause: complaint.RootCause,
-                actionTaken: complaint.ActionTaken,
-                // reasonCode: complaint.ReasonCode,
+                actionTaken: complaint.ActionTaken
               },
               complaintStatus: complaint.ComplaintStatus
             });
@@ -309,18 +308,30 @@ export class NcaComponent implements OnInit {
               console.log(error);
             })
           }
+          this._DataService.getReasonCodes().then(codes => {
+            $.each(codes, (index, code) => {
+              this.reasonCodes.push({ value: code.Title, label: code.Title });
+              this.isResonCodeDisabled = false;
+            });
+            this.ncaForm.patchValue({
+              userControls: {
+                reasonCode: complaint.ReasonCode
+              }
+            });
+          });
         }
-      })
+      });
     } else {
       this.formLoading = false;
       this.formTitle = "Add a new complaint";
+
+      this._DataService.getReasonCodes().then(codes => {
+        $.each(codes, (index, code) => {
+          this.reasonCodes.push({ value: code.Title, label: code.Title });
+          this.isResonCodeDisabled = false;
+        });
+      });
     }
-    // this._DataService.getReasonCodes().then(codes => {
-    //   $.each(codes, (index, code) => {
-    //     this.reasonCodes.push({ value: code.Title, label: code.Title });
-    //     this.isResonCodeDisabled = false;
-    //   });
-    // });
   }
 
   onProductionSiteChange(siteName) {
@@ -583,8 +594,8 @@ export class NcaComponent implements OnInit {
         nca.Level3LookupId = +this.getControlValue('userControls.level3');
         nca.Level4LookupId = +this.getControlValue('userControls.level4');
         nca.Explanation = this.getControlValue('userControls.explanation');
-
-        if(!this.itemID || this.itemID < 1){
+        nca.ReasonCode = this.getControlValue('userControls.reasonCode');
+        if (!this.itemID || this.itemID < 1) {
           nca.SubmittedOn = new Date().toISOString();
           nca.ContentTypeId = Constants.Globals.ncaContentTypeID;
         }
@@ -602,7 +613,6 @@ export class NcaComponent implements OnInit {
       if (this.userType.indexOf(Constants.Globals.UPLIFT_RESPONSIBLE_PERSON) > -1) {
         nca.RootCause = this.getControlValue('responsiblePersonControls.rootCause');
         nca.ActionTaken = this.getControlValue('responsiblePersonControls.actionTaken');
-        // nca.ReasonCode = this.getControlValue('responsiblePersonControls.reasonCode');
       }
       nca.ComplaintStatus = this.getControlValue('complaintStatus') || 'Submitted';
       self._DataService.addOrUpdateItem(nca).then((data: any) => {

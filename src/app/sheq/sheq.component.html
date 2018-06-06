@@ -32,6 +32,17 @@
                             </span>
                         </span>
                     </div>
+                    <div class="col-xs-12 col-md-4 col-sm-4 form-group">
+                        <label class="form-label">Uplift Number*</label>
+                        <input type="text" class="form-control ulTxtBox" formControlName="upliftNumber" />
+                        <span class="help-block" *ngIf="(sheqForm.get('userControls.upliftNumber').touched ||
+                          sheqForm.get('userControls.upliftNumber').dirty) &&
+                sheqForm.get('userControls.upliftNumber').errors">
+                          <span *ngIf="sheqForm.get('userControls.upliftNumber').errors.required">
+                              This field is required.
+                          </span>
+                        </span>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12 col-md-4 col-sm-4 form-group">
@@ -157,6 +168,24 @@
                         <a href="javascript:;" (click)="addPackCode()">
                             <span class="addPackCode">+ Add Pack Code</span>
                         </a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-8 col-sm-8 form-group">
+                        <label class="form-label">Reason Code*</label>
+                        <div class="ulSelectOutter">
+                            <select class="ulSelect" formControlName="reasonCode">
+                              <option *ngFor="let reasonCode of reasonCodes" value="{{reasonCode.value}}">{{ reasonCode.label }}</option>
+                          </select>
+                            <span class="help-block" *ngIf="(sheqForm.get('userControls.reasonCode').touched ||
+                sheqForm.get('userControls.reasonCode').dirty) &&
+                sheqForm.get('userControls.reasonCode').errors">
+                              <span *ngIf="sheqForm.get('userControls.reasonCode').errors.required">
+                                  This field is required.
+                              </span>
+                            </span>
+                        </div>
                     </div>
                 </div>
 
@@ -354,23 +383,6 @@
                 </div>
             </div>
             <div data-type="responsible-person-form" formGroupName="responsiblePersonControls" *ngIf="responsiblePersongsControlVisible">
-                <div class="row">
-                    <div class="col-xs-12 col-md-8 col-sm-8 form-group">
-                        <label class="form-label">Reason Code*</label>
-                        <div class="ulSelectOutter">
-                            <select class="ulSelect" formControlName="reasonCode">
-                                <option *ngFor="let reasonCode of reasonCodes" value="{{reasonCode.value}}">{{ reasonCode.label }}</option>
-                            </select>
-                            <span class="help-block" *ngIf="(sheqForm.get('responsiblePersonControls.reasonCode').touched ||
-                  sheqForm.get('responsiblePersonControls.reasonCode').dirty) &&
-                  sheqForm.get('responsiblePersonControls.reasonCode').errors">
-                                <span *ngIf="sheqForm.get('responsiblePersonControls.reasonCode').errors.required">
-                                    This field is required.
-                                </span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-xs-12 col-md-8 col-sm-8 form-group">
                         <label class="form-label">Root Cause*</label>

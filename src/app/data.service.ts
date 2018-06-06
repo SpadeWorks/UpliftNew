@@ -104,6 +104,7 @@ ${Constants.Complaints.QUANTITY},\
 ${Constants.Complaints.QUANTITY_UNIT},\
 ${Constants.Complaints.REMEDY_NUMBER},\
 ${Constants.Complaints.DELIVERY_NUMBER},\
+${Constants.Complaints.UPLIFT_NUMBER},\
 ${Constants.Complaints.APPROVAL_STATUS}`)
         .expand(`${Constants.Complaints.LEVEL1_LOOKUP},\
 ${Constants.Complaints.LEVEL2_LOOKUP},\
@@ -186,7 +187,8 @@ ${Constants.Complaints.PERSON_RESPONSIBLE}`)
             Quantity: c[Constants.Complaints.QUANTITY],
             QuantityUnit: c[Constants.Complaints.QUANTITY_UNIT],
             RemedyNumber: c[Constants.Complaints.REMEDY_NUMBER],
-            DeliveryNumber: c[Constants.Complaints.DELIVERY_NUMBER]
+            DeliveryNumber: c[Constants.Complaints.DELIVERY_NUMBER],
+            UpliftNumber: c[Constants.Complaints.UPLIFT_NUMBER]
           }
           resolve(sheq);
         }, error => {

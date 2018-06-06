@@ -91,6 +91,7 @@ export class SheqComponent implements OnInit {
 
     this.sheqForm = this.fb.group({
       userControls: this.fb.group({
+        upliftNumber: ['', Validators.required],
         dateOfIncident: ['', Validators.required],
         customerNumber: ['', Validators.required],
         customerName: ['', Validators.required],
@@ -105,6 +106,7 @@ export class SheqComponent implements OnInit {
         explanation: ['', Validators.required],
         products: this.fb.array([this.buildProduct()]),
         attachments: '',
+        reasonCode: '',
       }),
       scaControls: this.fb.group({
         productionSite: '',
@@ -119,8 +121,7 @@ export class SheqComponent implements OnInit {
       }),
       responsiblePersonControls: this.fb.group({
         rootCause: '',
-        actionTaken: '',
-        reasonCode: '',
+        actionTaken: ''
       }),
       complaintStatus: '',
       buttons: this.fb.group({
@@ -254,6 +255,7 @@ export class SheqComponent implements OnInit {
           dateOfIncident = complaint.DateOfIncident ? new Date(complaint.DateOfIncident) : new Date();
           this.sheqForm.patchValue({
             userControls: {
+              upliftNumber: complaint.UpliftNumber,
               dateOfIncident: {
                 date: {
                   year: dateOfIncident.getFullYear(),
@@ -268,7 +270,7 @@ export class SheqComponent implements OnInit {
               contactPersonDesignation: complaint.CustomerContactDesignation,
               contactNumber: complaint.CustomerContact,
               complaintDetails: complaint.ComplaintDetails,
-              explanation: complaint.Explanation,
+              explanation: complaint.Explanation
             },
             scaControls: {
               productionSite: complaint.SiteName,
@@ -289,8 +291,7 @@ export class SheqComponent implements OnInit {
             },
             responsiblePersonControls: {
               rootCause: complaint.RootCause,
-              actionTaken: complaint.ActionTaken,
-              reasonCode: complaint.ReasonCode,
+              actionTaken: complaint.ActionTaken
             },
             complaintStatus: complaint.ComplaintStatus
           });
@@ -360,18 +361,29 @@ export class SheqComponent implements OnInit {
               console.log(error);
             })
           }
+          this._DataService.getReasonCodes().then(codes => {
+            $.each(codes, (index, code) => {
+              this.reasonCodes.push({ value: code.Title, label: code.Title });
+              this.isResonCodeDisabled = false;
+            });
+            this.sheqForm.patchValue({
+              userControls: {
+                reasonCode: complaint.ReasonCode
+              }
+            });
+          });
         }
       })
     } else {
       this.formLoading = false;
       this.formTitle = "Add a new complaint";
-    }
-    this._DataService.getReasonCodes().then(codes => {
-      $.each(codes, (index, code) => {
-        this.reasonCodes.push({ value: code.Title, label: code.Title });
-        this.isResonCodeDisabled = false;
+      this._DataService.getReasonCodes().then(codes => {
+        $.each(codes, (index, code) => {
+          this.reasonCodes.push({ value: code.Title, label: code.Title });
+          this.isResonCodeDisabled = false;
+        });
       });
-    });
+    }
   }
   onProductionSiteChange(siteName) {
     return new Promise((resolve, reject) => {
@@ -596,9 +608,9 @@ export class SheqComponent implements OnInit {
       this.sheqForm.controls.complaintStatus.disable();
     } else {
       if (this.userType.indexOf(Constants.Globals.UPLIFT_SCA) > -1 ||
-        this.userType.indexOf(Constants.Globals.UPLIFT_RESPONSIBLE_PERSON) > -1){
-          this.sheqForm.controls.complaintStatus.enable();
-        }
+        this.userType.indexOf(Constants.Globals.UPLIFT_RESPONSIBLE_PERSON) > -1) {
+        this.sheqForm.controls.complaintStatus.enable();
+      }
       this.sheqForm.patchValue({
         complaintStatus: Constants.Globals.ASSIGNED
       })
@@ -634,6 +646,7 @@ export class SheqComponent implements OnInit {
       sheq.ID = self.itemID || 0;
       if (this.userType.indexOf(Constants.Globals.UPLIFT_USER) > -1 ||
         this.userType.indexOf(Constants.Globals.UPLIFT_SCA) > -1) {
+        sheq.UpliftNumber = this.getControlValue("userControls.upliftNumber");
         sheq.DateOfIncident = this.getISODate(this.getControlValue("userControls.dateOfIncident")) || new Date().toISOString();
         sheq.CustomerNumber = this.getControlValue("userControls.customerNumber");
         sheq.CustomerName = this.getControlValue("userControls.customerName");
@@ -646,6 +659,7 @@ export class SheqComponent implements OnInit {
         sheq.Level3LookupId = +this.getControlValue("userControls.level3");
         sheq.Level4LookupId = +this.getControlValue("userControls.level4");
         sheq.Explanation = this.getControlValue("userControls.explanation");
+        sheq.ReasonCode = this.getControlValue("userControls.reasonCode");
         if (!this.itemID || this.itemID < 1) {
           sheq.SubmittedOn = new Date().toISOString();
           sheq.ContentTypeId = Constants.Globals.sheqContentTypeID;
@@ -689,7 +703,6 @@ export class SheqComponent implements OnInit {
       if (this.userType.indexOf(Constants.Globals.UPLIFT_RESPONSIBLE_PERSON) > -1) {
         sheq.RootCause = this.getControlValue("responsiblePersonControls.rootCause");
         sheq.ActionTaken = this.getControlValue("responsiblePersonControls.actionTaken");
-        sheq.ReasonCode = this.getControlValue("responsiblePersonControls.reasonCode");
       }
 
       sheq.ComplaintStatus = sheq.ComplaintStatus ||

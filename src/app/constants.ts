@@ -140,6 +140,7 @@ export class Complaints {
     static Approver_Comments = "ApproverComments";
     static PLANT_CONTACT_NAME = "PlantContactName";
     static QUANTITY_UNIT = "QuantityUnit";
+    static UPLIFT_NUMBER = "UpliftNumber";
 }
 
 export class Globals{

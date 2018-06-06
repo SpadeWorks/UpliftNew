@@ -200,6 +200,24 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-xs-12 col-md-8 col-sm-8 form-group">
+                        <label class="form-label">Reason Code *</label>
+                        <div class="ulSelectOutter">
+                            <select class="ulSelect" formControlName="reasonCode">
+                <option *ngFor="let reasonCode of reasonCodes" value="{{reasonCode.value}}">{{ reasonCode.label }}</option>
+              </select>
+                        </div>
+                        <span class="help-block" *ngIf="(ncaForm.get('userControls.reasonCode').touched ||
+                ncaForm.get('userControls.reasonCode').dirty) &&
+                ncaForm.get('userControls.reasonCode').errors">
+              <span *ngIf="ncaForm.get('userControls.reasonCode').errors.required">
+                This field is required.
+              </span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="col-xs-12 col-md-4 col-sm-4 form-group">
                         <label class="form-label">Level 1 *</label>
                         <div class="ulSelectOutter">
@@ -322,23 +340,6 @@
                 </div>
             </div>
             <div data-type="responsible-person-form" formGroupName="responsiblePersonControls" *ngIf="responsiblePersongsControlVisible">
-                <!-- <div class="row">
-                    <div class="col-xs-12 col-md-8 col-sm-8 form-group">
-                        <label class="form-label">Reason Code *</label>
-                        <div class="ulSelectOutter" *ngIf="!isReasonCodeDisabled">
-                            <select class="ulSelect" [disableControl]="isReasonCodeDisabled" formControlName="reasonCode">
-                <option *ngFor="let reasonCode of reasonCodes" value="{{reasonCode.value}}">{{ reasonCode.label }}</option>
-              </select>
-                        </div>
-                        <span class="help-block" *ngIf="(ncaForm.get('responsiblePersonControls.reasonCode').touched ||
-                  ncaForm.get('responsiblePersonControls.reasonCode').dirty) &&
-                  ncaForm.get('responsiblePersonControls.reasonCode').errors">
-              <span *ngIf="ncaForm.get('responsiblePersonControls.reasonCode').errors.required">
-                This field is required.
-              </span>
-                        </span>
-                    </div>
-                </div> -->
                 <div class="row">
                     <div class="col-xs-12 col-md-8 col-sm-8 form-group">
                         <label class="form-label">Root Cause *</label>
