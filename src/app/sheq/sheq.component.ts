@@ -691,7 +691,7 @@ export class SheqComponent implements OnInit {
       }
       if (this.userType.indexOf(Constants.Globals.UPLIFT_APPROVER) > -1 ||
         this.userType.indexOf(Constants.Globals.UPLIFT_SCA) > -1) {
-        sheq.ApprovalStatus = this.getControlValue("approverControls.approvalStatus");
+        sheq.ApprovalStatus = this.getControlValue("approverControls.approvalStatus") || Constants.Globals.NOT_STARTED;
         if (sheq.ApprovalStatus && sheq.ApprovalStatus.toLowerCase() == Constants.Globals.NO.toLowerCase()) {
           sheq.ComplaintStatus = Constants.Globals.REJECTED;
         }
