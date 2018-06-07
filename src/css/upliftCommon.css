@@ -573,3 +573,19 @@ span.loader-message {
 .ulSelect option {
     font: 'robotoregular' !important;
 }
+
+.ms-InlineSearch-DivBaseline>div:nth-child(2) {
+    display: none;
+}
+
+ul.s4-breadcrumb {
+    display: none !important;
+}
+
+.contextual-navigation {
+    display: none !important;
+}
+
+.welcome-content {
+    display: none !important;
+}
